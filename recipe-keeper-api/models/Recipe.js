@@ -14,7 +14,7 @@ const recipeSchema = new mongoose.Schema({
     required: true,
   },
   photo: {
-    type: Image,
+    url: String,
   },
   time: {
     type: Number,
@@ -23,13 +23,13 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  steps: {
+  instructions: {
     type: String,
     required: true,
   },
   favorited: {
     type: Boolean,
-    default: falses,
+    default: false,
   },
 });
 

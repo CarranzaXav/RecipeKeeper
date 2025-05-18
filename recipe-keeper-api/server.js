@@ -25,10 +25,15 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use("/*splat", express.static(path.join(__dirname, "public")));
+app.use("/", express.static(path.join(__dirname, "public")));
 
-app.use("/*splat", require("./routes/root"));
+app.use("/", require("./routes/root"));
+app.use("/users", require("./routes/userRoutes"));
+app.use("/recipes", require("./routes/recipeRoutes"));
 
+// Express 5 no longer allows regex-style
+// i.e."^/$|/index(.html)?"
+//Express 5 no longer allows the wildcard(*) to be empty it must now have a splat attach to it (*splat)
 app.all("*splat", (req, res) => {
   res.status(404);
   if (req.accepts("html")) {
