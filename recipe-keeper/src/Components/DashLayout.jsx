@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom"
-import DashHeader from "./DashHeader"
+import Navbar from "./Navbar"
 
 const DashLayout = () => {
   return (
     <>
-        <DashHeader/>
+        {/* <Navbar/> */}
         <div className="dash-container">
             <Outlet/>
         </div>
