@@ -40,7 +40,7 @@ const createNewUser = asyncHandler(async (req, res) => {
   const hashedPwd = await bcrypt.hash(password, 10); // salt rounds
 
   // Double check if passsword is fine without the quotes around it.
-  const userObject = { username, password: hashedPwd, roles };
+  const userObject = { username, password: hashedPwd };
 
   const user = await User.create(userObject);
 
@@ -80,7 +80,6 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   user.username = username;
-  user.roles = roles;
 
   if (password) {
     // Hash password

@@ -37,7 +37,7 @@ const createNewRecipe = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  // Create and store the new user
+  // Create and store the new recipe
   const recipe = await Recipe.create({
     user,
     title,
@@ -59,20 +59,10 @@ const createNewRecipe = asyncHandler(async (req, res) => {
 // @route PATCH /recipes
 // @access Private
 const updateRecipe = asyncHandler(async (req, res) => {
-  const { user, title, photo, time, ingredients, instructions, favorited } =
-    req.body;
+  const { id, user, title, ingredients, instructions } = req.body;
 
   // Confirm data
-  if (
-    !id ||
-    !user ||
-    !title ||
-    !photo ||
-    !time ||
-    !ingredients ||
-    !instructions ||
-    typeof favorited !== "boolean"
-  ) {
+  if (!id || !user || !title || !ingredients || !instructions) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -85,11 +75,8 @@ const updateRecipe = asyncHandler(async (req, res) => {
 
   recipe.user = user;
   recipe.title = title;
-  recipe.photo = photo;
-  recipe.time = time;
   recipe.ingredients = ingredients;
   recipe.instructions = instructions;
-  recipe.favorited = favorited;
 
   const updatedRecipe = await recipe.save();
 

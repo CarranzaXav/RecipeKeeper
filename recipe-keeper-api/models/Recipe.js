@@ -3,6 +3,8 @@ const { time } = require("console");
 mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 
+//  "id": "682a4d6ad58aa599643b5948",
+
 const recipeSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -20,11 +22,11 @@ const recipeSchema = new mongoose.Schema({
     type: Number,
   },
   ingredients: {
-    type: String,
+    type: Array,
     required: true,
   },
   instructions: {
-    type: String,
+    type: Array,
     required: true,
   },
   favorited: {

@@ -1,0 +1,29 @@
+20250518	16:20:16	d1172555-e6bc-4ada-ac0d-fe036e6fa573	MongooseError: Operation `users.find()` buffering timed out after 10000ms	GET	/users	undefined
+20250518	16:20:41	758fc8f5-44d6-4d12-8d91-bf39e9c82281	MongooseError: Operation `users.find()` buffering timed out after 10000ms	GET	/users	undefined
+20250518	16:26:42	9e7db903-c1e7-4290-ba73-5ff53aea25fa	MongooseError: Operation `users.find()` buffering timed out after 10000ms	GET	/users	undefined
+20250518	16:28:35	a5f42ffd-ecd2-48dd-b7e7-29b696002472	MongooseError: Operation `users.find()` buffering timed out after 10000ms	GET	/users	undefined
+20250518	16:30:47	bcc9f232-1734-456f-83aa-5e80b9f3b8a0	MongooseError: Operation `users.find()` buffering timed out after 10000ms	GET	/users	undefined
+20250518	16:32:20	0291a2ce-a5af-4672-b962-e0c20ea9e552	MongooseError: Operation `users.find()` buffering timed out after 10000ms	GET	/users	undefined
+20250518	16:46:14	7873cf90-8e81-43b9-82c5-ed5761fcf090	TypeError: Cannot destructure property 'username' of 'req.body' as it is undefined.	POST	/users?username=%22CarranzaXav%22&password=1107	undefined
+20250518	16:46:27	f38a8395-1fd5-4348-9595-832335868087	TypeError: Cannot destructure property 'username' of 'req.body' as it is undefined.	POST	/users?username=CarranzaXav&password=1107	undefined
+20250518	16:46:44	7fec319f-121d-4155-a05f-dead5a2287ae	TypeError: Cannot destructure property 'username' of 'req.body' as it is undefined.	POST	/users?%22username%22=%22CarranzaXav%22&password=1107	undefined
+20250518	16:47:04	548ace46-8f44-4d91-bc47-8b69d1bf3368	TypeError: Cannot destructure property 'username' of 'req.body' as it is undefined.	POST	/users?%22username%22=%22CarranzaXav%22&%22password%22=1107	undefined
+20250518	16:50:30	ee20fbb8-e23d-4782-8747-ace07daccb82	TypeError: Cannot destructure property 'username' of 'req.body' as it is undefined.	POST	/users?%22username%22=%22CarranzaXav%22&%22password%22=1107	undefined
+20250518	16:51:59	25c32a10-aae0-46fe-add1-04a83c361aa3	TypeError: Cannot destructure property 'username' of 'req.body' as it is undefined.	POST	/users?%22username%22=%22CarranzaXav%22&%22password%22=1107	undefined
+20250518	16:52:29	4ad6bab6-ec93-4e23-aefc-01dcc4fd149b	TypeError: Cannot destructure property 'username' of 'req.body' as it is undefined.	POST	/users?%22username%22=%22CarranzaXav%22&%22password%22=1107	undefined
+20250518	16:55:14	39ec9e4d-3fbc-4cd3-8335-d290a3b90693	TypeError: Cannot destructure property 'username' of 'req.body' as it is undefined.	POST	/users?username=%22CarranzaXav%22&%22password%22=1107	undefined
+20250518	16:56:40	1f86fcd1-0651-42f9-9121-4a893ce8d551	Error: data must be a string or Buffer and salt must either be a salt string or a number of rounds	POST	/users	undefined
+20250518	16:56:54	af008a26-a9b9-4443-9bfc-ac39df281910	ReferenceError: roles is not defined	POST	/users	undefined
+20250518	16:57:22	7b0cb38a-cbad-476e-8390-9cd2441f9df2	ValidationError: User validation failed: password: Cast to Number failed for value "$2b$10$QhcQNsZJEEzU2DYGyIzAM.lB/T8ySot6SKXXZXFP77ufcXpSZsveS" (type string) at path "password"	POST	/users	undefined
+20250518	16:57:35	a7a59664-9289-4acf-9407-b3615b2f0a05	Error: data must be a string or Buffer and salt must either be a salt string or a number of rounds	POST	/users	undefined
+20250518	16:59:34	7ae52b45-8e26-446b-b50c-60ba14e26a9e	ReferenceError: roles is not defined	PATCH	/users	undefined
+20250518	17:06:51	efe6dec5-0463-4890-b0b3-d89e59c65fe6	ValidationError: User validation failed: password: Cast to Number failed for value "$2b$10$Ql.LAMaUr628lDXYPnxTN.8QMWq8pWptbdLJBEbgUIGTulHBgaSXe" (type string) at path "password"	PATCH	/users	undefined
+20250518	17:07:23	92cd63c1-30cd-44ee-9ebd-69de09a2cfd4	Error: data must be a string or Buffer and salt must either be a salt string or a number of rounds	PATCH	/users	undefined
+20250518	17:27:14	b57796df-5475-4569-adb6-ff4d8be7ec31	SyntaxError: Unexpected token , in JSON at position 106	GET	/recipes	undefined
+20250518	17:31:30	d6f49867-433a-4a62-8769-9eb52e66acdc	SyntaxError: Unexpected token , in JSON at position 106	POST	/recipes	undefined
+20250518	17:35:38	8a2460f9-f7e9-4d78-b5b1-faacd49ce505	SyntaxError: Unexpected token , in JSON at position 105	POST	/recipes	undefined
+20250518	17:35:45	56c5ed03-958d-493d-8bd1-b82e2b341a45	SyntaxError: Unexpected token , in JSON at position 107	POST	/recipes	undefined
+20250518	17:50:35	7a6265a3-8b74-42c5-8c9d-f7b41dfd6703	ReferenceError: id is not defined	PATCH	/recipes	undefined
+20250518	17:52:49	da4bc00d-b65a-4e9c-898f-5533d125174b	ReferenceError: id is not defined	PATCH	/recipes	undefined
+20250518	17:53:28	0bcc76cd-3130-421e-98ca-a291a4341120	ReferenceError: id is not defined	PATCH	/recipes	undefined
+20250518	17:53:33	1f6df147-9820-40aa-8f38-3d92547c2f69	ReferenceError: id is not defined	PATCH	/recipes	undefined
