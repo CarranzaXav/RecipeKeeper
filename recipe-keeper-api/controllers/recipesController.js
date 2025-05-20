@@ -29,8 +29,16 @@ const getAllRecipes = asyncHandler(async (req, res) => {
 // @route POST /recipes
 // @access Private
 const createNewRecipe = asyncHandler(async (req, res) => {
-  const { user, title, photo, time, ingredients, instructions, favorited } =
-    req.body;
+  const {
+    user,
+    title,
+    course,
+    photo,
+    time,
+    ingredients,
+    instructions,
+    favorited,
+  } = req.body;
 
   // Confirm data
   if (!user || !title || !ingredients || !instructions) {
@@ -41,6 +49,7 @@ const createNewRecipe = asyncHandler(async (req, res) => {
   const recipe = await Recipe.create({
     user,
     title,
+    course,
     photo,
     time,
     ingredients,
@@ -59,7 +68,17 @@ const createNewRecipe = asyncHandler(async (req, res) => {
 // @route PATCH /recipes
 // @access Private
 const updateRecipe = asyncHandler(async (req, res) => {
-  const { id, user, title, ingredients, instructions } = req.body;
+  const {
+    id,
+    user,
+    title,
+    course,
+    photo,
+    time,
+    ingredients,
+    instructions,
+    favorited,
+  } = req.body;
 
   // Confirm data
   if (!id || !user || !title || !ingredients || !instructions) {
@@ -75,8 +94,12 @@ const updateRecipe = asyncHandler(async (req, res) => {
 
   recipe.user = user;
   recipe.title = title;
+  recipe.course = course;
+  recipe.photo = photo;
+  recipe.time = time;
   recipe.ingredients = ingredients;
   recipe.instructions = instructions;
+  recipe.favorited = favorited;
 
   const updatedRecipe = await recipe.save();
 

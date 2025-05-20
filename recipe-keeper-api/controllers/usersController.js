@@ -55,7 +55,7 @@ const createNewUser = asyncHandler(async (req, res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = asyncHandler(async (req, res) => {
-  const { id, username, password } = req.body;
+  const { id, username, password, role } = req.body;
 
   // Confirm data
   if (!id || !username) {
@@ -80,6 +80,7 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   user.username = username;
+  user.role = role;
 
   if (password) {
     // Hash password

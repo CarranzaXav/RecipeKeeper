@@ -1,5 +1,3 @@
-const { time } = require("console");
-
 mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 
@@ -14,6 +12,9 @@ const recipeSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+  },
+  course: {
+    type: [String],
   },
   photo: {
     url: String,
