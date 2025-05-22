@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom"
+import './ComponentsCSS/DashLayout.css'
 import Navbar from "./Navbar"
 
 const DashLayout = () => {

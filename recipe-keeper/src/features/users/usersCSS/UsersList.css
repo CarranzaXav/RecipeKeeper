@@ -1,0 +1,36 @@
+.usersList{
+    background-color: var(--BORDER-COLOR);
+    width: 100%;
+    border-radius: 15px;
+    border-style: outset;
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    letter-spacing: 1px;
+}
+
+.usersListHead{
+    width: 80%;
+    padding-block: 0.7em;
+    margin-inline: auto;
+}
+
+.usersListRow{
+    color: purple;
+    display: flex;
+    width: 100%;
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: 5px;
+}
+
+.usersListRowTitle{
+    width: 50%;
+}
+
+.usersListRowEdit{
+    width: 50%;
+    display: flex;
+    flex-direction: row-reverse;
+}

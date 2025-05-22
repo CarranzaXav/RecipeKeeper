@@ -1,0 +1,21 @@
+.userRow{
+    display: flex;
+    margin-inline: auto;
+    width: 80%;
+    padding-block: 0.75em;
+    padding-inline: 2%;
+  }
+
+.userCell{
+    width: 50%;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 2px;
+    font-size: 1.25em;
+}
+
+.userCellBtnContainer{
+    width: 50%;
+    display: flex;
+    flex-direction: row-reverse;
+}

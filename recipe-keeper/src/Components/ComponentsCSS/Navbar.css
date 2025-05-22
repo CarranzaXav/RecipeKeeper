@@ -1,0 +1,15 @@
+.navbarContainer{
+    padding-inline: 2%;
+    padding-block: 5px;
+    background-color: var(--NAVBAR);
+    color: white;
+}
+
+.navbarTitleContainer{
+    text-decoration: none;
+}
+
+.navbarTitle{
+    color: white;
+    letter-spacing: 1px;
+}
