@@ -11,6 +11,7 @@
     --BGCOLOR:#defcf9;
     --BORDER-COLOR:#cadefc;
     --BUTTON-COLOR:#c3bef0;
+    --FORM-COLOR: #e6d3f4;
     --NAVBAR: #cca8e9;
     --FONT-COLOR:white;
     --ERROR:firebrick;
@@ -28,4 +29,8 @@ body{
     font-weight: 400;
     font-style: normal;
     /* display: flex; */
+}
+
+.flex{
+    display: flex;
 }

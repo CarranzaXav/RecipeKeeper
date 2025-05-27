@@ -15,7 +15,6 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
-      keepUnusedDataFor: 5,
       transformResponse: (responseData) => {
         const loadedRecipes = responseData.map((recipe) => {
           recipe.id = recipe._id;
@@ -32,10 +31,43 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
         } else return [{ type: "Recipe", id: "LIST" }];
       },
     }),
+    addNewRecipe: builder.mutation({
+      query: (initialRecipe) => ({
+        url: "/recipes",
+        method: "POST",
+        body: {
+          ...initialRecipe,
+        },
+      }),
+      invalidatesTags: [{ type: "Recipe", id: "LIST" }],
+    }),
+    updateRecipe: builder.mutation({
+      query: (initialRecipe) => ({
+        url: "/recipes",
+        method: "PATCH",
+        body: {
+          ...initialRecipe,
+        },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "Recipe", id: arg.id }],
+    }),
+    deleteRecipe: builder.mutation({
+      query: ({ id }) => ({
+        url: `/recipes`,
+        method: "DELETE",
+        body: { id },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "Recipe", id: arg.id }],
+    }),
   }),
 });
 
-export const { useGetRecipesQuery } = recipesApiSlice;
+export const {
+  useGetRecipesQuery,
+  useAddNewRecipeMutation,
+  useUpdateRecipeMutation,
+  useDeleteRecipeMutation,
+} = recipesApiSlice;
 
 // return the query result object
 export const selectRecipesResult =

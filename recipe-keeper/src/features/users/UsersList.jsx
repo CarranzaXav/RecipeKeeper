@@ -23,6 +23,7 @@ const UsersList = () => {
           <div className="usersListRowEdit">Edit</div>
         </div>
       </div>
+        <div className="usersListHeadLine"></div>
       <div className="usersListBody">{usersContent}</div>
     </div>
 

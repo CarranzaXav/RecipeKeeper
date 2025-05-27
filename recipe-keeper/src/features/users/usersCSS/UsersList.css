@@ -3,16 +3,24 @@
     width: 100%;
     border-radius: 15px;
     border-style: outset;
+    border:3px outset;
     font-family: "Oswald", sans-serif;
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
     letter-spacing: 1px;
+    padding-bottom: 10px;
 }
 
 .usersListHead{
     width: 80%;
     padding-block: 0.7em;
+    margin-inline: auto;
+}
+
+.usersListHeadLine{
+    border-bottom: 1px solid white;
+    width: 90%;
     margin-inline: auto;
 }
 

@@ -16,11 +16,17 @@ const User = ({ userId }) => {
     // const userRolesString = user.roles.toString().replaceAll(",", ", ");
 
     return (
-      <div className="userRow">
-        <div className="userCell">{user.username}</div>
-        <div className="userCellBtnContainer">
-          <button className="userEditBtn" onClick={handleEdit}>Edit</button>
+      <div className="userRowContainer">
+        <div className="userRow">
+
+          <div className="userCell">{user.username}</div>
+
+          <div className="userCellBtnContainer">
+            <button className="userEditBtn" onClick={handleEdit}>Edit</button>
+          </div>
+          
         </div>
+        <div className="userRowLine"></div>
       </div>
     );
   } else return null;

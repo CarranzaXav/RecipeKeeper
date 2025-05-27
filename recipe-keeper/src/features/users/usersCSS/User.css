@@ -1,6 +1,11 @@
+.userRowContainer{
+    width: 100%;
+    margin-inline: auto;
+}
+
 .userRow{
     display: flex;
-    margin-inline: auto;
+    justify-self: center;
     width: 80%;
     padding-block: 0.75em;
     padding-inline: 2%;
@@ -18,4 +23,10 @@
     width: 50%;
     display: flex;
     flex-direction: row-reverse;
+}
+
+.userRowLine{
+    border-bottom: 2px dashed white; 
+    width: 90%;
+    margin-inline: auto;
 }
