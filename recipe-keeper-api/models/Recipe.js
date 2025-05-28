@@ -1,7 +1,10 @@
 mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
+// const Schema = mongoose.Schema;
 
 //  "id": "682a4d6ad58aa599643b5948",
+
+// const ImageSchema = new Schema({ url: String, filename: String });
 
 const recipeSchema = new mongoose.Schema({
   user: {
@@ -17,7 +20,7 @@ const recipeSchema = new mongoose.Schema({
     type: [String],
   },
   photo: {
-    url: String,
+    type: String,
   },
   time: {
     type: Number,

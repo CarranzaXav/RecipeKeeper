@@ -13,9 +13,9 @@ const RecipesList = () => {
 
   // const createNewRecipe() => {}
 
-  if (isLoading) <p>Loading...</p>
+  if (isLoading) return <p>Loading...</p>
 
-  if(isError) <p className="errmsg">{error?.data?.message}</p>
+  if(isError) return <p className="errmsg">{error?.data?.message}</p>
 
 
 if(isSuccess){

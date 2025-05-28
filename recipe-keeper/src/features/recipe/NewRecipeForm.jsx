@@ -11,40 +11,40 @@ const NewRecipeForm = ({users}) => {
 
   const navigate = useNavigate()
 
-  const [userId, setUsetId] = useState(users?.[0]?.id || '')
+  const [userId, setUserId] = useState(users?.[0]?.id || '')
   const [title, setTitle] = useState('')
   const [course, setCourse] = useState([''])
   const [photo, setPhoto] = useState('')
   const [time, setTime] = useState()
-  const [ingredients, setIngredients] = useState([])
-  const [instructions, setInstructions] = useState([])
+  const [ingredients, setIngredients] = useState('')
+  const [instructions, setInstructions] = useState('')
 
   useEffect(() => {
     if (isSuccess) {
-        setUsetId('')
+        setUserId('')
         setTitle('')
-        setCourse([''])
+        setCourse([])
         setPhoto('')
         setTime()
-        setIngredients([])
-        setInstructions([])
+        setIngredients('')
+        setInstructions('')
         navigate('/dash/recipes')
     }
   }, [isSuccess, navigate])
 
-  const onUserIdChanged = (e) => setUsetId(e.target.value)
+  const onUserIdChanged = (e) => setUserId(e.target.value)
   const onTitleChanged = (e) => setTitle(e.target.value)
   const onPhotoChanged = (e) => setPhoto(e.target.value)
   const onTimeChanged = (e) => setTime(e.target.value)
 
 const onIngredientsChanged = (e) => {
     setIngredients(e.target.value)
-    autoResizeTextarea(e.target.value)
+    autoResizeTextarea(e.target)
     }
 
 const onInstructionsChanged = (e) => {
     setInstructions(e.target.value)
-    autoResizeTextarea(e.target.value)
+    autoResizeTextarea(e.target)
     }
 
   const onCourseChanged = (e) => {
@@ -60,7 +60,14 @@ const onInstructionsChanged = (e) => {
   const onSaveRecipeClicked = async (e) => {
     e.preventDefault()
     if(canSave){
-        await addNewRecipe({user: userId, title, ingredients, instructions})
+        await addNewRecipe({
+            user: userId,
+            title, 
+            // split ingredients and instruction 
+            // into arrays before mutation
+            ingredients: ingredients.split(/[\n,]+/).map(i => i.trim()).filter(Boolean),
+            instructions: instructions.split(/[\n,]+/).map(i => i.trim()).filter(Boolean),
+        })
     }
   }
 
@@ -88,7 +95,7 @@ const onInstructionsChanged = (e) => {
 
   return (
     <>
-        <div className="newRecipeForm" onSubmit={onSaveRecipeClicked}>
+        <form className="newRecipeForm" onSubmit={onSaveRecipeClicked}>
             <div className="newRecipeFormHead">
                 <div className="newRecipeFormHeadTitle">New Recipe</div>
             </div>
@@ -111,7 +118,7 @@ const onInstructionsChanged = (e) => {
                     <label className="newRecipeFormLabel" htmlFor="photo">Photo: </label>
                     <input 
                         className="newRecipeFormInput"
-                        type="file"
+                        type="text"
                         name="photo" 
                         id="photo" 
                         value={photo}
@@ -155,6 +162,7 @@ const onInstructionsChanged = (e) => {
                         value={ingredients} 
                         onChange={onIngredientsChanged}
                     />
+                    {/* Implement Live Preview */}
                 </div>
 
                 <div className="newRecipeFormBodyInstructionsBlock flex">
@@ -166,6 +174,7 @@ const onInstructionsChanged = (e) => {
                         value={instructions}
                         onChange={onInstructionsChanged}
                     />
+                        {/* Implement Live Preview */}
                 </div>
             </div>
                 <div className="newRecipeFormFooter">
@@ -179,7 +188,7 @@ const onInstructionsChanged = (e) => {
                     </button>
                 }
                 </div>
-        </div>
+        </form>
     </>
   )
 }

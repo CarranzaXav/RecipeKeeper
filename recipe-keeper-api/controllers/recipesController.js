@@ -104,6 +104,7 @@ const updateRecipe = asyncHandler(async (req, res) => {
   const updatedRecipe = await recipe.save();
 
   res.json(`'${updatedRecipe.title}' updated`);
+  console.log("✅ PATCH hit with data:", req.body);
 });
 
 // @desc Delete a Recipe

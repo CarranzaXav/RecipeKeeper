@@ -17,7 +17,7 @@ const RecipeCard = ({recipeCardId}) => {
 
     if (!recipe) return null
 
-    const handleEdit = () => navigate(`/dash/recipes/${recipeCardId}`)
+    const handleEdit = () => navigate(`/dash/recipes/edit/${recipeCardId}`)
 
     const viewRecipeCard = () => navigate(`/dash/recipes/${recipeCardId}`)
 

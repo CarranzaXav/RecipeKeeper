@@ -8,17 +8,30 @@ const Recipe = () => {
 
   const {id} = useParams()
 
-  const {recipe} = useGetRecipesQuery('recipesList', {
-    selectFromResult: ({data}) => ({
-        recipe: data?.entities[id]
-    })
-  })
+//   const {recipe} = useGetRecipesQuery('recipesList', {
+//     selectFromResult: ({data}) => ({
+//         recipe: data?.entities[id]
+//     })
+//   })
+
+// Data Called
+    const {
+        data,
+        isLoading,
+        isSuccess,
+        isError
+    } = useGetRecipesQuery('recipesList')
+
+    const recipe = data?.entities[id]
+// End of Data Called
 
   const navigate = useNavigate()
 
-  if (!recipe) return <p>Recipe not found</p>
+  if(isLoading) return <p>Loading ...</p>
 
-  const handleEdit = () => navigate(`/dash/recipes/${id}`)
+  if (!recipe && isSuccess) return <p>Recipe not found</p>
+
+  const handleEdit = () => navigate(`/dash/recipes/edit/${id}`)
 
   return (
     <div className="recipe">
@@ -30,7 +43,13 @@ const Recipe = () => {
     </div>
         
         <div className="recipeTime">{recipe.time} mins</div>
-        <div className="recipePhoto">{recipe.photo}</div>
+        <div className="recipePhoto">
+            <img 
+                src={recipe.photo || "/images/placeholder.jpg"} 
+                alt={recipe.title} 
+                className="recipeImage"
+            />
+        </div>
         <div className="recipeCourse">{recipe.course}</div>
         <ul className='recipeIngredients'>
             {recipe.ingredients.map((ing, index) =>(

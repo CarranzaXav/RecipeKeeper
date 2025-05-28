@@ -10,6 +10,7 @@ import UsersList from './features/users/UsersList'
 import Login from './features/auth/Login'
 import NewRecipe from './features/recipe/NewRecipe'
 import Prefetch from './features/auth/Prefetch'
+import EditRecipe from './features/recipe/EditRecipe'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
             <Route  path='recipes'>
               <Route index element={<RecipesList/>}/>
               <Route path=':id' element={<Recipe/>}/>
+              <Route path='edit/:id' element={<EditRecipe/>}/>
               <Route path='new' element={<NewRecipe/>} />
             </Route>
 
