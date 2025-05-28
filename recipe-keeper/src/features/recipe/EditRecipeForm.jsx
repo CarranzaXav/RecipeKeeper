@@ -36,6 +36,7 @@ const EditRecipeForm = ({recipe, users}) => {
         setTime()
         setIngredients([])
         setInstructions([])
+        isFavorited(Boolean)
         navigate('/dash/recipes')
     }
   }, [isSuccess, isDelSuccess, navigate])
@@ -76,7 +77,53 @@ const EditRecipeForm = ({recipe, users}) => {
   }
 
   return (
-    <div>EditRecipeForm</div>
+    <div className='editRecipeFormContainer'>
+        <form className='editRecipeForm' onSubmit={e => e.preventDefault()}>
+            <div className="editRecipeFormHead">
+                <div className="editRecipeFormBodyFavorited">
+                    {recipe.favoriteds ? '⭐' : 'not ⭐'}
+                </div>
+
+            <h2>Edit {recipe.title} Recipe</h2>
+            <button
+                className='editRecipeDeleteBtn'
+                title='Delete'
+                onClick={onDeleteRecipeClicked}
+            >🗑</button>
+            </div>
+
+            <div className="editRecipeFormBody">
+
+                <div className="editRecipeFormBodyTitle">
+                    <label className='editRecipeFormLabel' htmlFor="recipe-title">Title</label>
+
+                    <input 
+                        type="text" 
+                        className='editRecipeFormInput'
+                        id='reipe-title'
+                        name='title'
+                        autoComplete='off'
+                        value={title}
+                        onChange={onTitleChanged}
+                    />
+                </div>
+
+                <div className="editRecipeFormPhoto">
+                    <label htmlFor="recipe-photo">Photo(Optional)</label>
+
+                    <input 
+                        className='editRecipeFormInput'
+                        type="photo" 
+                        id='recipe-photo'
+                        name='photo'
+                        value={photo}
+                        onChange={onPhotoChanged}    
+                    />
+                </div>
+
+            </div>
+        </form>
+    </div>
   )
 }
 
