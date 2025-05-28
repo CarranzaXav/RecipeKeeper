@@ -1,10 +1,12 @@
 .newRecipeForm {
   width: 80%;
-  height: 450px;
+  min-height: 450px;
+  height: auto;
   background-color: var(--FORM-COLOR);
   padding: 1.2em;
   justify-self: center;
   border-radius: 15px;
+  margin-bottom: 15px;
 }
 
 .newRecipeFormHead{
@@ -23,8 +25,9 @@
 }
 
 .newRecipeFormBody{
-    height: 70%;
+    /* height: 70%; */
     width: 90%;
+    
     /* padding-left: 10%; */
     margin-inline: auto;
     background-color:#f9f4fc;
@@ -34,7 +37,6 @@
 }
 
 .newRecipeFormLabel{
-    /* margin-right: 10%; */
     width: 50%;
     font-size: 1.2rem;
     letter-spacing: 2px;
@@ -49,23 +51,27 @@
     padding-block: 0.5em;
     margin-bottom: 10px;
     justify-items: end;
+    border-radius: 5px;
 }
 
 .newRecipeFormInputTitle{
     width: 50%;
     margin-bottom: 10px;
-    display: flex;
-    justify-items: center;
-    padding-top: 0.5em;
+    padding-top: 0.5em;        border-radius: 5px;
 }
 
 .newRecipeFormInput{
     width: 50%;
     margin-bottom: 10px;
-    padding: 0.25em;
-    display: flex;
-    justify-items: end;
+    padding: 0.5em;
+    border-radius: 5px;
+    resize: none;
+    overflow: hidden;
+    min-height: 4em;
+    white-space: pre-wrap;
+    line-height: 1.4;
 }
+
 
 .newRecipeFormFooter{
     height: 15%;

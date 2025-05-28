@@ -9,6 +9,7 @@ import Recipe from './features/recipe/Recipe'
 import UsersList from './features/users/UsersList'
 import Login from './features/auth/Login'
 import NewRecipe from './features/recipe/NewRecipe'
+import Prefetch from './features/auth/Prefetch'
 
 function App() {
 
@@ -18,21 +19,23 @@ function App() {
         <Route index element={<MainPage/>}/>
         <Route path='login' element={<Login/>}/>
 
-        <Route path='dash' element={<DashLayout/>}>
+        <Route element={<Prefetch/>}>
+          <Route path='dash' element={<DashLayout/>}>
 
-          {/* Recipes Route */}
-          <Route  path='recipes'>
-            <Route index element={<RecipesList/>}/>
-            <Route path=':id' element={<Recipe/>}/>
-            <Route path='new' element={<NewRecipe/>} />
-          </Route>
+            {/* Recipes Route */}
+            <Route  path='recipes'>
+              <Route index element={<RecipesList/>}/>
+              <Route path=':id' element={<Recipe/>}/>
+              <Route path='new' element={<NewRecipe/>} />
+            </Route>
 
-          {/* Users Route */}
-          <Route  path='users'>
-            <Route index element={<UsersList/>}/>
-          </Route>
+            {/* Users Route */}
+            <Route  path='users'>
+              <Route index element={<UsersList/>}/>
+            </Route>
 
-        </Route>
+          </Route> {/*End of Dash*/}
+        </Route> {/*End of Prefetch*/}
 
       </Route>
     </Routes>

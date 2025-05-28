@@ -2,6 +2,8 @@ import { useGetRecipesQuery } from "./recipesApiSlice"
 import { Link } from "react-router-dom"
 import RecipeCard from "./RecipeCard"
 
+import './recipeCSS/RecipesList.css'
+
 const RecipesList = () => {
 
   const {
@@ -22,13 +24,13 @@ if(isSuccess){
   const recipeContent = ids?.length ? ids.map(recipeCardId => <RecipeCard key={recipeCardId} recipeCardId={recipeCardId}/>) : null
 
   return (
-    <div className="recipesList">
-      {recipeContent}
-      <Link to='/dash/recipes/new'>
+    <div className="recipeList flex">
+      <Link className="recipeListCreate" to='/dash/recipes/new'>
         <div className="recipeListCreateBtn">
-          '➕'
+          ➕
         </div>
       </Link>
+      {recipeContent}
     </div>
   )
 }

@@ -3,6 +3,8 @@ import { selectRecipeById } from "./recipesApiSlice"
 import { useGetRecipesQuery } from "./recipesApiSlice"
 import { useNavigate } from "react-router-dom"
 
+import './recipeCSS/RecipeCard.css'
+
 const RecipeCard = ({recipeCardId}) => {
 
     const {recipe} = useGetRecipesQuery('recipesList', {
@@ -22,7 +24,7 @@ const RecipeCard = ({recipeCardId}) => {
   return (
 
     <div className="recipeCard">
-        <div className="recipeCardeHeader">
+        <div className="recipeCardHeader flex">
             <div className="recipeCardTitle">{recipe.title}</div>
             <div className="recipeCardFavorited">{recipe.favorited ? 
            <span>Favorited</span> : '⭐'}</div>
@@ -30,13 +32,13 @@ const RecipeCard = ({recipeCardId}) => {
 
         <div className="recipeCardPhoto">{recipe.photo || "📷"}</div>
 
-        <div className="recipeCardFooter">
-            <div className="recipeCardViewContainer">
-                <button className="recipeViewBtn" onClick={viewRecipeCard}>View</button>
+        <div className="recipeCardFooter flex">
+            <div className="recipeCardEditContainer">
+                <button className="recipeCardEditBtn" onClick={handleEdit}>Edit</button>
             </div>
 
-            <div className="recipeCardEditContianer">
-                <button className="recipeEditBtn" onClick={handleEdit}>Edit</button>
+            <div className="recipeCardViewContainer">
+                <button className="recipeViewBtn" onClick={viewRecipeCard}>View</button>
             </div>
         </div>
     </div>

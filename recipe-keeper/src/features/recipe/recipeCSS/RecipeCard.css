@@ -1,0 +1,52 @@
+.recipeCard{
+    width: 30%;
+    height:200px;
+    background-color: var(--FORM-COLOR);
+    padding: 0.75em 0.5em;
+    border-radius: 20px;
+}
+
+.recipeCardHeader{
+    width: 100%;
+    height: 10%;
+    justify-content: center;
+}
+
+.recipeCardTitle{
+    width: 80%;
+    /* padding-block: 0.5em; */
+    font-size: 1.25rem;
+}
+
+.recipeCardFavorited{
+    width: 10%;
+    font-size: .8rem;
+    padding-block: 0.5em;
+    align-self: center;
+}
+
+.recipeCardPhoto{
+    height: 75%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+
+.recipeCardFooter{
+    justify-self: center;
+    display: flex;
+    height: 10%;
+    width: 90%;
+}
+
+.recipeCardEditContainer,
+.recipeCardViewContainer{
+    width: 50%;
+}
+
+.recipeCardViewContainer{
+    display: flex;
+    justify-content: end;
+}

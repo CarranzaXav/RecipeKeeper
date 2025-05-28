@@ -36,8 +36,16 @@ const NewRecipeForm = ({users}) => {
   const onTitleChanged = (e) => setTitle(e.target.value)
   const onPhotoChanged = (e) => setPhoto(e.target.value)
   const onTimeChanged = (e) => setTime(e.target.value)
-  const onIngredientsChanged = (e) => setIngredients(e.target.value)
-  const onInstructionsChanged = (e) => setInstructions(e.target.value)
+
+const onIngredientsChanged = (e) => {
+    setIngredients(e.target.value)
+    autoResizeTextarea(e.target.value)
+    }
+
+const onInstructionsChanged = (e) => {
+    setInstructions(e.target.value)
+    autoResizeTextarea(e.target.value)
+    }
 
   const onCourseChanged = (e) => {
     const values = Array.from(
@@ -64,6 +72,19 @@ const NewRecipeForm = ({users}) => {
     )
   })
 
+  const autoResizeTextarea = (element) => {
+    if(element) {
+        element.style.height = 'auto';
+        element.style.height = `${element.scrollHeight}px`
+    }
+  }
+
+  useEffect(() => {
+    const ingredientsBox = document.getElementById('ingredients');
+    const instructionsBox = document.getElementById('instructions');
+    autoResizeTextarea(ingredientsBox);
+    autoResizeTextarea(instructionsBox)
+  }, [ingredients, instructions])
 
   return (
     <>
@@ -76,8 +97,9 @@ const NewRecipeForm = ({users}) => {
 
                 <div className="newRecipeFormBodyTitleBlock flex">
                     <label className="newRecipeFormLabel" htmlFor="title">Title: </label>
-                    <textarea 
+                    <input 
                         className="newRecipeFormInputTitle"
+                        type="text"
                         name="title" 
                         id="title" 
                         value={title}
@@ -147,13 +169,15 @@ const NewRecipeForm = ({users}) => {
                 </div>
             </div>
                 <div className="newRecipeFormFooter">
+                {(canSave) &&
                     <button
                         className="newRecipeFormBtn"
                         title="Save"
-                        disabled={!canSave}
+                        // disabled={!canSave}
                     >
                         UPLOAD
                     </button>
+                }
                 </div>
         </div>
     </>
