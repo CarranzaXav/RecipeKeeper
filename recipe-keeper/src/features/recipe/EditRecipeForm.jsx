@@ -13,7 +13,7 @@ const EditRecipeForm = ({recipe, users}) => {
 
   const [deleteRecipe, {
     isSuccess: isDelSuccess,
-    isError: isDelSuccess,
+    isError: isDelError,
     error: delerror
   }] = useDeleteRecipeMutation()
 
