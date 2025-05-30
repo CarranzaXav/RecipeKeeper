@@ -1,6 +1,8 @@
 import {Link} from 'react-router-dom'
 import Loader from '../../Components/Loader'
 import { useState, useEffect } from 'react'
+import './authCSS/MainPage.css'
+import FavoritedRecipes from '../recipe/FavoritedRecipes'
 
 const MainPage = () => {
 
@@ -18,11 +20,23 @@ const MainPage = () => {
     if (isLoading) return  <p>... Loading</p>
 
   return (
-    <section className='MainPage'>
-      <p className='MainPageDate'>{today}</p>
-      <h1 className='MainPageTitle'> Welcome to my Recipe Book! </h1>
-      <p><Link to='/dash/recipes'>View Recipes</Link></p>
-      <p><Link to='/dash/users'>View Users</Link></p>
+    <section className='mainPage'>
+    <div className="mainPageHead">
+      <h1 className='mainPageTitle'> Welcome to my Recipe Book! </h1>
+      <p className='mainPageDate'>{today}</p>
+    </div>
+
+    <div className="mainPageBody">
+      <FavoritedRecipes/>
+    </div>
+
+    <div className="mainPageLinks">
+      <p ><Link className='mainPageRecipeLink' to='/dash/recipes'>VIEW ALL RECIPES</Link></p>
+
+      {(isAdmin) &&
+      <p><Link className='mainPageUserLink' to='/dash/users'>View Users</Link></p>
+      }
+    </div>
     </section>
   )
 }

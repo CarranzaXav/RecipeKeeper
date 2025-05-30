@@ -8,12 +8,6 @@ const Recipe = () => {
 
   const {id} = useParams()
 
-//   const {recipe} = useGetRecipesQuery('recipesList', {
-//     selectFromResult: ({data}) => ({
-//         recipe: data?.entities[id]
-//     })
-//   })
-
 // Data Called
     const {
         data,

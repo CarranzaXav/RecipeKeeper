@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 import './recipeCSS/RecipeCard.css'
 
-const RecipeCard = ({recipeCardId}) => {
+const RecipeCard = ({recipeCardId, props}) => {
 
     const {recipe} = useGetRecipesQuery('recipesList', {
         selectFromResult: ({data}) => ({
@@ -27,7 +27,8 @@ const RecipeCard = ({recipeCardId}) => {
         <div className="recipeCardHeader flex">
             <div className="recipeCardTitle">{recipe.title}</div>
             <div className="recipeCardFavorited">{recipe.favorited ? 
-           <span>Favorited</span> : '⭐'}</div>
+            '⭐' : <span>Not Fav</span> }
+            </div>
         </div>
 
         <div className="recipeCardPhoto">{recipe.photo || "📷"}</div>

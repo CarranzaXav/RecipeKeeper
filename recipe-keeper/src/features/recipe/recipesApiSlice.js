@@ -3,7 +3,7 @@ import { apiSlice } from "../../app/api/apiSlice";
 
 const recipesAdapter = createEntityAdapter({
   sortComparer: (a, b) =>
-    a.favorited === b.favorited ? 0 : a.favorited ? 1 : -1,
+    a.favorited === b.favorited ? 0 : a.favorited ? -1 : 1,
 });
 
 const initialState = recipesAdapter.getInitialState();
