@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const recipesController = require("../controllers/recipesController");
+const verifyJWT = require("../middleware/verifyJWT");
+
+router.use(verifyJWT);
 
 router
   .route("/")
