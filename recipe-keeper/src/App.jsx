@@ -11,6 +11,7 @@ import Login from './features/auth/Login'
 import NewRecipe from './features/recipe/NewRecipe'
 import Prefetch from './features/auth/Prefetch'
 import EditRecipe from './features/recipe/EditRecipe'
+import PersistLogin from './features/auth/PersistLogin'
 
 function App() {
 
