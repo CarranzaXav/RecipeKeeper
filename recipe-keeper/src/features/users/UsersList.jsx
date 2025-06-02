@@ -4,7 +4,11 @@ import './usersCSS/UsersList.css'
 
 const UsersList = () => {
 
-  const {data: users, isLoading, isSuccess, isError, error} = useGetUsersQuery()
+  const {data: users, isLoading, isSuccess, isError, error} = useGetUsersQuery('usersList', {
+    pollingInterval: 60000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  })
 
   if (isLoading) return <p>Loading...</p>
   

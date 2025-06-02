@@ -3,8 +3,11 @@ import Loader from '../../Components/Loader'
 import { useState, useEffect } from 'react'
 import './authCSS/MainPage.css'
 import FavoritedRecipes from '../recipe/FavoritedRecipes'
+import useAuth from '../../hooks/useAuth'
 
 const MainPage = () => {
+
+    const {username, isAdmin} = useAuth()
 
     const [isLoading, setIsLoading] = useState(true)
 

@@ -5,12 +5,14 @@ const verifyJWT = async (req, res, next) => {
     const authHeader = req.headers.authorization || req.headers.Authorization;
 
     if (!authHeader?.startsWith("Bearer ")) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized verifyJWT" });
     }
 
     const token = authHeader.split(" ")[1];
 
     const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    console.log(ACCESS_TOKEN_SECRET);
 
     req.user = decoded.UserInfo.username;
     req.roles = decoded.UserInfo.roles;
@@ -30,3 +32,5 @@ const verifyJWT = async (req, res, next) => {
 };
 
 module.exports = verifyJWT;
+
+// eyJBQ0NFU1NfVE9LRU5fU0VDUkVUIjoiZjhlMjllNWUwNzgwNGQ4MzIzZDUzNDg0YWNkZjJmZjkxZjE1NTg3MGVhMTViYTU4NGVhYjFhYjE4Mzg0YjI1ZGU2MTkzYWVkMWViMDFhMWRhNWUzNzJhNWU1MWNmZjZiYjQ3MTllMjYyM2MwZGEwMTM5ZjA4MzMxZTdlYjU0YTkifQ

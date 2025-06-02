@@ -1,12 +1,19 @@
 import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
-import { selectUserById } from "./usersApiSlice";
+import { selectUserById, useGetUsersQuery } from "./usersApiSlice";
+import { memo } from 'react'
 
 import './usersCSS/User.css'
 
 const User = ({ userId }) => {
-  const user = useSelector((state) => selectUserById(state, userId));
+  // const user = useSelector((state) => selectUserById(state, userId));
+
+  const {user} = useGetUsersQuery('usersList', {
+    selectFromResult: ({data}) => ({
+      user: data?.entities[userId],
+    }),
+  })
 
   const navigate = useNavigate();
 
@@ -31,5 +38,7 @@ const User = ({ userId }) => {
     );
   } else return null;
 };
+
+const memoizedUser = memo(User)
 
 export default User;

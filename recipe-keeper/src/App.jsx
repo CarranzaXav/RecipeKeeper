@@ -20,6 +20,7 @@ function App() {
         <Route index element={<MainPage/>}/>
         <Route path='login' element={<Login/>}/>
 
+        <Route element={<PersistLogin/>}>
         <Route element={<Prefetch/>}>
           <Route path='dash' element={<DashLayout/>}>
 
@@ -38,6 +39,7 @@ function App() {
 
           </Route> {/*End of Dash*/}
         </Route> {/*End of Prefetch*/}
+        </Route>
 
       </Route>
     </Routes>
