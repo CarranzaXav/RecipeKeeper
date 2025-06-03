@@ -36,7 +36,7 @@ const Login = () => {
       dispatch(setCredentials({accessToken}))
       setUsername('')
       setPassword('')
-      navigate('/dash', {replace: true})
+      navigate('/', {replace: true})
       // window.location.reload()
     } catch (err) {
       if(!err.status){

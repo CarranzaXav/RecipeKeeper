@@ -13,6 +13,7 @@ import Prefetch from './features/auth/Prefetch'
 import EditRecipe from './features/recipe/EditRecipe'
 import PersistLogin from './features/auth/PersistLogin'
 import RequireAuth from './features/auth/RequireAuth'
+import NewUserForm from './features/users/NewUserForm'
 import { ROLES } from '../config/roles'
 
 function App() {
@@ -23,6 +24,11 @@ function App() {
         <Route index element={<MainPage/>}/>
         <Route path='login' element={<Login/>}/>
 
+        <Route path='users/new' element={<NewUserForm/>}/>
+
+
+          <Route element={<PersistLogin/>}>
+          <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]}/>}>
         <Route element={<Prefetch/>}>
           <Route path='dash' element={<DashLayout/>}>
 
@@ -30,15 +36,15 @@ function App() {
             <Route  path='recipes'>
               <Route index element={<RecipesList/>}/>
               <Route path=':id' element={<Recipe/>}/>
-          <Route element={<PersistLogin/>}>
-          <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]}/>}>
               <Route path='edit/:id' element={<EditRecipe/>}/>
               <Route path='new' element={<NewRecipe/>} />
             </Route>
 
             {/* Users Route */}
-            <Route  path='users'>
-              <Route index element={<UsersList/>}/>
+            <Route element={<RequireAuth allowedRoles={[ROLES.Admin]}/>}>
+              <Route  path='users'>
+                <Route index element={<UsersList/>}/>
+              </Route>
             </Route>
 
           </Route> {/*End of Dash*/}

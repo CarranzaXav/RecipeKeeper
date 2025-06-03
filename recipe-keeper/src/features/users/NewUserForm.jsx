@@ -1,15 +1,16 @@
+import { Link } from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import { useAddNewUserMutation } from './usersApiSlice'
 import { useNavigate } from 'react-router-dom'
 
-import './usersCSS/NewUserForm.jsx'
+import './usersCSS/NewUserForm.css'
 
 const USER_REGEX = /^[A-z]{3,20}$/;
 const PWD_REGEX = /^[0-9]{4}/
 
 const NewUserForm = () => {
 
-    const [addNewUser, {isLoading, isError}] = useAddNewUserMutation()
+    const [addNewUser, {isLoading, isSuccess, isError}] = useAddNewUserMutation()
 
     const navigate = useNavigate()
 
@@ -108,8 +109,15 @@ const NewUserForm = () => {
                         Create New User
                     </button>}
                 </div>
+
+                <div className="userFormLogin">
+                    <p>Already A User?</p>
+                    <Link to='/login'>Please Login</Link>
+                </div>
             </form>
         </>
     )
 
 }
+
+export default NewUserForm

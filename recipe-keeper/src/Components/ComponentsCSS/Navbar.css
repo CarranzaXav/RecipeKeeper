@@ -1,15 +1,32 @@
-.navbarContainer{
-    padding-inline: 2%;
-    padding-block: 5px;
-    background-color: var(--NAVBAR);
-    color: white;
+.navbarContainer {
+  display: flex;
+  padding-inline: 2%;
+  padding-block: 5px;
+  width: 100%;
+  background-color: var(--NAVBAR);
+  color: white;
 }
 
-.navbarTitleContainer{
+.navbarTitleContainer {
+  text-decoration: none;
+  width: 80%;
+}
+
+.navbarTitle {
+  color: white;
+  letter-spacing: 1px;
+}
+
+.navbarButtonContainer {
+  width: 20%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+
+  a {
     text-decoration: none;
-}
-
-.navbarTitle{
-    color: white;
-    letter-spacing: 1px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
 }
