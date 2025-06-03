@@ -15,6 +15,7 @@ const verifyJWT = async (req, res, next) => {
     console.log(ACCESS_TOKEN_SECRET);
 
     req.user = decoded.UserInfo.username;
+    req.phone = decoded.UserInfo.phone;
     req.roles = decoded.UserInfo.roles;
 
     next();

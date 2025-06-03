@@ -60,7 +60,7 @@ const PersistLogin = () => {
     // Show error message if refresh token fails
     console.log("Error during token refresh: ", error?.data?.message);
     content = (
-      <div className="errmsh">
+      <div className="errmsg">
         {error?.data?.message || "An error occurred"}
         <Link to="/login">Please log in again</Link>
       </div>

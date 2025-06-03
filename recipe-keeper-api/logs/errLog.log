@@ -30,3 +30,6 @@
 20250519	23:17:16	ba0c1131-b26c-4a2a-aec7-f3cd9f405558	ValidationError: User validation failed: role: Cast to string failed for value "[ 'Standard' ]" (type Array) at path "role"	PATCH	/users	undefined
 20250523	09:24:07	c1360b11-749c-4644-a666-cf0cf90bf7c4	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-dkan9cx-shard-00-00.6ofgv3t.mongodb.net	GET	/recipes	http://localhost:5173
 20250528	11:27:43	b1da3bf8-f6cd-4091-acad-334cff020cca	ValidationError: Recipe validation failed: user: Path `user` is required.	PATCH	/recipes	http://localhost:5173
+20250602	22:05:04	b09dd619-e17e-4bb6-b3d3-0aee7798b061	ValidationError: User validation failed: phone: Path `phone` is required.	PATCH	/users	undefined
+20250602	22:05:48	0fcebe20-7a16-40ff-a59d-c1fe75542e81	ValidationError: User validation failed: phone: Path `phone` is required.	PATCH	/users	undefined
+20250602	22:06:06	8857993e-4ad3-4bef-9a3e-f71c07500495	ValidationError: User validation failed: phone: Path `phone` is required.	PATCH	/users	undefined

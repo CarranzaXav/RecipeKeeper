@@ -3,6 +3,24 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 
+// Token need to authenticate with JWT
+const user = {
+  username: "XavierCarranza",
+  phone: "3525072571",
+  roles: ["Admin"],
+};
+const token = jwt.sign(
+  {
+    UserInfo: {
+      username: user.username,
+      phone: user.phone,
+      roles: user.roles,
+    },
+  },
+  process.env.ACCESS_TOKEN_SECRET,
+  { expiresIn: "15m" }
+);
+
 // @desc Login
 // @route POST /auth
 // @access Public
@@ -13,10 +31,12 @@ const login = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  const foundUser = await User.findOne({ username }).exec();
+  const foundUser = await User.findOne({
+    username: { $regex: new RegExp(`^${username}$`, "i") },
+  }).exec();
 
   if (!foundUser || !foundUser.active) {
-    return res.status(401).json({ message: "Unauthorized User" });
+    return res.status(401).json({ message: "Unauthorized FoundUser" });
   }
 
   const match = await bcrypt.compare(password, foundUser.password);
@@ -32,6 +52,12 @@ const login = asyncHandler(async (req, res) => {
     },
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: "15m" }
+  );
+
+  const refreshToken = jwt.sign(
+    { username: foundUser.username },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: "14d" }
   );
 
   //Create secure cookie with refresh token

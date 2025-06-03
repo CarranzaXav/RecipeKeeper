@@ -22,7 +22,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // @route POST /users
 // @access Private
 const createNewUser = asyncHandler(async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, phone, roles } = req.body;
 
   // Confirm data
   if (!username || !password) {
@@ -40,7 +40,7 @@ const createNewUser = asyncHandler(async (req, res) => {
   const hashedPwd = await bcrypt.hash(password, 10); // salt rounds
 
   // Double check if passsword is fine without the quotes around it.
-  const userObject = { username, password: hashedPwd };
+  const userObject = { username, password: hashedPwd, phone, roles };
 
   const user = await User.create(userObject);
 
@@ -55,7 +55,7 @@ const createNewUser = asyncHandler(async (req, res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = asyncHandler(async (req, res) => {
-  const { id, username, password, role } = req.body;
+  const { id, username, password, phone, roles } = req.body;
 
   // Confirm data
   if (!id || !username) {
@@ -80,7 +80,9 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   user.username = username;
-  user.role = role;
+  user.phone = phone;
+  user.roles = roles;
+  user.active = active;
 
   if (password) {
     // Hash password

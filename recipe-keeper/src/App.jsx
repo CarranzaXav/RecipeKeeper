@@ -12,6 +12,8 @@ import NewRecipe from './features/recipe/NewRecipe'
 import Prefetch from './features/auth/Prefetch'
 import EditRecipe from './features/recipe/EditRecipe'
 import PersistLogin from './features/auth/PersistLogin'
+import RequireAuth from './features/auth/RequireAuth'
+import { ROLES } from '../config/roles'
 
 function App() {
 
@@ -21,7 +23,6 @@ function App() {
         <Route index element={<MainPage/>}/>
         <Route path='login' element={<Login/>}/>
 
-        <Route element={<PersistLogin/>}>
         <Route element={<Prefetch/>}>
           <Route path='dash' element={<DashLayout/>}>
 
@@ -29,6 +30,8 @@ function App() {
             <Route  path='recipes'>
               <Route index element={<RecipesList/>}/>
               <Route path=':id' element={<Recipe/>}/>
+          <Route element={<PersistLogin/>}>
+          <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]}/>}>
               <Route path='edit/:id' element={<EditRecipe/>}/>
               <Route path='new' element={<NewRecipe/>} />
             </Route>
@@ -40,6 +43,7 @@ function App() {
 
           </Route> {/*End of Dash*/}
         </Route> {/*End of Prefetch*/}
+        </Route> {/*End of RequireAuth*/}
         </Route>
 
       </Route>
