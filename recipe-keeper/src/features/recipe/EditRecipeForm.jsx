@@ -40,7 +40,7 @@ const EditRecipeForm = ({recipe}) => {
         setIngredients([])
         setInstructions([])
         isFavorited(recipe.favorited || false)
-        navigate('/dash/recipes')
+        navigate('/recipes')
     }
   }, [isSuccess, isDelSuccess, navigate])
 
@@ -185,7 +185,7 @@ const EditRecipeForm = ({recipe}) => {
                     <textarea 
                     className='editRecipeFormInput'
                     name="ingredients" id="recipe-ingredients"
-                    value={ingredients} 
+                    value={ingredients.join(', ')} 
                     onChange={onIngredientsChanged}></textarea>
                 </div>
 
@@ -198,7 +198,7 @@ const EditRecipeForm = ({recipe}) => {
                     <textarea 
                     className='editRecipeFormInput'
                     name="instructions" id="recipe-instructions"
-                    value={instructions} 
+                    value={instructions.join(', ')} 
                     onChange={onInstructionsChanged}></textarea>
                 </div>
             </div>

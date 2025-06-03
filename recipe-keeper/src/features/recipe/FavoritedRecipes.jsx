@@ -28,7 +28,7 @@ if(isSuccess){
   const recipeContent = limited.map(id => <RecipeCard key={id} recipeCardId={id}/>)
 
   return (
-    <div className="recipeList flex">
+    <div className="recipeList favoritedList flex">
       {recipeContent}
     </div>
   )

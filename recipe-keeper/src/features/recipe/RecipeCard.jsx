@@ -2,10 +2,13 @@ import { useSelector } from "react-redux"
 import { selectRecipeById } from "./recipesApiSlice"
 import { useGetRecipesQuery } from "./recipesApiSlice"
 import { useNavigate } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
 
 import './recipeCSS/RecipeCard.css'
 
 const RecipeCard = ({recipeCardId, props}) => {
+
+    const {username} = useAuth()
 
     const {recipe} = useGetRecipesQuery('recipesList', {
         selectFromResult: ({data}) => ({
@@ -33,6 +36,8 @@ const RecipeCard = ({recipeCardId, props}) => {
 
         <div className="recipeCardPhoto">{recipe.photo || "📷"}</div>
 
+        {/* User Can Only Edit Their Own Recipes */}
+        {(username) &&
         <div className="recipeCardFooter flex">
             <div className="recipeCardEditContainer">
                 <button className="recipeCardEditBtn" onClick={handleEdit}>Edit</button>
@@ -41,9 +46,8 @@ const RecipeCard = ({recipeCardId, props}) => {
             <div className="recipeCardViewContainer">
                 <button className="recipeViewBtn" onClick={viewRecipeCard}>View</button>
             </div>
-        </div>
+        </div>}
     </div>
-
   )
 }
 

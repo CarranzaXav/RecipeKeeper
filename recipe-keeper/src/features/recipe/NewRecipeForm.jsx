@@ -28,7 +28,7 @@ const NewRecipeForm = ({users}) => {
         setTime()
         setIngredients('')
         setInstructions('')
-        navigate('/dash/recipes')
+        navigate('/recipes')
     }
   }, [isSuccess, navigate])
 
@@ -65,8 +65,8 @@ const onInstructionsChanged = (e) => {
             title, 
             // split ingredients and instruction 
             // into arrays before mutation
-            ingredients: ingredients.split(/[\n,]+/).map(i => i.trim()).filter(Boolean),
-            instructions: instructions.split(/[\n,]+/).map(i => i.trim()).filter(Boolean),
+            ingredients: ingredients.split(/[\s\n,]+/).map(i => i.trim()).filter(Boolean),
+            instructions: instructions.split(/[\s\n,]+/).map(i => i.trim()).filter(Boolean),
         })
     }
   }

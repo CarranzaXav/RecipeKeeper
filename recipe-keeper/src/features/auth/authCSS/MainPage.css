@@ -1,5 +1,11 @@
 .mainPage {
-  width: 100%;
+  margin-inline: auto;
+  width: 90%;
+  height: auto;
+  background-color: #c9b9d6;
+  padding: 1.5em;
+  border-radius: 15px;
+  border: outset 3px var(--FORM-COLOR);
 }
 
 .mainPageHead {
@@ -12,12 +18,15 @@
 .mainPageTitle {
   width: 80%;
   font-size: 2.25rem;
+  color: white;
 }
 
 .mainPageDate {
   width: 20%;
   height: auto;
   align-self: end;
+  display: flex;
+  justify-content: end;
 }
 
 .mainPageBody {
@@ -32,6 +41,7 @@
   height: 10%;
   font-size: 1.25rem;
   border-radius: 15px;
+  border: inset 3px #c9b9d6;
   justify-self: center;
 }
 

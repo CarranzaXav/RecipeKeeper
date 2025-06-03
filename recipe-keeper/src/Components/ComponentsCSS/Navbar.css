@@ -1,10 +1,15 @@
 .navbarContainer {
   display: flex;
-  padding-inline: 2%;
-  padding-block: 5px;
   width: 100%;
   background-color: var(--NAVBAR);
   color: white;
+}
+
+.navbarHome {
+  padding-block: 5px;
+  padding-inline: 2%;
+  width: 80%;
+  /* min-width: ; */
 }
 
 .navbarTitleContainer {
@@ -18,15 +23,55 @@
 }
 
 .navbarButtonContainer {
-  width: 20%;
+  width: 10%;
+  margin-left: 10%;
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: end;
   align-items: center;
+  /* background-color: #997eaf; */
+  background-image: linear-gradient(270deg, #b393cc 70%, var(--NAVBAR));
+  /* height: 100%; */
+  padding-right: 2%;
+  cursor: pointer;
 
   a {
+    display: flex;
+    /* flex-direction: row-reverse; */
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 600;
     letter-spacing: 2px;
+  }
+}
+
+.navbarLogoutBtn {
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+.navBtn {
+  font-weight: 600;
+  letter-spacing: 2px;
+  display: none;
+  color: white;
+}
+
+.navbarTitleContainer:hover,
+.navbarButtonContainer:visited {
+  .navbarTitle {
+    color: purple;
+  }
+}
+
+.navbarButtonContainer:hover,
+.navbarButtonContainer:visited {
+  width: 20%;
+  margin-left: 0;
+  .navBtn {
+    display: flex;
+  }
+
+  .navBtnHolder {
+    display: none;
   }
 }

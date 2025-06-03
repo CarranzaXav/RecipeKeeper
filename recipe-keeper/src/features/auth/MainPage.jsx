@@ -12,7 +12,7 @@ const MainPage = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-      const timer = setTimeout(() => setIsLoading(false), 3000)
+      const timer = setTimeout(() => setIsLoading(false), 1000)
       return () => clearTimeout(timer)
     }, [])
 
@@ -34,7 +34,7 @@ const MainPage = () => {
     </div>
 
     <div className="mainPageLinks">
-      <p ><Link className='mainPageRecipeLink' to='/dash/recipes'>VIEW ALL RECIPES</Link></p>
+      <p ><Link className='mainPageRecipeLink' to='/recipes'>VIEW ALL RECIPES</Link></p>
 
       {(isAdmin) &&
       <p><Link className='mainPageUserLink' to='/dash/users'>View Users</Link></p>
