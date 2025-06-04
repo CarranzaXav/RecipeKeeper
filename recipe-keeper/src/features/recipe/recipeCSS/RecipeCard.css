@@ -21,9 +21,10 @@
 
 .recipeCardFavorited {
   width: 10%;
-  font-size: 0.8rem;
-  padding-block: 0.5em;
-  align-self: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  /* padding-block: 0.5em; */
+  align-self: start;
 }
 
 .recipeCardPhoto {

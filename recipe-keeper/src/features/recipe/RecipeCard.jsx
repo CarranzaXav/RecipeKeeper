@@ -1,7 +1,10 @@
 import { useSelector } from "react-redux"
-import { selectRecipeById } from "./recipesApiSlice"
+import { selectRecipeById, useUpdateRecipeMutation } from "./recipesApiSlice"
 import { useGetRecipesQuery } from "./recipesApiSlice"
 import { useNavigate } from "react-router-dom"
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faStar} from '@fortawesome/free-solid-svg-icons'
+
 import useAuth from "../../hooks/useAuth"
 
 import './recipeCSS/RecipeCard.css'
@@ -16,7 +19,27 @@ const RecipeCard = ({recipeCardId, props}) => {
         })
       })
 
+    const [updateRecipe] = useUpdateRecipeMutation()
+
     const navigate = useNavigate()
+
+    const handleFavorited = async () => {
+        if(recipe) {
+            try{
+                await updateRecipe({
+                    id: recipe.id,
+                    user: recipe.user,
+                    title: recipe.title,
+                    ingredients: recipe.ingredients,
+                    instructions: recipe.instructions,
+                    // photo: recipe.photo,
+                    favorited: !recipe.favorited
+                }).unwrap()
+            } catch (err){
+                console.error('Failed to Favorite the Recipe')
+            }
+        }
+    }
 
     if (!recipe) return null
 
@@ -29,8 +52,11 @@ const RecipeCard = ({recipeCardId, props}) => {
     <div className="recipeCard">
         <div className="recipeCardHeader flex">
             <div className="recipeCardTitle">{recipe.title}</div>
-            <div className="recipeCardFavorited">{recipe.favorited ? 
-            '⭐' : <span>Not Fav</span> }
+            <div className="recipeCardFavorited"
+                onClick={handleFavorited}
+            >{recipe.favorited ? 
+            <FontAwesomeIcon icon={faStar} style={{color: "#FFD43B",}} />
+             : <FontAwesomeIcon icon={faStar} style={{color: "#bababa",}} />}
             </div>
         </div>
 
