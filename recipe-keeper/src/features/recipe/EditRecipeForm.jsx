@@ -26,8 +26,12 @@ const EditRecipeForm = ({recipe}) => {
   const [course,setCourse] = useState(recipe.course)
   const [photo, setPhoto] = useState(recipe.photo)
   const [time, setTime] = useState(recipe.time)
-  const [ingredients, setIngredients] = useState(recipe.ingredients)
-  const [instructions, setInstructions] = useState(recipe.instructions)
+  const [ingredients, setIngredients] = useState(
+  Array.isArray(recipe.ingredients) ? recipe.ingredients : recipe.ingredients.split(/[\s\n,]+/).filter(Boolean))
+  const [instructions, setInstructions] = useState(
+  Array.isArray(recipe.instructions) ? recipe.instructions : recipe.instructions.split(/[\s\n,]+/).filter(Boolean))
+
+//   const [instructions, setInstructions] = useState(recipe.instructions)
   const [favorited, isFavorited] = useState(recipe.favorited)
 
   useEffect(() => {
@@ -50,12 +54,11 @@ const EditRecipeForm = ({recipe}) => {
 //   const onFavorited = (e) => isFavorited(e.target.value)
 
   const onIngredientsChanged = (e) => {
-    setIngredients(e.target.value)
-    // autoResizeTextarea(e.target.value)
-    }
+  setIngredients(e.target.value.split(/[\s\n,]+/).map(i => i.trim()).filter(Boolean))}
+
 
   const onInstructionsChanged = (e) => {
-    setInstructions(e.target.value)
+    setInstructions(e.target.value.split(/[\s\n,]+/).map(i => i.trim()).filter(Boolean))
     // autoResizeTextarea(e.target.value)
     }
 

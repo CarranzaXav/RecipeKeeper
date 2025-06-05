@@ -15,6 +15,7 @@ import PersistLogin from './features/auth/PersistLogin'
 import RequireAuth from './features/auth/RequireAuth'
 import NewUserForm from './features/users/NewUserForm'
 import { ROLES } from '../config/roles'
+import EditUser from './features/users/EditUser'
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.Admin]}/>}>
               <Route  path='users'>
                 <Route index element={<UsersList/>}/>
+                <Route path=':id' element={<EditUser/>}/>
               </Route>
             </Route>
 

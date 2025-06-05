@@ -33,3 +33,5 @@
 20250602	22:05:04	b09dd619-e17e-4bb6-b3d3-0aee7798b061	ValidationError: User validation failed: phone: Path `phone` is required.	PATCH	/users	undefined
 20250602	22:05:48	0fcebe20-7a16-40ff-a59d-c1fe75542e81	ValidationError: User validation failed: phone: Path `phone` is required.	PATCH	/users	undefined
 20250602	22:06:06	8857993e-4ad3-4bef-9a3e-f71c07500495	ValidationError: User validation failed: phone: Path `phone` is required.	PATCH	/users	undefined
+20250604	16:55:31	d6f72137-e989-418c-a367-15554ab2b47e	ReferenceError: active is not defined	PATCH	/users	http://localhost:5173
+20250604	17:04:14	e793189f-05a1-427f-a503-bb9c4ee2660a	ReferenceError: active is not defined	PATCH	/users	http://localhost:5173

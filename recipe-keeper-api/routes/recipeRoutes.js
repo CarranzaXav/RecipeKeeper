@@ -10,8 +10,8 @@ router.get("/", recipesController.getAllRecipes);
 router
   .route("/")
   // .get(recipesController.getAllRecipes)
-  .post(recipesController.createNewRecipe)
-  .patch(recipesController.updateRecipe)
-  .delete(recipesController.deleteRecipe);
+  .post(verifyJWT, recipesController.createNewRecipe)
+  .patch(verifyJWT, recipesController.updateRecipe)
+  .delete(verifyJWT, recipesController.deleteRecipe);
 
 module.exports = router;

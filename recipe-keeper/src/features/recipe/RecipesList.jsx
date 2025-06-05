@@ -7,7 +7,7 @@ import useAuth from "../../hooks/useAuth"
 
 const RecipesList = () => {
 
-  const {status, isAdmin} = useAuth()
+  const {username,status, isAdmin} = useAuth()
 
   const {
     data: recipes,
@@ -34,7 +34,7 @@ if(isSuccess){
   return (
     <div className="recipeList flex">
 
-    {(!status || !isAdmin) ?
+    {(status || isAdmin) ?
       '' :  
       <Link className="recipeListCreate" to='/dash/recipes/new'>
         <div className="recipeListCreateBtn">

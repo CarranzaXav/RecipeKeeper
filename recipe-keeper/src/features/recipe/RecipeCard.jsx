@@ -24,7 +24,7 @@ const RecipeCard = ({recipeCardId, props}) => {
     const navigate = useNavigate()
 
     const handleFavorited = async () => {
-        if(recipe) {
+        if(recipe && username) {
             try{
                 await updateRecipe({
                     id: recipe.id,
@@ -52,18 +52,18 @@ const RecipeCard = ({recipeCardId, props}) => {
     <div className="recipeCard">
         <div className="recipeCardHeader flex">
             <div className="recipeCardTitle">{recipe.title}</div>
-            <div className="recipeCardFavorited"
+            {(username) && <div className="recipeCardFavorited"
                 onClick={handleFavorited}
             >{recipe.favorited ? 
             <FontAwesomeIcon icon={faStar} style={{color: "#FFD43B",}} />
              : <FontAwesomeIcon icon={faStar} style={{color: "#bababa",}} />}
-            </div>
+            </div>}
         </div>
 
         <div className="recipeCardPhoto">{recipe.photo || "📷"}</div>
 
         {/* User Can Only Edit Their Own Recipes */}
-        {(username) &&
+        {(!username) &&
         <div className="recipeCardFooter flex">
             <div className="recipeCardEditContainer">
                 <button className="recipeCardEditBtn" onClick={handleEdit}>Edit</button>

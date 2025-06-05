@@ -33,6 +33,10 @@
   padding-bottom: 1.25em;
 }
 
+.mainPageBodyRecipeCards {
+  justify-content: space-evenly;
+}
+
 .mainPageLinks {
   background-color: var(--FORM-COLOR);
   width: 60%;
