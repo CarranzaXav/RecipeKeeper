@@ -34,13 +34,13 @@ if(isSuccess){
   return (
     <div className="recipeList flex">
 
-    {(status || isAdmin) ?
-      '' :  
+    {(username) ?
       <Link className="recipeListCreate" to='/dash/recipes/new'>
         <div className="recipeListCreateBtn">
           ➕
         </div>
       </Link>
+      : ''
       }
 
       {recipeContent}

@@ -8,11 +8,10 @@ const verifyJWT = async (req, res, next) => {
       return res.status(401).json({ message: "Unauthorized verifyJWT" });
     }
 
+    console.log(process.env.ACCESS_TOKEN_SECRET);
     const token = authHeader.split(" ")[1];
 
     const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-
-    console.log(ACCESS_TOKEN_SECRET);
 
     req.user = decoded.UserInfo.username;
     req.phone = decoded.UserInfo.phone;

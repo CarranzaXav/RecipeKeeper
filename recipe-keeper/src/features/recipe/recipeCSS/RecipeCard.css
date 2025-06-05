@@ -48,7 +48,33 @@
   width: 50%;
 }
 
+.recipeCardEditBtn {
+  font-size: 1.5em;
+  color: white;
+  background: transparent;
+  border: none;
+}
+
 .recipeCardViewContainer {
   display: flex;
   justify-content: end;
+}
+
+.recipeCardViewButton {
+  /* button { */
+  /* text-decoration: none; */
+  background: transparent;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  /* } */
+}
+
+.recipeCardViewBtn {
+  color: white;
+}
+
+.recipeCardViewBtn:hover,
+.recipeCardEditBtn:hover {
+  color: purple;
 }

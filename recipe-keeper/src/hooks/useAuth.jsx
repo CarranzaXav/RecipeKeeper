@@ -11,7 +11,7 @@ const useAuth = () => {
     if(token) {
         try{
             const decoded = jwtDecode(token)
-            const { username, roles:userRoles } = decoded.UserInfo || {}
+            const { id, username, roles:userRoles } = decoded.UserInfo || {}
 
             if(userRoles){
                 roles = userRoles
@@ -19,7 +19,7 @@ const useAuth = () => {
 
                 if(isAdmin) status = 'Admin'
 
-                return {username, roles, status, isAdmin}
+                return {id, username, roles, status, isAdmin}
             }
         }
         catch(err) {

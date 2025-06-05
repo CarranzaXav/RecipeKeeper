@@ -137,7 +137,7 @@ const EditUserForm = ({user}) => {
                     <label htmlFor="user-phone" className="editUserFormLabelPhone">Phone:</label>
                     
                     <input 
-                        type="tel" className="editUserFormInput"
+                        type="text" className="editUserFormInput"
                         id='user-phone'
                         name='user-phone' 
                         value={phone}

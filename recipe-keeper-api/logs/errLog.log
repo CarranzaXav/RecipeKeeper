@@ -35,3 +35,8 @@
 20250602	22:06:06	8857993e-4ad3-4bef-9a3e-f71c07500495	ValidationError: User validation failed: phone: Path `phone` is required.	PATCH	/users	undefined
 20250604	16:55:31	d6f72137-e989-418c-a367-15554ab2b47e	ReferenceError: active is not defined	PATCH	/users	http://localhost:5173
 20250604	17:04:14	e793189f-05a1-427f-a503-bb9c4ee2660a	ReferenceError: active is not defined	PATCH	/users	http://localhost:5173
+20250605	09:11:35	a6b67b20-392d-4b69-959f-405db08a4637	ReferenceError: active is not defined	PATCH	/users	http://localhost:5173
+20250605	09:40:32	031692e8-2721-4af4-90b2-f947759c79ff	ValidationError: Recipe validation failed: user: Cast to ObjectId failed for value "AshleyCarranza" (type string) at path "user" because of "BSONError"	POST	/recipes	http://localhost:5173
+20250605	09:41:07	b3169be0-30d3-422d-9359-dcdf1950b70e	ValidationError: Recipe validation failed: user: Cast to ObjectId failed for value "AshleyCarranza" (type string) at path "user" because of "BSONError"	POST	/recipes	http://localhost:5173
+20250605	09:43:00	6c3d9672-60dc-4d5a-87b8-ad3d5a9a5fa6	ValidationError: Recipe validation failed: user: Cast to ObjectId failed for value "AshleyCarranza" (type string) at path "user" because of "BSONError"	POST	/recipes	http://localhost:5173
+20250605	09:44:28	2ed3d733-4106-40e0-a404-df11d0fbaf4c	ValidationError: Recipe validation failed: user: Cast to ObjectId failed for value "AshleyCarranza" (type string) at path "user" because of "BSONError"	POST	/recipes	http://localhost:5173

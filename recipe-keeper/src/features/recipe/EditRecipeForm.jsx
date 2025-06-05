@@ -27,9 +27,16 @@ const EditRecipeForm = ({recipe}) => {
   const [photo, setPhoto] = useState(recipe.photo)
   const [time, setTime] = useState(recipe.time)
   const [ingredients, setIngredients] = useState(
-  Array.isArray(recipe.ingredients) ? recipe.ingredients : recipe.ingredients.split(/[\s\n,]+/).filter(Boolean))
+  Array.isArray(recipe.ingredients)
+    ? recipe.ingredients.join(', ')
+    : recipe.ingredients
+  )
   const [instructions, setInstructions] = useState(
-  Array.isArray(recipe.instructions) ? recipe.instructions : recipe.instructions.split(/[\s\n,]+/).filter(Boolean))
+    Array.isArray(recipe.instructions)
+    ? recipe.instructions.join(', ')
+    : recipe.instructions
+  )
+
 
 //   const [instructions, setInstructions] = useState(recipe.instructions)
   const [favorited, isFavorited] = useState(recipe.favorited)
@@ -53,14 +60,14 @@ const EditRecipeForm = ({recipe}) => {
   const onTimeChanged = (e) => setTime(e.target.value)
 //   const onFavorited = (e) => isFavorited(e.target.value)
 
-  const onIngredientsChanged = (e) => {
-  setIngredients(e.target.value.split(/[\s\n,]+/).map(i => i.trim()).filter(Boolean))}
-
-
-  const onInstructionsChanged = (e) => {
-    setInstructions(e.target.value.split(/[\s\n,]+/).map(i => i.trim()).filter(Boolean))
-    // autoResizeTextarea(e.target.value)
+    const onIngredientsChanged = (e) => {
+    setIngredients(e.target.value)
     }
+
+    const onInstructionsChanged = (e) => {
+    setInstructions(e.target.value)
+    }
+
 
   const onCourseChanged = (e) => {
     const values = Array.from(
@@ -72,15 +79,21 @@ const EditRecipeForm = ({recipe}) => {
 
   const canSave = [title, ingredients, instructions].every(Boolean) && !isLoading
 
-    // const canSave = [userId, title, ingredients, instructions].every(Boolean) && !isLoading
-
   const onSaveRecipeClicked = async (e) => {
-    // if(canSave){
-    //     await updateRecipe({id: recipe.id, user: userId, title, course, time, photo, ingredients, instructions, favorited})
-    // }
-
+    
     if(canSave){
-        await updateRecipe({id: recipe.id, user: recipe.user, title, course, time, photo, ingredients, instructions, favorited})
+        await updateRecipe({
+            id: recipe.id,
+            user: recipe.user,
+            title,
+            course,
+            time,
+            photo,
+            ingredients: ingredients.split(',').map(i => i.trim()).filter(Boolean),
+            instructions: instructions.split(',').map(i => i.trim()).filter(Boolean),
+            favorited
+})
+
     }
   }
 
@@ -188,7 +201,7 @@ const EditRecipeForm = ({recipe}) => {
                     <textarea 
                     className='editRecipeFormInput'
                     name="ingredients" id="recipe-ingredients"
-                    value={ingredients.join(', ')} 
+                    value={ingredients} 
                     onChange={onIngredientsChanged}></textarea>
                 </div>
 
@@ -201,7 +214,7 @@ const EditRecipeForm = ({recipe}) => {
                     <textarea 
                     className='editRecipeFormInput'
                     name="instructions" id="recipe-instructions"
-                    value={instructions.join(', ')} 
+                    value={instructions} 
                     onChange={onInstructionsChanged}></textarea>
                 </div>
             </div>

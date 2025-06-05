@@ -55,10 +55,10 @@ const createNewUser = asyncHandler(async (req, res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = asyncHandler(async (req, res) => {
-  const { id, username, password, phone, roles } = req.body;
+  const { id, username, password, phone, roles, active } = req.body;
 
   // Confirm data
-  if (!id || !username) {
+  if (!id || !username || typeof active !== "boolean") {
     return res
       .status(400)
       .json({ message: "All fields expect password are required" });

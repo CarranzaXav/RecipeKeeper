@@ -4,14 +4,16 @@ import { useNavigate } from "react-router-dom"
 import { COURSES } from "../../../config/courses"
 
 import './recipeCSS/NewRecipeForm.css'
+import useAuth from "../../hooks/useAuth"
 
 const NewRecipeForm = ({users}) => {
+// Authenticate current user
+  const {id: userId, username} = useAuth()
 
   const [addNewRecipe, {isLoading, isSuccess, isError, error}] = useAddNewRecipeMutation()
 
   const navigate = useNavigate()
 
-  const [userId, setUserId] = useState(users?.[0]?.id || '')
   const [title, setTitle] = useState('')
   const [course, setCourse] = useState([''])
   const [photo, setPhoto] = useState('')
@@ -21,7 +23,7 @@ const NewRecipeForm = ({users}) => {
 
   useEffect(() => {
     if (isSuccess) {
-        setUserId('')
+        // setUserId('')
         setTitle('')
         setCourse([])
         setPhoto('')
@@ -32,7 +34,6 @@ const NewRecipeForm = ({users}) => {
     }
   }, [isSuccess, navigate])
 
-  const onUserIdChanged = (e) => setUserId(e.target.value)
   const onTitleChanged = (e) => setTitle(e.target.value)
   const onPhotoChanged = (e) => setPhoto(e.target.value)
   const onTimeChanged = (e) => setTime(e.target.value)
@@ -55,7 +56,7 @@ const onInstructionsChanged = (e) => {
     setCourse(values)
   }
 
-  const canSave = [userId, title, ingredients, instructions].every(Boolean) && !isLoading
+  const canSave = [username, title, ingredients, instructions].every(Boolean) && !isLoading
 
   const onSaveRecipeClicked = async (e) => {
     e.preventDefault()

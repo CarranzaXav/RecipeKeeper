@@ -65,7 +65,7 @@ const NewUserForm = () => {
                         <span>[3-20 letters]</span>
                         </label>
                         <input
-                            className=''
+                            className='UserFormInput'
                             type="text" 
                             id='username'
                             autoComplete='off'
@@ -88,10 +88,10 @@ const NewUserForm = () => {
                     </div>
 
                     <div className="userFormPhoneBlk">
-                    <label htmlFor="phone" className="userFormlabel">
+                    <label htmlFor="phone" className="userFormlabel">Phone:
                     </label>
                     <input 
-                    type="tel" 
+                    type="text" 
                     className="userFormLabel"
                     id='phone'
                     name='phone'

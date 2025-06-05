@@ -3,23 +3,23 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 
-// Token need to authenticate with JWT
-const user = {
-  username: "XavierCarranza",
-  phone: "3525072571",
-  roles: ["Admin"],
-};
-const token = jwt.sign(
-  {
-    UserInfo: {
-      username: user.username,
-      phone: user.phone,
-      roles: user.roles,
-    },
-  },
-  process.env.ACCESS_TOKEN_SECRET,
-  { expiresIn: "15m" }
-);
+// // Token need to authenticate with JWT
+// const user = {
+//   username: "XavierCarranza",
+//   phone: "3525072571",
+//   roles: ["Admin"],
+// };
+// const token = jwt.sign(
+//   {
+//     UserInfo: {
+//       username: user.username,
+//       phone: user.phone,
+//       roles: user.roles,
+//     },
+//   },
+//   process.env.ACCESS_TOKEN_SECRET,
+//   { expiresIn: "15m" }
+// );
 
 // @desc Login
 // @route POST /auth
@@ -46,6 +46,7 @@ const login = asyncHandler(async (req, res) => {
   const accessToken = jwt.sign(
     {
       UserInfo: {
+        id: foundUser._id,
         username: foundUser.username,
         roles: foundUser.roles,
       },
@@ -99,6 +100,7 @@ const refresh = (req, res) => {
       const accessToken = jwt.sign(
         {
           UserInfo: {
+            id: foundUser._id,
             username: foundUser.username,
             roles: foundUser.roles,
           },

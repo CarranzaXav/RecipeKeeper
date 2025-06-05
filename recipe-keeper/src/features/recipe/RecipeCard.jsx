@@ -3,7 +3,7 @@ import { selectRecipeById, useUpdateRecipeMutation } from "./recipesApiSlice"
 import { useGetRecipesQuery } from "./recipesApiSlice"
 import { useNavigate } from "react-router-dom"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faStar} from '@fortawesome/free-solid-svg-icons'
+import {faStar, faEye, faPenToSquare} from '@fortawesome/free-solid-svg-icons'
 
 import useAuth from "../../hooks/useAuth"
 
@@ -11,7 +11,7 @@ import './recipeCSS/RecipeCard.css'
 
 const RecipeCard = ({recipeCardId, props}) => {
 
-    const {username} = useAuth()
+    const {id: userId, username} = useAuth()
 
     const {recipe} = useGetRecipesQuery('recipesList', {
         selectFromResult: ({data}) => ({
@@ -63,16 +63,21 @@ const RecipeCard = ({recipeCardId, props}) => {
         <div className="recipeCardPhoto">{recipe.photo || "📷"}</div>
 
         {/* User Can Only Edit Their Own Recipes */}
-        {(!username) &&
         <div className="recipeCardFooter flex">
             <div className="recipeCardEditContainer">
-                <button className="recipeCardEditBtn" onClick={handleEdit}>Edit</button>
+        {userId === recipe.user &&
+                <button className="recipeCardEditBtn" onClick={handleEdit}>
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                </button>
+        }
             </div>
 
             <div className="recipeCardViewContainer">
-                <button className="recipeViewBtn" onClick={viewRecipeCard}>View</button>
+                <button className="recipeCardViewButton" onClick={viewRecipeCard}>
+                    <FontAwesomeIcon  className='recipeCardViewBtn'icon={faEye} />
+                </button>
             </div>
-        </div>}
+        </div>
     </div>
   )
 }

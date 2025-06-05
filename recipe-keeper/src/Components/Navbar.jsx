@@ -3,10 +3,12 @@ import './ComponentsCSS/Navbar.css'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import useAuth from '../hooks/useAuth'
 import { useState } from 'react'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faBurger} from '@fortawesome/free-solid-svg-icons'
 
 const Navbar = () => {
 
-  const {status, isAdmin} = useAuth()
+  const {username} = useAuth()
   const [sendLogout, {isLoading, isSuccess, isError, error}] = useSendLogoutMutation()
 
   return (
@@ -17,13 +19,15 @@ const Navbar = () => {
         </Link>
       </div>
 
-        {(!status || !isAdmin) ?
+        {(!username) ?
           <nav className='navbarButtonContainer'>
             <Link to='/users/new'>
               <p className='navBtn'>
               Sign Up
               </p>
-              <p className='navBtnHolder'>🍕</p>
+              <p className='navBtnHolder'>
+              <FontAwesomeIcon icon={faBurger} style={{color: 'white'}} />
+              </p>
             </Link>
           </nav> 
         : 
@@ -36,7 +40,9 @@ const Navbar = () => {
            <p className='navBtn'>
               Logout
               </p>
-              <p className='navBtnHolder'>🍕</p>
+              <p className='navBtnHolder'>
+              <FontAwesomeIcon icon={faBurger} style={{color: "white",}} />
+              </p>
           </div> 
         </nav>
         }
