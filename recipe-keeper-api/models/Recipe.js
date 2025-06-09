@@ -6,38 +6,41 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 // const ImageSchema = new Schema({ url: String, filename: String });
 
-const recipeSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
+const recipeSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    course: {
+      type: [String],
+    },
+    photo: {
+      type: String,
+    },
+    time: {
+      type: Number,
+    },
+    ingredients: {
+      type: Array,
+      required: true,
+    },
+    instructions: {
+      type: Array,
+      required: true,
+    },
+    favorited: {
+      type: Object,
+      default: {},
+    },
   },
-  title: {
-    type: String,
-    required: true,
-  },
-  course: {
-    type: [String],
-  },
-  photo: {
-    type: String,
-  },
-  time: {
-    type: Number,
-  },
-  ingredients: {
-    type: Array,
-    required: true,
-  },
-  instructions: {
-    type: Array,
-    required: true,
-  },
-  favorited: {
-    type: Boolean,
-    default: false,
-  },
-});
+  { timestamps: true }
+);
 
 recipeSchema.plugin(AutoIncrement, {
   inc_field: "recipe",

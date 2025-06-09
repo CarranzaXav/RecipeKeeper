@@ -3,8 +3,11 @@ import { Link } from "react-router-dom"
 import RecipeCard from "./RecipeCard"
 
 import './recipeCSS/FavoritedRecipes.css'
+import useAuth from "../../hooks/useAuth"
 
 const FavoritedRecipes = () => {
+
+  const {id:userId} = useAuth()
 
   const {
     data: recipes,
@@ -16,10 +19,16 @@ const FavoritedRecipes = () => {
   if(isError) return <p className="errmsg">{error?.data?.message}</p>
 
 
-if(isSuccess){
+if(isSuccess && recipes && userId){
+
   const {ids, entities} = recipes
 
-  const favoritedIds = ids.filter(id => entities[id]?.favorited)
+  // const favoritedIds = ids.filter(id => entities[id]?.favorited)
+
+  const favoritedIds = ids.filter( id => {
+    const recipe = entities[id]
+    return recipe?.favorited?.[userId] === true
+  })
 
   const shuffleIds = favoritedIds.sort(() => 0.5 - Math.random())
 
@@ -29,7 +38,7 @@ if(isSuccess){
 
   return (
     <div className="recipeList favoritedList flex">
-      {recipeContent}
+      {favoritedIds.length > 0 ? recipeContent : <span>No Favorites</span>}
     </div>
   )
 }

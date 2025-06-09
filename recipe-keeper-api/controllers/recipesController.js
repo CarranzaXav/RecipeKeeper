@@ -81,8 +81,12 @@ const updateRecipe = asyncHandler(async (req, res) => {
   } = req.body;
 
   // Confirm data
-  if (!id || !user || !title || !ingredients || !instructions) {
-    return res.status(400).json({ message: "All fields are required" });
+  // if (!id || !user || !title || !ingredients || !instructions) {
+  //   return res.status(400).json({ message: "All fields are required" });
+  // }
+
+  if (!id) {
+    return res.status(400).json({ message: "Recipe ID is required" });
   }
 
   // Confirm recipe exists to update
@@ -92,19 +96,32 @@ const updateRecipe = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Recipe not found" });
   }
 
-  recipe.user = user;
-  recipe.title = title;
-  recipe.course = course;
-  recipe.photo = photo;
-  recipe.time = time;
-  recipe.ingredients = ingredients;
-  recipe.instructions = instructions;
-  recipe.favorited = favorited;
+  // if (favorited !== undefined) {
+  //   recipe.favorited = favorited;
+  // }
+
+  // recipe.user = user;
+  // recipe.title = title;
+  // recipe.course = course;
+  // recipe.photo = photo;
+  // recipe.time = time;
+  // recipe.ingredients = ingredients;
+  // recipe.instructions = instructions;
+
+  if (user !== undefined) recipe.user = user;
+  if (title !== undefined) recipe.title = title;
+  if (course !== undefined) recipe.course = course;
+  if (photo !== undefined) recipe.photo = photo;
+  if (time !== undefined) recipe.time = time;
+  if (ingredients !== undefined) recipe.ingredients = ingredients;
+  if (instructions !== undefined) recipe.instructions = instructions;
+  if (favorited !== undefined) recipe.favorited = favorited;
 
   const updatedRecipe = await recipe.save();
+  updatedRecipe.id = updatedRecipe._id;
 
-  res.json(`'${updatedRecipe.title}' updated`);
   console.log("✅ PATCH hit with data:", req.body);
+  res.json(updatedRecipe);
 });
 
 // @desc Delete a Recipe

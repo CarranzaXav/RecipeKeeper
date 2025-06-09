@@ -1,10 +1,11 @@
 import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../../app/api/apiSlice";
 
-const recipesAdapter = createEntityAdapter({
-  sortComparer: (a, b) =>
-    a.favorited === b.favorited ? 0 : a.favorited ? -1 : 1,
-});
+const recipesAdapter = createEntityAdapter();
+//   {
+//   sortComparer: (a, b) =>
+//     a.favorited === b.favorited ? 0 : a.favorited ? -1 : 1,
+// }
 
 const initialState = recipesAdapter.getInitialState();
 
@@ -41,16 +42,74 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Recipe", id: "LIST" }],
     }),
+    // updateRecipe: builder.mutation({
+    //   query: (initialRecipe) => ({
+    //     url: "/recipes",
+    //     method: "PATCH",
+    //     body: { ...initialRecipe },
+    //   }),
+    //   // Update the cache manually
+    //   async onQueryStarted(initialRecipe, { dispatch, queryFulfilled }) {
+    //     try {
+    //       const { data: updatedRecipe } = await queryFulfilled;
+
+    //       dispatch(
+    //         apiSlice.util.updateQueryData(
+    //           "getRecipes",
+    //           "recipesList",
+    //           (draft) => {
+    //             draft.entities[updatedRecipe.id] = {
+    //               ...updatedRecipe,
+    //               favorited: { ...(updatedRecipe.favorited || {}) },
+    //             };
+    //           }
+    //         )
+    //       );
+    //     } catch (err) {
+    //       console.error("Failed to update cache after recipe update:", err);
+    //     }
+    //   },
+    //   invalidatesTags: (result, error, arg) => [{ type: "Recipe", id: arg.id }],
+    // }),
     updateRecipe: builder.mutation({
       query: (initialRecipe) => ({
         url: "/recipes",
         method: "PATCH",
-        body: {
-          ...initialRecipe,
-        },
+        body: { ...initialRecipe },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Recipe", id: arg.id }],
+      async onQueryStarted(initialRecipe, { dispatch, queryFulfilled }) {
+        try {
+          const { data: updatedRecipe } = await queryFulfilled;
+
+          dispatch(
+            apiSlice.util.updateQueryData(
+              "getRecipes",
+              "recipesList",
+              (draft) => {
+                // draft.entities[updatedRecipe.id] = {
+                //   ...updatedRecipe,
+                //   favorited: JSON.parse(
+                //     JSON.stringify(updatedRecipe.favorited || {})
+                //   ),
+                // };
+                recipesAdapter.updateOne(draft, {
+                  id: updatedRecipe.id,
+                  changes: {
+                    favorited: JSON.parse(
+                      JSON.stringify(updatedRecipe.favorited || {})
+                    ),
+                  },
+                });
+              }
+            )
+          );
+        } catch (err) {
+          console.error("❌ Failed to update recipe cache:", err);
+        }
+      },
+      invalidatesTags: (result, error, arg) => [{ type: "Recipe", id: arg.id }], // ✅ ADD THIS
     }),
+
     deleteRecipe: builder.mutation({
       query: ({ id }) => ({
         url: `/recipes`,

@@ -40,3 +40,10 @@
 20250605	09:41:07	b3169be0-30d3-422d-9359-dcdf1950b70e	ValidationError: Recipe validation failed: user: Cast to ObjectId failed for value "AshleyCarranza" (type string) at path "user" because of "BSONError"	POST	/recipes	http://localhost:5173
 20250605	09:43:00	6c3d9672-60dc-4d5a-87b8-ad3d5a9a5fa6	ValidationError: Recipe validation failed: user: Cast to ObjectId failed for value "AshleyCarranza" (type string) at path "user" because of "BSONError"	POST	/recipes	http://localhost:5173
 20250605	09:44:28	2ed3d733-4106-40e0-a404-df11d0fbaf4c	ValidationError: Recipe validation failed: user: Cast to ObjectId failed for value "AshleyCarranza" (type string) at path "user" because of "BSONError"	POST	/recipes	http://localhost:5173
+20250608	22:50:29	70f7eccf-06c2-4055-b1cb-2d666beb9f82	ReferenceError: result is not defined	PATCH	/recipes	http://localhost:5173
+20250608	22:50:35	0b700bb4-8bb3-4f4a-ad03-a732e306c0f7	ReferenceError: result is not defined	PATCH	/recipes	http://localhost:5173
+20250608	22:50:48	ce596afb-a745-4896-8d3e-e41ed7d81b8e	ReferenceError: result is not defined	PATCH	/recipes	http://localhost:5173
+20250608	22:50:59	0ed865ad-f1b3-4b1d-80b2-4cef0bd04ce0	ReferenceError: result is not defined	PATCH	/recipes	http://localhost:5173
+20250608	22:51:06	792532e6-eec1-447b-a8ab-f963d59b4134	ReferenceError: result is not defined	PATCH	/recipes	http://localhost:5173
+20250608	22:51:10	1a64c880-3033-4ae0-9011-12df2e1792f0	ReferenceError: result is not defined	PATCH	/recipes	http://localhost:5173
+20250608	22:57:26	9bfcb050-24fb-4990-99bc-0f1d7337979e	ReferenceError: result is not defined	PATCH	/recipes	http://localhost:5173
