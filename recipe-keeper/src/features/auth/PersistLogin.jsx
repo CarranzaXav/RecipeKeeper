@@ -1,9 +1,10 @@
+import { useDispatch } from "react-redux";
 import { Outlet, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useRefreshMutation } from "./authApiSlice";
 import usePersist from "../../hooks/usePersist";
 import { useSelector } from "react-redux";
-import { selectCurrentToken } from "./authSlice";
+import { selectCurrentToken, setCredentials } from "./authSlice";
 
 const PersistLogin = () => {
   // Check if persistence is enabled
@@ -12,6 +13,9 @@ const PersistLogin = () => {
   const token = useSelector(selectCurrentToken);
   // State to track verification
   const [isVerified, setIsVerified] = useState(false);
+
+  const dispatch = useDispatch();
+
 
   //Mutation for refreshing token
   const [refresh, { isLoading, isSuccess, isError, error }] =
@@ -24,7 +28,8 @@ const PersistLogin = () => {
       if (!token && persist) {
         try {
           if (isMounted) {
-            await refresh().unwrap();
+            const {accessToken} = await refresh().unwrap();
+            dispatch(setCredentials({accessToken}))
             setIsVerified(true);
           }
         } catch (err) {
