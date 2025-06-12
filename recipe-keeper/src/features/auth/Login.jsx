@@ -6,6 +6,7 @@ import { setCredentials } from './authSlice';
 import { useLoginMutation} from './authApiSlice'
 
 import usePersist from '../../hooks/usePersist'
+import './authCSS/Login.css'
 
 const Login = () => {
 
@@ -58,6 +59,8 @@ const Login = () => {
   const handleUserInput = (e) => setUsername(e.target.value)
   const handlePwdInput = (e) => setPassword(e.target.value)
   const handleToggle = () => setPersist(prev => !prev)
+
+  const handleSignUp = () => navigate('/users/new')
   
   const errClass = errMsg ? 'errmsg': 'offscreen'
 
@@ -125,6 +128,13 @@ const Login = () => {
         </div>
       </footer>
     </section>
+    <div className="signupButtonContainer">
+    <h2 className='signupButtonTitle'>Login</h2>
+    <div className='signupButtonSlider' onClick={handleSignUp}>
+      <div className='signupBtn' name='Signup'>
+      </div>
+    </div>
+    </div>
   </>
   );
 

@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react'
 import { useAddNewUserMutation } from './usersApiSlice'
 import { useNavigate } from 'react-router-dom'
 
+
 import './usersCSS/NewUserForm.css'
 
 const USER_REGEX = /^[A-z]{3,20}$/;
@@ -51,8 +52,16 @@ const NewUserForm = () => {
         }
     }
 
+    const handleLogin = () => {
+        navigate(
+        '/login'
+        )
+    }
+
     return(
         <>
+
+
             <form className='userForm' onSubmit={onSaveUserClicked}
             >
                 <div className="userFormHead">
@@ -115,6 +124,13 @@ const NewUserForm = () => {
                     <Link to='/login'>Please Login</Link>
                 </div>
             </form>
+            <div className="loginButtonContainer">
+                <h2 className='loginButtonTitle'>Sign Up</h2>
+                <div className='loginButtonSlider' onClick={handleLogin}>
+                <div className='loginBtn' name='Login'>
+                </div>
+                </div>
+            </div>
         </>
     )
 
