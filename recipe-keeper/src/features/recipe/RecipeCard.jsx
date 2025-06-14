@@ -26,41 +26,6 @@ const RecipeCard = ({recipeCardId, props}) => {
 
     const navigate = useNavigate()
 
-//     const handleFavorited = async () => {
-//     if (recipe && username) {
-//     const currentStatus = recipe.favorited?.[userId];
-//     const updatedStatus = !currentStatus;
-
-//     console.log("🟡 Favorite toggle clicked", {
-//       userId,
-//       recipeId: recipe.id,
-//       currentStatus,
-//       updatedStatus
-//     });
-
-//     try {
-//       const result = await updateRecipe({
-//         id: recipe.id,
-//         user: recipe.user,
-//         title: recipe.title,
-//         course: recipe.course,
-//         time: recipe.time,
-//         photo: recipe.photo,
-//         ingredients: recipe.ingredients,
-//         instructions: recipe.instructions,
-//         favorited: {
-//           ...recipe.favorited,
-//           [userId]: updatedStatus
-//         }
-//       }).unwrap();
-
-//       console.log("🟢 Updated recipe returned from server:", result);
-//     } catch (err) {
-//       console.error("🔴 Failed to favorite the recipe", err);
-//     }
-//   }
-// };
-
 const handleFavorited = async () => {
   if (!recipe || !userId) return;
 
@@ -105,10 +70,32 @@ const handleFavorited = async () => {
 
   return (
 
-    <div className="recipeCard">
-        <div className="recipeCardHeader flex">
-            <div className="recipeCardTitle">{recipe.title}</div>
-            {(username) && <div className="recipeCardFavorited"
+    <div 
+    className="recipeCard 
+    w-full h-48 
+    bg-[var(--FORM-COLOR)] 
+    px-[0.75em] py-[0.5em]
+    rounded-xl
+    inset-shadow-[#c9b9d6] inset-shadow-sm
+    "
+    >
+        <div className="recipeCardHeader 
+        flex
+        w-full
+        h-1/10
+        justify-center
+        ">
+            <div className="
+            recipeCardTitle
+            w-8/10
+            text-xl
+            ">{recipe.title}</div>
+            {(username) && <div className="recipeCardFavorited
+            w-1/10
+            text-xl
+            cursor-pointer
+            self-start
+            "
                 onClick={handleFavorited}
             >
             {/* {recipe.favorited?.[userId] ? 
@@ -118,21 +105,51 @@ const handleFavorited = async () => {
             </div>}
         </div>
 
-        <div className="recipeCardPhoto">{recipe.photo || "📷"}</div>
+        <div className="recipeCardPhoto
+        h-3/4
+        w-full
+        flex
+        items-center
+        justify-center
+        text-4xl
+        ">{recipe.photo || "📷"}</div>
 
         {/* User Can Only Edit Their Own Recipes */}
-        <div className="recipeCardFooter flex">
-            <div className="recipeCardEditContainer">
+        <div className="recipeCardFooter 
+        self-center
+        h-1/10
+        w-9/10
+        flex
+        ">
+            <div className="recipeCardEditContainer w-1/2">
         {userId === recipe.user &&
-                <button className="recipeCardEditBtn" onClick={handleEdit}>
+                <button className="recipeCardEditBtn
+                text-2xl
+                text-white
+                bg-transparent
+                border-none
+                cursor-pointer
+                hover:text-purple-500
+                " onClick={handleEdit}>
                     <FontAwesomeIcon icon={faPenToSquare} />
                 </button>
         }
             </div>
 
-            <div className="recipeCardViewContainer">
-                <button className="recipeCardViewButton" onClick={viewRecipeCard}>
-                    <FontAwesomeIcon  className='recipeCardViewBtn'icon={faEye} />
+            <div className="recipeCardViewContainer  w-1/2 
+            flex
+            justify-end
+            ">
+                <button className="recipeCardViewButton
+                bg-transparent
+                border-none
+                text-2xl
+                cursor-pointer
+                " onClick={viewRecipeCard}>
+                    <FontAwesomeIcon  className='recipeCardViewBtn
+                    text-white
+                hover:text-purple-500
+                    'icon={faEye} />
                 </button>
             </div>
         </div>

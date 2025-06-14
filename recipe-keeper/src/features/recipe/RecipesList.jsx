@@ -32,10 +32,22 @@ if(isSuccess){
   const recipeContent = ids?.length ? ids.map(recipeCardId => <RecipeCard key={recipeCardId} recipeCardId={recipeCardId}/>) : null
 
   return (
-    <div className="recipeList flex">
+    <div className="recipeList 
+    grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 
+    w-8/10
+    justify-evenly gap-x-2 gap-y-6">
 
     {(username) ?
-      <Link className="recipeListCreate" to='/dash/recipes/new'>
+      <Link className="recipeListCreate flex 
+      bg-gray-300 
+       w-full md:w-sm 
+       h-48  md:h-md
+       px-[0.75em] py-[0.5em]
+       rounded-xl
+       inset-shadow-gray-500 inset-shadow-sm
+       " 
+       to='/dash/recipes/new'
+      >
         <div className="recipeListCreateBtn">
           ➕
         </div>

@@ -1,4 +1,4 @@
-.recipeCard {
+/* .recipeCard {
   width: 30%;
   height: 225px;
   background-color: var(--FORM-COLOR);
@@ -15,7 +15,6 @@
 
 .recipeCardTitle {
   width: 80%;
-  /* padding-block: 0.5em; */
   font-size: 1.25rem;
 }
 
@@ -23,7 +22,6 @@
   width: 10%;
   font-size: 1.25rem;
   cursor: pointer;
-  /* padding-block: 0.5em; */
   align-self: start;
 }
 
@@ -61,13 +59,10 @@
 }
 
 .recipeCardViewButton {
-  /* button { */
-  /* text-decoration: none; */
   background: transparent;
   border: none;
   font-size: 1.5em;
   cursor: pointer;
-  /* } */
 }
 
 .recipeCardViewBtn {
@@ -77,4 +72,4 @@
 .recipeCardViewBtn:hover,
 .recipeCardEditBtn:hover {
   color: purple;
-}
+} */

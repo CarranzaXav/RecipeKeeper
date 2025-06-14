@@ -1,37 +1,39 @@
 /* https://www.shecodes.io/palettes/1517 */
 
+@import "tailwindcss";
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  /* margin: 0;
+  padding: 0; */
+  box-sizing: border-box;
 }
 
-:root{
-    /* COLORS */
-    --BGCOLOR:#defcf9;
-    --BORDER-COLOR:#cadefc;
-    --BUTTON-COLOR:#c3bef0;
-    --FORM-COLOR: #e6d3f4;
-    --NAVBAR: #cca8e9;
-    --FONT-COLOR:white;
-    --ERROR:firebrick;
-    --LOGIN-SIGNUP: #b1c2dd;
+:root {
+  /* COLORS */
+  --BGCOLOR: #defcf9;
+  --BORDER-COLOR: #cadefc;
+  --BUTTON-COLOR: #c3bef0;
+  --FORM-COLOR: #e6d3f4;
+  --NAVBAR: #cca8e9;
+  --FONT-COLOR: white;
+  --ERROR: firebrick;
+  --LOGIN-SIGNUP: #b1c2dd;
 }
 
-body{
-    background-color: var(--BGCOLOR);
-    font-size: 100%;
+body {
+  background-color: var(--BGCOLOR);
+  font-size: 100%;
 }
 
-#root{
-    height: 100%;
-    width: 100%;
-    font-family: "Crafty Girls", cursive;
-    font-weight: 400;
-    font-style: normal;
-    /* display: flex; */
+#root {
+  height: 100%;
+  width: 100%;
+  font-family: "Crafty Girls", cursive;
+  font-weight: 400;
+  font-style: normal;
+  /* display: flex; */
 }
 
-.flex{
-    display: flex;
+.flex {
+  display: flex;
 }

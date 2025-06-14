@@ -6,7 +6,7 @@ const Layout = () => {
   return (
   <>
     <Navbar/>
-    <div className="layoutContainer">
+    <div className="m-auto w-[80vw] justify-self-center py-6">
       <Outlet/>
     </div>
   </>
