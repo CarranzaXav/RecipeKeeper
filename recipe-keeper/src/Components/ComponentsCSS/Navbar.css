@@ -1,4 +1,4 @@
-.navbarContainer {
+/* .navbarContainer {
   display: flex;
   width: 100%;
   background-color: var(--NAVBAR);
@@ -9,7 +9,6 @@
   padding-block: 5px;
   padding-inline: 2%;
   width: 80%;
-  /* min-width: ; */
 }
 
 .navbarTitleContainer {
@@ -28,15 +27,12 @@
   display: flex;
   justify-content: end;
   align-items: center;
-  /* background-color: #997eaf; */
   background-image: linear-gradient(270deg, #b393cc 70%, var(--NAVBAR));
-  /* height: 100%; */
   padding-right: 2%;
   cursor: pointer;
 
   a {
     display: flex;
-    /* flex-direction: row-reverse; */
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 600;
@@ -78,4 +74,4 @@
   .navBtnHolder {
     display: none;
   }
-}
+} */

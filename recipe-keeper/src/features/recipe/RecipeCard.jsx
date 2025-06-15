@@ -7,8 +7,6 @@ import {faStar, faEye, faPenToSquare} from '@fortawesome/free-solid-svg-icons'
 
 import useAuth from "../../hooks/useAuth"
 
-import './recipeCSS/RecipeCard.css'
-
 const RecipeCard = ({recipeCardId, props}) => {
 
     const {id: userId, username} = useAuth()
@@ -72,7 +70,8 @@ const handleFavorited = async () => {
 
     <div 
     className="recipeCard 
-    w-full h-48 
+    w-full 
+    h-64 m:h-48 lg:h-72
     bg-[var(--FORM-COLOR)] 
     px-[0.75em] py-[0.5em]
     rounded-xl
@@ -84,6 +83,7 @@ const handleFavorited = async () => {
         w-full
         h-1/10
         justify-center
+        mb-2
         ">
             <div className="
             recipeCardTitle
@@ -98,9 +98,6 @@ const handleFavorited = async () => {
             "
                 onClick={handleFavorited}
             >
-            {/* {recipe.favorited?.[userId] ? 
-            <FontAwesomeIcon icon={faStar} style={{color: "#FFD43B",}} />
-             : <FontAwesomeIcon icon={faStar} style={{color: "#bababa",}} />} */}
              <FontAwesomeIcon icon={faStar} style={{color: isFavorited ? '#FFD43B' : '#bababa'}}/>
             </div>}
         </div>
@@ -111,14 +108,17 @@ const handleFavorited = async () => {
         flex
         items-center
         justify-center
+        rounded-xl
+        bg-white
         text-4xl
         ">{recipe.photo || "📷"}</div>
 
         {/* User Can Only Edit Their Own Recipes */}
         <div className="recipeCardFooter 
-        self-center
-        h-1/10
+        justify-self-center
+        h-auto
         w-9/10
+        pt-1
         flex
         ">
             <div className="recipeCardEditContainer w-1/2">

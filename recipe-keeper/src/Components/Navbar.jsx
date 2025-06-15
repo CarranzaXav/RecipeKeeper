@@ -10,39 +10,93 @@ const Navbar = () => {
 
   const {username} = useAuth()
   const [sendLogout, {isLoading, isSuccess, isError, error}] = useSendLogoutMutation()
+  const [isHovered, setIsHovered] = useState(false)
+
+  const hoverClass = isHovered ? 'invisible' : 'visible text-purple-400'
+  const hiddenClass = isHovered ? '' : 'invisible'
+
+  const hover = () => {
+    setIsHovered(!isHovered)
+  }
 
   return (
-    <header className="navbarContainer">
-      <div className="navbarHome">
-        <Link className='navbarTitleContainer' to='/'>
-          <h1 className='navbarTitle'>Recipe Keeper</h1>
+    <header className="navbarContainer
+      flex
+      w-full
+      bg-[var(--NAVBAR)]
+      text-white
+    ">
+      <div className="navbarHome
+        px-[2%] py-[5px]
+        w-9/10
+        items-center
+        flex
+      ">
+        <Link className='navbarTitleContainer w-8/10' to='/'>
+          <h1 className='navbarTitle text-white tracking-[1px]'>Recipe Keeper</h1>
         </Link>
       </div>
 
         {(!username) ?
-          <nav className='navbarButtonContainer'>
-            <Link to='/users/new'>
-              <p className='navBtn'>
+          <nav className='navbarButtonContainer
+            w-1/10
+            ml-1/10
+            flex
+            justify-end
+            pr-[2%]
+            cursor-pointer
+            bg-linear-270 from-[#b393cc] from-75% to-[var(--NAVBAR)]'
+            onMouseEnter={hover}
+            onMouseLeave={hover}
+          >
+            <Link to='/users/new' className='flex
+            items-center
+            text-xl
+            font-semibold
+            tracking-[2px]
+            '>
+              <p className={`navBtn
+              ${hiddenClass}
+              text-white
+              tracking-[2px]
+              font-semibold
+              justify-self-end
+              `}>
               Sign Up
               </p>
-              <p className='navBtnHolder'>
+              <p className={`navBtnHolder ${hoverClass} text-4xl`}>
               <FontAwesomeIcon icon={faBurger} style={{color: 'white'}} />
               </p>
             </Link>
           </nav> 
         : 
-          <nav className='navbarButtonContainer'>
+          <nav className='navbarButtonContainer
+            w-2/10
+            ml-1/10
+            flex
+            justify-end
+            pr-[2%] hover:pr-0
+            cursor-pointer
+            bg-linear-270 from-[#b393cc] from-75% to-[var(--NAVBAR)]'
+            onMouseEnter={hover}
+            onMouseLeave={hover}
+          >
           <div
-            className='navbarLogoutBtn'
+            className={`navbarLogoutBtn flex items-center font-semibold tracking-[2px] `}
             title='Logout'
             onClick={sendLogout}
           >
-           <p className='navBtn'>
+           <p className={`navBtn 
+              ${hiddenClass}
+              text-white hover:text-purple-600
+              tracking-[2px]
+              font-semibold
+              `}>
               Logout
-              </p>
-              <p className='navBtnHolder'>
+            </p>
+            <p className={`navBtnHolder text-4xl ${hoverClass}`}>
               <FontAwesomeIcon icon={faBurger} style={{color: "white",}} />
-              </p>
+            </p>
           </div> 
         </nav>
         }
