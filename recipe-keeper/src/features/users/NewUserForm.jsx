@@ -59,79 +59,172 @@ const NewUserForm = () => {
     }
 
     return(
-        <>
-
-
-            <form className='userForm' onSubmit={onSaveUserClicked}
+        <div className='w-full pt-12 h-96'>
+            <form className='userForm
+            grid
+            w-9/10 sm:w-8/10 md:w-6/10 lg:w-1/2 xl:w-2/5
+            h-72 md:h-60
+            my-auto
+            px-1.5
+            justify-self-center
+            bg-[var(--LOGIN-SIGNUP)]
+            rounded-t-xl
+            ' onSubmit={onSaveUserClicked}
             >
-                <div className="userFormHead">
-                    <h2 className='userFormTitle'>Create User</h2>
+                <div className="userFormHead
+                py-2
+                flex
+                self-center
+                justify-center
+                ">
+                    <h2 className='userFormTitle
+                        text-white
+                        text-xl sm:text-3xl
+                        font-semibold
+                        flex
+                        self-center
+                        tracking-[6px]
+                    '>Create User</h2>
                 </div>
-                <div className="userFormBody">
+                <div className="userFormBody
+                    w-full
+                 justify-items-center
+                 content-center">
 
-                    <div className="userFormUsernameBlk">
-                        <label htmlFor="username" className='userFormLabel'>Username:
-                        <span>[3-20 letters]</span>
-                        </label>
+                    <div className="userFormUsernameBlk
+                        w-9/10
+                        justify-items-center
+                        py-2
+                    ">
                         <input
-                            className='UserFormInput'
+                            className='UserFormInput
+                            py-1 px-2
+                            bg-white
+                            text-purple-700
+                            shadow-md shadow-purple-700
+                            rounded-xl
+                            flex
+                            w-full lg:w-9/10
+                            justify-center
+                            '
                             type="text" 
                             id='username'
                             autoComplete='off'
                             value={username}
+                            placeholder='Username [3-20 letters]'
                             onChange={onUsernameChanged}    
                         />
                     </div>
 
-                    <div className="userFormPasswordBlk">
-                    <label htmlFor="password" className="userFormLabel">
-                    Passcode: <span className=''>[Please enter 4 digit passcode]</span>
-                    </label>
+                    <div className="userFormPasswordBlk w-9/10
+                 justify-items-center
+                 py-2">
                     <input 
-                    type="password" className="userFormInput" 
+                    type="password" className="userFormInput
+                    py-1 px-2
+                    bg-white
+                    text-purple-700
+                    shadow-md shadow-purple-700
+                    rounded-xl
+                    flex
+                    w-full lg:w-9/10
+                    justify-center" 
                     id='password'
                     name='password'
+                    placeholder='Create 4 Digit Passcode'
                     value={password}
                     onChange={onPasswordChanged}
                     />
                     </div>
 
-                    <div className="userFormPhoneBlk">
-                    <label htmlFor="phone" className="userFormlabel">Phone:
-                    </label>
+                    <div className="userFormPhoneBlk w-9/10
+                 justify-items-center
+                 py-2">
+
                     <input 
                     type="text" 
-                    className="userFormLabel"
+                    className="userFormInput
+                    py-1 px-2
+                    bg-white
+                    text-purple-700
+                    shadow-md shadow-purple-700
+                    rounded-xl
+                    flex
+                    w-full lg:w-9/10
+                    justify-center"
                     id='phone'
                     name='phone'
+                    placeholder='Enter Phone #'
                     value={phone} 
                     onChange={onPhoneChanged}
                     />
                     </div>
 
                 </div>
-                <div className="userFormFooter">
+                <div className="userFormFooter
+                    justify-self-center
+                    justify-center
+                    w-8/10 sm:w-3/5 md:w-1/2
+                ">
                     {(canSave) && <button 
-                        className='userFormBtn'
+                        className='userFormBtn
+                            py-1 px-2
+                            bg-purple-700
+                            font-bold
+                            text-sm
+                            text-white
+                            shadow-md shadow-white
+                            rounded-xl
+                            w-full
+                            tracking-[2px]
+                        '
                         title='Save'
                     >
                         Create New User
                     </button>}
                 </div>
 
-                <div className="userFormLogin">
-                    <p>Already A User?</p>
-                    <Link to='/login'>Please Login</Link>
-                </div>
             </form>
-            <div className="loginButtonContainer">
-                <h2 className='loginButtonTitle'>Sign Up</h2>
-                <div className='loginButtonSlider' onClick={handleLogin}>
-                <div className='loginBtn' name='Login'>
-                </div>
+            <div className="loginButtonContainer
+                w-9/10 sm:w-8/10 md:w-6/10 lg:w-1/2 xl:w-2/5
+                bg-[var(--LOGIN-SIGNUP)]
+                rounded-b-2xl
+                pb-2.5
+                justify-self-center
+                ">
+                <h2 className='loginButtonTitle
+                    w-full
+                    flex
+                    py-2
+                    text-white
+                    tracking-[4px]
+                    text-md sm:text-lg
+                    justify-center
+                '>Sign Up</h2>
+                <div className='loginButtonSlider
+                        h-7.75
+                        w-2/5 md:w-3/10 lg:w-1/5
+                        rounded-2xl
+                        bg-[var(--BGCOLOR)]
+                        justify-self-center
+                        pb-1.25
+                        flex flex-row-reverse
+                        inset-shadow-sm inset-shadow-[#b393cc]
+                    ' onClick={handleLogin}>
+                    <div className='loginBtn
+                        h-7.75
+                        w-1/2
+                        rounded-2xl
+                        z-1
+                        relative
+                        bg-linear-to-br from-purple-500 from-20% via-[#b393cc] via-50% to-purple-500
+                        ring ring-purple-400
+                        left-2px
+                    ' name='Login'>
+                    </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 
 }

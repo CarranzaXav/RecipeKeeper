@@ -8,6 +8,7 @@ const Layout = () => {
     <div className="flex
     m-auto 
     w-[85vw] lg:w-[90vw]
+    h-full
     justify-self-center justify-center 
     py-6"
     >

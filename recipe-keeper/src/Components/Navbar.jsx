@@ -1,5 +1,4 @@
 import {Link} from 'react-router-dom'
-import './ComponentsCSS/Navbar.css'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import useAuth from '../hooks/useAuth'
 import { useState } from 'react'
@@ -33,17 +32,18 @@ const Navbar = () => {
         flex
       ">
         <Link className='navbarTitleContainer w-8/10' to='/'>
-          <h1 className='navbarTitle text-white tracking-[1px]'>Recipe Keeper</h1>
+          <h1 className='navbarTitle text-2xl text-white hover:text-purple-700 
+         font-semibold tracking-[1px]'>Recipe Keeper</h1>
         </Link>
       </div>
 
         {(!username) ?
           <nav className='navbarButtonContainer
-            w-1/10
-            ml-1/10
+            w-2/10
+            ml-1/10 hover:ml-0
             flex
             justify-end
-            pr-[2%]
+            pr-[2%] hover:pr-0
             cursor-pointer
             bg-linear-270 from-[#b393cc] from-75% to-[var(--NAVBAR)]'
             onMouseEnter={hover}
@@ -57,10 +57,10 @@ const Navbar = () => {
             '>
               <p className={`navBtn
               ${hiddenClass}
-              text-white
+              text-white hover:text-purple-700
               tracking-[2px]
               font-semibold
-              justify-self-end
+              flex
               `}>
               Sign Up
               </p>
@@ -87,8 +87,9 @@ const Navbar = () => {
             onClick={sendLogout}
           >
            <p className={`navBtn 
+              flex
               ${hiddenClass}
-              text-white hover:text-purple-600
+              text-white hover:text-purple-700
               tracking-[2px]
               font-semibold
               `}>

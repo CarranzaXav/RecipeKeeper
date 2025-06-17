@@ -96,7 +96,16 @@ const onInstructionsChanged = (e) => {
 
   return (
     <>
-        <form className="newRecipeForm" onSubmit={onSaveRecipeClicked}>
+        <form className="newRecipeForm
+        w-8/10
+        min-h-48
+        h-auto
+        bg-[var(--FORM-COLOR)]
+        p-5
+        justify-self-center
+        rounded-2xl
+        mb-4s
+        " onSubmit={onSaveRecipeClicked}>
             <div className="newRecipeFormHead">
                 <div className="newRecipeFormHeadTitle">New Recipe</div>
             </div>
