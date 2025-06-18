@@ -1,5 +1,7 @@
 import { useRef, useState, useEffect} from 'react'
 import { useNavigate, Link} from 'react-router-dom'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faHouseChimney} from '@fortawesome/free-solid-svg-icons'
 
 import { useDispatch} from 'react-redux'
 import { setCredentials } from './authSlice';
@@ -67,75 +69,228 @@ const Login = () => {
   if (isLoading) return <div className='loader'>Loading...</div>
 
   return (
-  <>
-    <section className="login">
-      <header className="loginHeader">
-        <h1 className="loginHeaderTitle">User Login</h1>
+  <div className="w-full pt-12 h-96">
+    <section className='
+      grid
+      w-9/10 sm:w-8/10 md:w-6/10 lg:w-1/2 xl:w-2/5
+      h-72 md:h-60
+      my-auto
+      px-1.5
+      justify-self-center
+      bg-[var(--LOGIN-SIGNUP)]
+      rounded-t-xl
+      '
+      title='login'
+    >
+      <header className="
+        py-2.5
+        h-16
+        flex
+        self-center
+        justify-center
+        "
+        title='loginHeader'
+      >
+        <h2 className='
+        text-white
+          text-xl sm:text-3xl
+          font-semibold
+          flex
+          self-center
+          tracking-[6px]
+          '
+          title="loginHeaderTitle"
+        >
+        User Login
+        </h2>
       </header>
-      <main className="loginMain">
+
+      <main className="
+        w-full
+        h-full
+        my-4
+        justify-items-center
+        content-center
+        "
+        title='loginMain'
+      >
         <p ref={errRef} className={errClass} aria-live='assertive'>{errMsg}</p>
 
-        <form onSubmit={handleSubmit} className="loginForm">
-          <div className="loginUsername">
-            <label htmlFor="username" className="loginFormLabel">
-              Username:
-            </label>
+        <form 
+          onSubmit={handleSubmit} 
+          className="w-9/10 justify-center"
+          title='loginForm'
+        >
+          <div className="
+            w-full
+            justify-items-center
+            py-2
+            "
+            title='loginUsername'
+          >
             <input type="text" 
-              className='loginFormInput'
+              className='
+                py-1 px-2
+                bg-white
+                text-purple-700
+                shadow-md shadow-purple-700
+                rounded-xl
+                flex
+                w-full lg:w-9/10
+                justify-center
+              '
+              title='loginFormInput'
               id='username'
               ref={userRef}
               value={username}
               onChange={handleUserInput}
               autoComplete='off'
+              placeholder='Username'
               required
             />
           </div>
 
-          <div className="loginFormPassword">
-            <label htmlFor="password" className="loginFormLabel">
-            Passcode:
-            </label>
+          <div className="
+            w-full
+            justify-items-center
+            py-2
+          "
+          title='loginFormPassword'
+          >
             <input 
               type="password"
-              className='loginFormInput'
+              className='
+                py-1 px-2
+                bg-white
+                text-purple-700
+                shadow-md shadow-purple-700
+                rounded-xl
+                flex
+                w-full lg:w-9/10
+                justify-center
+              '
+              title='loginFormInput'
               id='password'
+              placeholder='Passcode'
               onChange={handlePwdInput}
               value={password}
               required
             />
           </div>
 
-          <button className="loginFormBtn">Sign In</button>
+          <button 
+            className="
+              py-1 px-2
+              bg-white
+              text-purple-700
+              shadow-md shadow-purple-700
+              rounded-xl
+              flex
+              w-1/2 lg:w-9/10
+              justify-self-center
+              justify-center
+            "
+            title='loginFormBtn'
+          >
+            Sign In
+          </button>
 
-          <div className="loginFormMainFooter">
-            <label htmlFor="persist" className="loginFormTrusted">Trust This Device:</label>
+          <div className="
+          flex
+          justify-center
+          my-2
+          text-sm
+          "
+            title='loginFormMainFooter'
+          >
             <input 
               type="checkbox" 
-              className='loginFormCheckbox'
+              className='loginFormCheckbox
+              accent-transparent checked:accent-purple-500/25
+              mr-2
+              '
               id='persist'
               onChange={handleToggle}
               checked={persist}
             />
+            <label htmlFor="persist" className="loginFormTrusted">Trust This Device</label>
           </div>
 
         </form>
 
       </main>
 
-      <footer className='loginFormFooter'>
+      <footer className='loginFormFooter
+        h-6
+        flex flex-col-reverse
+
+      '>
         <div className="loginFormFooterBtnContainer">
-          <Link className='loginFormButton' to='/'>Back to Home</Link>
+          <Link
+            className='loginFormButton
+            flex flex-row-reverse
+            ' 
+            to='/'
+          >
+            <FontAwesomeIcon icon={faHouseChimney}             className='text-white text-xl'
+            />
+          </Link>
         </div>
       </footer>
     </section>
-    <div className="signupButtonContainer">
-    <h2 className='signupButtonTitle'>Login</h2>
-    <div className='signupButtonSlider' onClick={handleSignUp}>
-      <div className='signupBtn' name='Signup'>
+    <div 
+      className='
+        w-9/10 sm:w-8/10 md:w-6/10 lg:w-1/2 xl:w-2/5
+        bg-[var(--LOGIN-SIGNUP)]
+        rounded-b-2xl
+        pb-2.5
+        justify-self-center
+      '
+      title="signupButtonContainer"
+      onClick={handleSignUp}
+    >
+    <h2 className='
+      w-full
+      flex
+      py-2
+      text-white
+      tracking-[4px]
+      text-md sm:text-lg
+      justify-center
+    '
+    title='signupButtonTitle'
+    >
+      Login
+    </h2>
+    <div className='
+      h-7.75
+      w-2/5 md:w-3/10 lg:w-1/5
+      rounded-2xl
+      bg-purple-200
+      justify-self-center
+      pb-1.25
+      flex
+      inset-shadow-sm inset-shadow-[#b393cc]
+    ' 
+      title='signupButtonSlider'
+    >
+      <div className='
+        h-7.75
+        w-1/2
+        rounded-2xl
+        z-1
+        relative
+        bg-linear-to-br from-purple-500 from-20% via-[#b393cc] via-50% to-purple-500
+        ring ring-purple-400
+        right-2px
+      '
+        title='signupBtn' 
+        name='Signup'
+      >
       </div>
     </div>
     </div>
-  </>
+  </div>
   );
 
 };

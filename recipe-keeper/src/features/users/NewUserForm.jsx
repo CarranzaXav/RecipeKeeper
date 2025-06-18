@@ -1,10 +1,6 @@
-import { Link } from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import { useAddNewUserMutation } from './usersApiSlice'
 import { useNavigate } from 'react-router-dom'
-
-
-import './usersCSS/NewUserForm.css'
 
 const USER_REGEX = /^[A-z]{3,20}$/;
 const PWD_REGEX = /^[0-9]{4}/
@@ -20,7 +16,6 @@ const NewUserForm = () => {
     const [password, setPassword] = useState('')
     const [validPassword, setValidPassword] = useState(false)
     const [phone, setPhone] = useState('')
-    // const [roles, setRoles] = useState(['Standard'])
 
     useEffect(() => {
         setValidUsername(USER_REGEX.test(username))
@@ -34,7 +29,6 @@ const NewUserForm = () => {
         if (isSuccess) {
             setUsername('')
             setPassword('')
-            // setRoles([])
             navigate('/dash/users')
         }
     }, [isSuccess, navigate])
@@ -60,44 +54,57 @@ const NewUserForm = () => {
 
     return(
         <div className='w-full pt-12 h-96'>
-            <form className='userForm
-            grid
-            w-9/10 sm:w-8/10 md:w-6/10 lg:w-1/2 xl:w-2/5
-            h-72 md:h-60
-            my-auto
-            px-1.5
-            justify-self-center
-            bg-[var(--LOGIN-SIGNUP)]
-            rounded-t-xl
-            ' onSubmit={onSaveUserClicked}
+            <form className='
+                grid
+                w-9/10 sm:w-8/10 md:w-6/10 lg:w-1/2 xl:w-2/5
+                h-72 md:h-60
+                my-auto
+                px-1.5
+                justify-self-center
+                bg-[var(--LOGIN-SIGNUP)]
+                rounded-t-xl
+                ' 
+                title='userForm'
+                onSubmit={onSaveUserClicked}
             >
-                <div className="userFormHead
-                py-2
-                flex
-                self-center
-                justify-center
-                ">
-                    <h2 className='userFormTitle
+                <div className="
+                    py-2
+                    flex
+                    self-center
+                    justify-center
+                    "
+                    title='userFormHead'
+                >
+                    <h2 className='
                         text-white
                         text-xl sm:text-3xl
                         font-semibold
                         flex
                         self-center
                         tracking-[6px]
-                    '>Create User</h2>
+                        '
+                        title='userFormTitle'
+                    >
+                    Create User
+                    </h2>
                 </div>
-                <div className="userFormBody
+                <div className="
                     w-full
-                 justify-items-center
-                 content-center">
+                    justify-items-center
+                    content-center
+                    "
+                    title='userFormBody'
+                 >
 
-                    <div className="userFormUsernameBlk
+                    <div className="
                         w-9/10
                         justify-items-center
                         py-2
-                    ">
+                        "
+                        title='userFormUsernameBlk'
+                    >
                         <input
-                            className='UserFormInput
+                            className='
                             py-1 px-2
                             bg-white
                             text-purple-700
@@ -107,6 +114,7 @@ const NewUserForm = () => {
                             w-full lg:w-9/10
                             justify-center
                             '
+                            title='userFormInput'
                             type="text" 
                             id='username'
                             autoComplete='off'
@@ -116,58 +124,71 @@ const NewUserForm = () => {
                         />
                     </div>
 
-                    <div className="userFormPasswordBlk w-9/10
-                 justify-items-center
-                 py-2">
-                    <input 
-                    type="password" className="userFormInput
-                    py-1 px-2
-                    bg-white
-                    text-purple-700
-                    shadow-md shadow-purple-700
-                    rounded-xl
-                    flex
-                    w-full lg:w-9/10
-                    justify-center" 
-                    id='password'
-                    name='password'
-                    placeholder='Create 4 Digit Passcode'
-                    value={password}
-                    onChange={onPasswordChanged}
-                    />
+                    <div className="
+                        w-9/10
+                        justify-items-center
+                        py-2
+                        "
+                        title='userFormPasswordBlk'
+                    >
+                        <input 
+                            type="password" 
+                            className="
+                                py-1 px-2
+                                bg-white
+                                text-purple-700
+                                shadow-md shadow-purple-700
+                                rounded-xl
+                                flex
+                                w-full lg:w-9/10
+                                justify-center
+                                "
+                            title='userFormInput' 
+                            id='password'
+                            name='password'
+                            placeholder='Create 4 Digit Passcode'
+                            value={password}
+                            onChange={onPasswordChanged}
+                        />
                     </div>
 
-                    <div className="userFormPhoneBlk w-9/10
-                 justify-items-center
-                 py-2">
+                    <div className="
+                        w-9/10
+                        justify-items-center
+                        py-2"
+                        title='userFormPhoneBlk'
+                    >
 
-                    <input 
-                    type="text" 
-                    className="userFormInput
-                    py-1 px-2
-                    bg-white
-                    text-purple-700
-                    shadow-md shadow-purple-700
-                    rounded-xl
-                    flex
-                    w-full lg:w-9/10
-                    justify-center"
-                    id='phone'
-                    name='phone'
-                    placeholder='Enter Phone #'
-                    value={phone} 
-                    onChange={onPhoneChanged}
-                    />
+                        <input 
+                            type="text" 
+                            className="
+                            py-1 px-2
+                            bg-white
+                            text-purple-700
+                            shadow-md shadow-purple-700
+                            rounded-xl
+                            flex
+                            w-full lg:w-9/10
+                            justify-center"
+                            title='userFormInput'
+                            id='phone'
+                            name='phone'
+                            placeholder='Enter Phone #'
+                            value={phone} 
+                            onChange={onPhoneChanged}
+                        />
                     </div>
 
                 </div>
-                <div className="userFormFooter
+                <div className="
                     justify-self-center
                     justify-center
                     w-8/10 sm:w-3/5 md:w-1/2
-                ">
+                    "
+                    title='userFormFooter'
+                >
                     {(canSave) && <button 
-                        className='userFormBtn
+                        className='
                             py-1 px-2
                             bg-purple-700
                             font-bold
@@ -178,21 +199,26 @@ const NewUserForm = () => {
                             w-full
                             tracking-[2px]
                         '
-                        title='Save'
+                        title='userFormBtnSave'
+                        name='Save'
                     >
                         Create New User
                     </button>}
                 </div>
 
             </form>
-            <div className="loginButtonContainer
+
+            <div className="
                 w-9/10 sm:w-8/10 md:w-6/10 lg:w-1/2 xl:w-2/5
                 bg-[var(--LOGIN-SIGNUP)]
                 rounded-b-2xl
                 pb-2.5
                 justify-self-center
-                ">
-                <h2 className='loginButtonTitle
+                "
+                title='loginButtonContainer'
+                onClick={handleLogin}
+            >
+                <h2 className='
                     w-full
                     flex
                     py-2
@@ -200,8 +226,12 @@ const NewUserForm = () => {
                     tracking-[4px]
                     text-md sm:text-lg
                     justify-center
-                '>Sign Up</h2>
-                <div className='loginButtonSlider
+                    '
+                    title='loginButtonTitle'
+                >
+                Sign Up
+                </h2>
+                <div className='
                         h-7.75
                         w-2/5 md:w-3/10 lg:w-1/5
                         rounded-2xl
@@ -210,8 +240,10 @@ const NewUserForm = () => {
                         pb-1.25
                         flex flex-row-reverse
                         inset-shadow-sm inset-shadow-[#b393cc]
-                    ' onClick={handleLogin}>
-                    <div className='loginBtn
+                    ' 
+                    title='loginButtonSlider'
+                >
+                    <div className='
                         h-7.75
                         w-1/2
                         rounded-2xl
@@ -220,7 +252,10 @@ const NewUserForm = () => {
                         bg-linear-to-br from-purple-500 from-20% via-[#b393cc] via-50% to-purple-500
                         ring ring-purple-400
                         left-2px
-                    ' name='Login'>
+                    ' 
+                        name='Login'
+                        title='loginBtn'
+                    >
                     </div>
                 </div>
             </div>
