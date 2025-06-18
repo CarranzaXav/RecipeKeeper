@@ -3512,3 +3512,5 @@
 20250618	08:29:43	b6e2cfca-a94a-4fb2-905b-f4a7bec3c9b6	OPTIONS	/auth/logout	http://localhost:5173
 20250618	08:29:43	ae690032-7f1a-45ee-996c-dfdc0d1de93f	POST	/auth/logout	http://localhost:5173
 20250618	08:29:44	730f79ae-0498-4a85-9df9-c253fea36d13	GET	/recipes	http://localhost:5173
+20250618	08:32:34	a38bbd49-b261-47aa-812b-77a02105ca7b	GET	/recipes	http://localhost:5173
+20250618	08:40:19	e45ad88d-2c5e-4b8a-9659-d86f214151a5	GET	/recipes	http://localhost:5173

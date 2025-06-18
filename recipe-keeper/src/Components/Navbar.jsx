@@ -11,7 +11,7 @@ const Navbar = () => {
   const [sendLogout, {isLoading, isSuccess, isError, error}] = useSendLogoutMutation()
   const [isHovered, setIsHovered] = useState(false)
 
-  const hoverClass = isHovered ? 'invisible' : 'visible text-purple-400'
+  const hoverClass = isHovered ? 'invisible' : 'duraction-300 ease-in-out text-purple-400'
   const hiddenClass = isHovered ? '' : 'invisible'
 
   const hover = () => {
@@ -43,6 +43,7 @@ const Navbar = () => {
             ml-1/10 hover:ml-0
             flex
             justify-end
+            py-2
             pr-[2%] hover:pr-0
             cursor-pointer
             bg-linear-270 from-[#b393cc] from-75% to-[var(--NAVBAR)]'
@@ -75,6 +76,7 @@ const Navbar = () => {
             ml-1/10
             flex
             justify-end
+            py-2
             pr-[2%] hover:pr-0
             cursor-pointer
             bg-linear-270 from-[#b393cc] from-75% to-[var(--NAVBAR)]'
