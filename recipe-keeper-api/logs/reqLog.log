@@ -3505,3 +3505,10 @@
 20250616	22:35:30	8dcd6461-72a9-4827-b708-cbbe5893fa1e	GET	/recipes	http://localhost:5173
 20250617	23:01:57	4d2611f1-eaa4-4317-8478-be6e1046723b	GET	/recipes	http://localhost:5173
 20250617	23:15:19	7d2270ae-9539-45e3-906b-f61939b08c1d	GET	/recipes	http://localhost:5173
+20250618	08:27:49	c2ce5b47-c07e-434e-8ab8-cf84a670d430	OPTIONS	/auth	http://localhost:5173
+20250618	08:27:49	e330b652-6d94-4700-a62b-034c39e703ca	POST	/auth	http://localhost:5173
+20250618	08:27:51	d94ef1e3-7931-498f-bbbf-05aa3e07fc53	OPTIONS	/recipes	http://localhost:5173
+20250618	08:27:51	2abd8c38-a185-44be-a85f-83e3a8f3a46b	GET	/recipes	http://localhost:5173
+20250618	08:29:43	b6e2cfca-a94a-4fb2-905b-f4a7bec3c9b6	OPTIONS	/auth/logout	http://localhost:5173
+20250618	08:29:43	ae690032-7f1a-45ee-996c-dfdc0d1de93f	POST	/auth/logout	http://localhost:5173
+20250618	08:29:44	730f79ae-0498-4a85-9df9-c253fea36d13	GET	/recipes	http://localhost:5173

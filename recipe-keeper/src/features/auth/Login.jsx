@@ -8,7 +8,7 @@ import { setCredentials } from './authSlice';
 import { useLoginMutation} from './authApiSlice'
 
 import usePersist from '../../hooks/usePersist'
-import './authCSS/Login.css'
+
 
 const Login = () => {
 
@@ -82,9 +82,9 @@ const Login = () => {
       '
       title='login'
     >
-      <header className="
-        py-2.5
-        h-16
+      <div className="
+        py-2
+        mt-2
         flex
         self-center
         justify-center
@@ -103,7 +103,7 @@ const Login = () => {
         >
         User Login
         </h2>
-      </header>
+      </div>
 
       <main className="
         w-full
@@ -186,7 +186,7 @@ const Login = () => {
               shadow-md shadow-purple-700
               rounded-xl
               flex
-              w-1/2 lg:w-9/10
+              w-1/2
               justify-self-center
               justify-center
             "
