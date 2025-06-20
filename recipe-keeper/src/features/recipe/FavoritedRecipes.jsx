@@ -2,7 +2,6 @@ import { useGetRecipesQuery } from "./recipesApiSlice"
 import { Link } from "react-router-dom"
 import RecipeCard from "./RecipeCard"
 
-import './recipeCSS/FavoritedRecipes.css'
 import useAuth from "../../hooks/useAuth"
 
 const FavoritedRecipes = () => {
@@ -37,7 +36,7 @@ if(isSuccess && recipes && userId){
   const recipeContent = limited.map(id => <RecipeCard key={id} recipeCardId={id}/>)
 
   return (
-    <div className="recipeList favoritedList flex">
+    <div className="recipeList favoritedList sm:flex sm:gap-x-4 w-full">
       {favoritedIds.length > 0 ? recipeContent : <span>No Favorites</span>}
     </div>
   )

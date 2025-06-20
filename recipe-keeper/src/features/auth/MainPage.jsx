@@ -58,9 +58,10 @@ const MainPage = () => {
     >
     <div className='
       grid md:flex
-      w-11/10 md:w-full
+      w-11/10 sm:w-full
       p-2
       pb-4
+      md:mb-1
       justify-self-center
     ' 
       title="mainPageHead"
@@ -76,7 +77,7 @@ const MainPage = () => {
       </h1>
       <p className='
         flex
-        w-full
+        w-full md:w-2/10
         h-auto
         self-end
         justify-end
@@ -94,18 +95,17 @@ const MainPage = () => {
     >
       {(username) ? 
         <FavoritedRecipes className="
-          grid md:flex
-          grid-cols-1 md:grid-cols-3
-          gap-y-4 md:gap-y-0
-          md:gap-x-4 
+          grid
+          grid-cols-1 sm:grid-cols-3
+          gap-y-4 sm:gap-y-0
         "
         /> 
         :
         <div className="
-          grid md:flex
+          grid 
           grid-cols-1 md:grid-cols-3
           gap-y-4 md:gap-y-0
-          md:gap-x-4 
+          sm:gap-x-4 
         "
           title='mainPageBodyRecipeCards'
         >
