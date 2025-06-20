@@ -75,7 +75,7 @@ const handleFavorited = async () => {
     bg-[var(--FORM-COLOR)] 
     px-[0.75em] py-[0.5em]
     rounded-xl
-    inset-shadow-[#c9b9d6] inset-shadow-sm
+    inset-shadow-sm inset-shadow-purple-700
     "
     >
         <div className="recipeCardHeader 
