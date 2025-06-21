@@ -13,8 +13,6 @@ const RecipesList = () => {
     isLoading, isSuccess, isError, error
   } = useGetRecipesQuery("recipesList")
 
-  // const createNewRecipe() => {}
-
   if (isLoading) return <p>Loading...</p>
 
   if(isError) return <p className="errmsg">{error?.data?.message}</p>
@@ -23,10 +21,6 @@ const RecipesList = () => {
 if(isSuccess){
   const {ids} = recipes
 
-  // const favoritedIds = ids.filter(id => entities[id]?.favorited)
-
-  // let filteredIds;
-  // if( || )
 
   const recipeContent = ids?.length ? ids.map(recipeCardId => <RecipeCard key={recipeCardId} recipeCardId={recipeCardId}/>) : null
 

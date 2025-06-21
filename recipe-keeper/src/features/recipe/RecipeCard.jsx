@@ -63,93 +63,120 @@ const handleFavorited = async () => {
 
     const handleEdit = () => navigate(`/dash/recipes/edit/${recipeCardId}`)
 
-    const viewRecipeCard = () => navigate(`/dash/recipes/${recipeCardId}`)
+    const viewRecipeCard = () => navigate(`/recipes/${recipeCardId}`)
     
 
   return (
 
     <div 
-    className="recipeCard 
-    w-full 
-    h-64 m:h-48 lg:h-72
-    bg-[var(--FORM-COLOR)] 
-    px-[0.75em] py-[0.5em]
-    rounded-xl
-    inset-shadow-sm inset-shadow-purple-700
+    className=" 
+      w-full 
+      h-64 m:h-48 lg:h-72
+      bg-[var(--FORM-COLOR)] 
+      px-[0.75em] py-[0.5em]
+      rounded-xl
+      inset-shadow-sm inset-shadow-purple-700
     "
+    title='recipeCard'
     >
-        <div className="recipeCardHeader 
-        flex
-        w-full
-        h-1/10
-        justify-center
-        mb-2
-        ">
+        <div className=" 
+          flex
+          w-full
+          h-1/10
+          justify-center
+          mb-2
+        "
+        title="recipeCardHeader"
+        >
             <div className="
-            recipeCardTitle
             w-8/10
-            text-xl
-            ">{recipe.title}</div>
-            {(username) && <div className="recipeCardFavorited
+            text-sm lg:text-xl
+            "
+            title='recipeCardTitle'
+            >
+              {recipe.title}
+            </div>
+
+            {(username) && 
+            <div className="
             w-1/10
             text-xl
             cursor-pointer
             self-start
             "
-                onClick={handleFavorited}
+              title="recipeCardFavorited"
+              onClick={handleFavorited}
             >
              <FontAwesomeIcon icon={faStar} style={{color: isFavorited ? '#FFD43B' : '#bababa'}}/>
             </div>}
         </div>
 
-        <div className="recipeCardPhoto
-        h-3/4
-        w-full
-        flex
-        items-center
-        justify-center
-        rounded-xl
-        bg-white
-        text-4xl
-        ">{recipe.photo || "📷"}</div>
+        <div className="
+          h-3/4
+          w-full
+          flex
+          items-center
+          justify-center
+          rounded-xl
+          bg-white
+          text-4xl
+        "
+          title="recipeCardPhoto"
+        >
+          {recipe.photo || "📷"}
+        </div>
 
         {/* User Can Only Edit Their Own Recipes */}
-        <div className="recipeCardFooter 
-        justify-self-center
-        h-auto
-        w-9/10
-        pt-1
-        flex
-        ">
-            <div className="recipeCardEditContainer w-1/2">
+        <div className=" 
+          justify-self-center
+          h-auto
+          w-9/10
+          pt-1
+          flex
+        "
+          title="recipeCardFooter"
+        >
+            <div className="w-1/2" title='recipeCardEditContainer'>
         {userId === recipe.user &&
-                <button className="recipeCardEditBtn
-                text-2xl
-                text-white
-                bg-transparent
-                border-none
-                cursor-pointer
-                hover:text-purple-500
-                " onClick={handleEdit}>
-                    <FontAwesomeIcon icon={faPenToSquare} />
+                <button className="
+                  text-2xl
+                  text-white
+                  bg-transparent
+                  border-none
+                  cursor-pointer
+                  hover:text-purple-500
+                " 
+                  onClick={handleEdit}
+                  name="recipeCardEditBtn"
+                >
+                  <FontAwesomeIcon icon={faPenToSquare} />
                 </button>
         }
             </div>
 
-            <div className="recipeCardViewContainer  w-1/2 
-            flex
-            justify-end
-            ">
-                <button className="recipeCardViewButton
-                bg-transparent
-                border-none
-                text-2xl
-                cursor-pointer
-                " onClick={viewRecipeCard}>
-                    <FontAwesomeIcon  className='recipeCardViewBtn
+            <div className="
+              w-1/2 
+              flex
+              justify-end
+            "
+              title='recipeCardViewContainer'
+            >
+                <button className="
+                  bg-transparent
+                  border-none
+                  text-2xl
+                  cursor-pointer
+                " 
+                  onClick={viewRecipeCard}
+                  title='recipeCardViewButton'
+                >
+                    <FontAwesomeIcon  className='
                     text-white
-                hover:text-purple-500
-                    'icon={faEye} />
+                    hover:text-purple-500
+                    '
+                      title="recipeCardViewBtn"
+                      icon={faEye} 
+                    />
                 </button>
             </div>
         </div>

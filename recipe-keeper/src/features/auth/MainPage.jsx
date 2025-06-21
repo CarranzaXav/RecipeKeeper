@@ -31,8 +31,6 @@ const MainPage = () => {
   if(isSuccess){
     const {ids, entities} = recipes
 
-    // const favoritedIds = ids.filter(id => entities[id]?.favorited)
-
     const selectRecipes = ids.filter(id => entities[id])
 
     const shuffleIds = selectRecipes.sort(() => 0.5 - Math.random())
@@ -95,8 +93,6 @@ const MainPage = () => {
     >
       {(username) ? 
         <FavoritedRecipes className="
-          grid
-          grid-cols-1 sm:grid-cols-3
           gap-y-4 sm:gap-y-0
         "
         /> 
@@ -104,7 +100,7 @@ const MainPage = () => {
         <div className="
           grid 
           grid-cols-1 md:grid-cols-3
-          gap-y-4 md:gap-y-0
+          gap-y-4 sm:gap-y-0
           sm:gap-x-4 
         "
           title='mainPageBodyRecipeCards'

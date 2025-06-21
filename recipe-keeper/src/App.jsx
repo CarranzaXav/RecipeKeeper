@@ -26,7 +26,11 @@ function App() {
         <Route path='login' element={<Login/>}/>
 
         <Route path='users/new' element={<NewUserForm/>}/>
-        <Route path='recipes' element={<RecipesList/>}/>
+        {/* <Route path='recipes' element={<RecipesList/>}/> */}
+        <Route path='recipes'>
+          <Route index element={<RecipesList/>}/>
+          <Route path=':id' element={<Recipe/>}/>
+        </Route>
 
           <Route element={<PersistLogin/>}>
           <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]}/>}>
@@ -36,7 +40,7 @@ function App() {
             {/* Recipes Route */}
             <Route  path='recipes'>
               {/* <Route index element={<RecipesList/>}/> */}
-              <Route path=':id' element={<Recipe/>}/>
+              {/* <Route path=':id' element={<Recipe/>}/> */}
               <Route path='edit/:id' element={<EditRecipe/>}/>
               <Route path='new' element={<NewRecipe/>} />
             </Route>

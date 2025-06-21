@@ -36,7 +36,16 @@ if(isSuccess && recipes && userId){
   const recipeContent = limited.map(id => <RecipeCard key={id} recipeCardId={id}/>)
 
   return (
-    <div className="recipeList favoritedList sm:flex sm:gap-x-4 w-full">
+    <div className=" 
+      w-full
+      grid
+      grid-cols-1 sm:grid-cols-3
+      sm:flex 
+      sm:gap-x-4 
+      gap-y-4 sm:gap-y-0
+    "
+    title='favoritedList'
+    >
       {favoritedIds.length > 0 ? recipeContent : <span>No Favorites</span>}
     </div>
   )
