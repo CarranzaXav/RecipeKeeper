@@ -1,13 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faUserPen} from '@fortawesome/free-solid-svg-icons'
 
-import { useSelector } from "react-redux";
-import { selectUserById, useGetUsersQuery } from "./usersApiSlice";
+import { useGetUsersQuery } from "./usersApiSlice";
 import { memo } from 'react'
 
-import './usersCSS/User.css'
-
 const User = ({ userId }) => {
-  // const user = useSelector((state) => selectUserById(state, userId));
 
   const {user} = useGetUsersQuery('usersList', {
     selectFromResult: ({data}) => ({
@@ -20,20 +18,52 @@ const User = ({ userId }) => {
   if (user) {
     const handleEdit = () => navigate(`/dash/users/${userId}`);
 
-    // const userRolesString = user.roles.toString().replaceAll(",", ", ");
-
     return (
-      <div className="userRowContainer">
-        <div className="userRow">
+      <div className='w-full mx-auto' title="userRowContainer">
+        <div className='flex
+          justify-self-center
+          w-4/5
+          py-3
+          px-1.5
+        ' title="userRow">
 
-          <div className="userCell">{user.username}</div>
+          <div className='
+            w-1/2
+            text-purple-800
+            font-medium
+            tracking-[2px]
+            text-sm md:text-lg lg:text-xl
+          ' 
+          title="userCell"
+          >
+            {user.username}
+          </div>
 
-          <div className="userCellBtnContainer">
-            <button className="userEditBtn" onClick={handleEdit}>Edit</button>
+          <div className='
+            w-1/2
+            flex
+            flex-row-reverse
+            text-sm md:text-lg lg:text-xl
+          '
+            title="userCellBtnContainer"
+          >
+            <button className="
+              cursor-pointer
+            "
+              title="userEditBtn" 
+              onClick={handleEdit}
+            >
+              <FontAwesomeIcon icon={faUserPen} style={{color: 'oklch(43.8% 0.218 303.724)'}}/>
+            </button>
           </div>
           
         </div>
-        <div className="userRowLine"></div>
+        <div className='
+          border-b-2 border-dashed border-white
+          w-9/10
+          mx-auto
+        '
+          title="userRowLine"></div>
       </div>
     );
   } else return null;

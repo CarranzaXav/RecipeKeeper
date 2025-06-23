@@ -24,7 +24,8 @@ const Loader = () => {
         src={images[current]} 
         alt={`Loader Part ${current + 1}`} 
         className='
-          w-32 h-32 
+          w-24 lg:w-28 
+          h-24 lg:h-28 
           transition-opacity duration-150 ease-in-out
         '
       />
