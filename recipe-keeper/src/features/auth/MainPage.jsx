@@ -15,18 +15,15 @@ const MainPage = () => {
        isLoading, isSuccess, isError, error
       } = useGetRecipesQuery("recipesList")
 
-    // const [isLoading, setIsLoading] = useState(true)
-
     useEffect(() => {
-      const timer = setTimeout(() => isLoading, 1000)
+      const timer = setTimeout(() => isLoading, 1500)
       return () => clearTimeout(timer)
     }, [])
 
     const date = new Date()
     const today = new Intl.DateTimeFormat('en-us', { dataStyle: 'full', timeStyle: 'short'}).format(date)
     
-    // if (isLoading) return  <Loader/>
-    if (isLoading) return  <p>... Loading</p>
+    if (isLoading) return  <Loader />
 
   if(isSuccess){
     const {ids, entities} = recipes

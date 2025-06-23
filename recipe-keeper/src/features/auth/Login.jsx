@@ -8,6 +8,7 @@ import { setCredentials } from './authSlice';
 import { useLoginMutation} from './authApiSlice'
 
 import usePersist from '../../hooks/usePersist'
+import Loader from '../../Components/Loader'
 
 
 const Login = () => {
@@ -66,7 +67,7 @@ const Login = () => {
   
   const errClass = errMsg ? 'errmsg': 'offscreen'
 
-  if (isLoading) return <div className='loader'>Loading...</div>
+  if (isLoading) return <Loader/>
 
   return (
   <div className="w-full pt-12 h-96">

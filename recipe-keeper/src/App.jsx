@@ -16,6 +16,7 @@ import RequireAuth from './features/auth/RequireAuth'
 import NewUserForm from './features/users/NewUserForm'
 import { ROLES } from '../config/roles'
 import EditUser from './features/users/EditUser'
+import Loader from './Components/Loader'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
       <Route path="/" element={<Layout/>}>
         <Route index element={<MainPage/>}/>
         <Route path='login' element={<Login/>}/>
+        {/* <Route path='loader' element={<Loader/>}/> */}
 
         <Route path='users/new' element={<NewUserForm/>}/>
         {/* <Route path='recipes' element={<RecipesList/>}/> */}

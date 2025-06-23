@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGetUsersQuery } from "./usersApiSlice";
 import EditUserForm from "./EditUserForm";
+import Loader from "../../Components/Loader";
 
 const EditUser = () => {
 
@@ -12,7 +13,7 @@ const EditUser = () => {
         }),
     })
 
-    if(!user) return <div className="loader">Loading...</div>
+    if(!user) return <div className="loader"><Loader/></div>
 
     return <EditUserForm user={user} />
 

@@ -1,6 +1,7 @@
 import { useGetUsersQuery } from "./usersApiSlice"
 import User from './User'
 import './usersCSS/UsersList.css'
+import Loader from "../../Components/Loader"
 
 const UsersList = () => {
 
@@ -10,7 +11,7 @@ const UsersList = () => {
     refetchOnMountOrArgChange: true,
   })
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <Loader/>
   
   if (isError) return <p className="errmsg">{error?.data?.message}</p>
 

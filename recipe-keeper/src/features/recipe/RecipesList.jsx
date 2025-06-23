@@ -1,6 +1,7 @@
 import { useGetRecipesQuery } from "./recipesApiSlice"
 import { Link } from "react-router-dom"
 import RecipeCard from "./RecipeCard"
+import Loader from "../../Components/Loader"
 
 import useAuth from "../../hooks/useAuth"
 
@@ -13,7 +14,7 @@ const RecipesList = () => {
     isLoading, isSuccess, isError, error
   } = useGetRecipesQuery("recipesList")
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <Loader/>
 
   if(isError) return <p className="errmsg">{error?.data?.message}</p>
 

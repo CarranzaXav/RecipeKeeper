@@ -5,6 +5,7 @@ import { useRefreshMutation } from "./authApiSlice";
 import usePersist from "../../hooks/usePersist";
 import { useSelector } from "react-redux";
 import { selectCurrentToken, setCredentials } from "./authSlice";
+import Loader from '../../Components/Loader'
 
 const PersistLogin = () => {
   // Check if persistence is enabled
@@ -60,7 +61,7 @@ const PersistLogin = () => {
   } else if (isLoading) {
     // Show loader during token verification
     console.log("Loading...");
-    content = <p>Loading</p>;
+    content = <Loader/>;
   } else if (isError) {
     // Show error message if refresh token fails
     console.log("Error during token refresh: ", error?.data?.message);

@@ -19,7 +19,7 @@ const Navbar = () => {
   const hiddenClass = isHovered ? '' : 'invisible'
 
   const hover = () => {
-    setIsHovered(!isHovered)
+    setIsHovered(prev => (!prev))
   }
 
   return (
