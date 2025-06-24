@@ -183,7 +183,6 @@ const isFavorited = userId && recipe?.favorited?.[userId]
             flex-row-reverse
             relative
             bottom-0
-                w-3/10
           ' 
         title="recipeEditContainer"
         >
