@@ -3,7 +3,6 @@ import { useAddNewRecipeMutation } from "./recipesApiSlice"
 import { useNavigate } from "react-router-dom"
 import { COURSES } from "../../../config/courses"
 
-import './recipeCSS/NewRecipeForm.css'
 import useAuth from "../../hooks/useAuth"
 
 const NewRecipeForm = ({users}) => {
