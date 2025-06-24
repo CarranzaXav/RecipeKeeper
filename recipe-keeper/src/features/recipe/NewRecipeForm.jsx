@@ -142,13 +142,6 @@ const onInstructionsChanged = (e) => {
                 <div className=""
                     title="newRecipeFormBodyTitleBlock"
                 >
-                    {/* <label className='
-                        flex
-                        w-1/2
-                        tracking-[2px]
-                        text-lg          self-center       
-                    '
-                    title="newRecipeFormLabel" htmlFor="title">Title: </label> */}
                     <input 
                         className='
                            flex
@@ -282,9 +275,10 @@ const onInstructionsChanged = (e) => {
 
                 <div className='mb-2'
                 title="newRecipeFormBodyIngredientsBlock">
-                    {/* <label className="newRecipeFormLabel" htmlFor="ingredients">Ingredients: </label> */}
+
                     <textarea 
-                        className='          w-full
+                        className='          
+                           w-full
                            bg-white
                            p-1
                            rounded-lg
@@ -305,7 +299,6 @@ const onInstructionsChanged = (e) => {
                 </div>
 
                 <div className='' title="newRecipeFormBodyInstructionsBlock">
-                    {/* <label className="newRecipeFormLabel" htmlFor="instructions">Instructions: </label> */}
                     <textarea 
                         className='          w-full
                            bg-white
@@ -334,7 +327,7 @@ const onInstructionsChanged = (e) => {
                     justify-center
                 '
                 title="newRecipeFormFooter">
-                {(!canSave) &&
+                {(canSave) &&
                     <button
                         className="
                             h-8/10
