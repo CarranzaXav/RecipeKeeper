@@ -22,7 +22,6 @@ const NewRecipeForm = ({users}) => {
 
   useEffect(() => {
     if (isSuccess) {
-        // setUserId('')
         setTitle('')
         setCourse([])
         setPhoto('')
@@ -95,7 +94,7 @@ const onInstructionsChanged = (e) => {
 
   return (
     <>
-        <form className="newRecipeForm
+        <form className="
         w-full md:w-8/10
         min-h-48
         h-auto
@@ -105,6 +104,7 @@ const onInstructionsChanged = (e) => {
         rounded-2xl
         mb-4
         " 
+        title="newRecipeForm"
         onSubmit={onSaveRecipeClicked}
         >
             <div className='
@@ -295,12 +295,30 @@ const onInstructionsChanged = (e) => {
                         onChange={onIngredientsChanged}
                         placeholder="Enter Ingredients..."
                     />
-                    {/* Implement Live Preview */}
+
+                    <div id="PrevIngredients">
+                        <ul className="px-4">
+                            {ingredients
+                                .split(/[\n,]+/) //splitby newline or comma
+                                .filter(item => item.trim() !== '')//remove empty entries
+                                .map((item, index)=> (
+                                    <li className="
+                                        list-disc
+                                        pl-2
+                                    " 
+                                        key={index}>{item.trim()}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+
                 </div>
 
                 <div className='' title="newRecipeFormBodyInstructionsBlock">
                     <textarea 
-                        className='          w-full
+                        className='    
+                           w-full
                            bg-white
                            p-1
                            rounded-lg
@@ -317,7 +335,22 @@ const onInstructionsChanged = (e) => {
                         onChange={onInstructionsChanged}
                         placeholder="Enter Instructions (Separate by comma)..."
                     />
-                        {/* Implement Live Preview */}
+
+                    <div id="PrevInstructions">
+                        <ul className="px-4">
+                            {instructions
+                                .split(/[\n,]+/) //splitby newline or comma
+                                .map((item, index) => item.trim())
+                                .filter(item => item.trim() !== '') //remove empty entries
+                                .map((item, index)=> (
+                                    <li className="list-decimal
+                                    pl-2
+                                    " key={index}>{item.trim()}</li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                    
                 </div>
             </div>
                 <div className='
