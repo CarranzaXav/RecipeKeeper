@@ -80,7 +80,7 @@ const EditUserForm = ({user}) => {
     }
 
     // CSS classes for form validation
-    const errClass = isError || isDelError ? 'errmsg' : 'offscreen'
+    const errClass = isError || isDelError ? 'errmsg' : ''
     const validUserClass = !validUsername ? 'formInput--incomplete' : ''
     const validPWDClass = password && !validPassword ? 'formInput--incomplete' : ''
     const validPhoneClass = !phone ? 'formInput--incomplete' : ''
@@ -90,7 +90,6 @@ const EditUserForm = ({user}) => {
   return (
     <>
         <p className={errClass}>{errContent}</p>
-
         <form 
             className='
             w-full md:w-9/10 lg:w-8/10 xl:w-7/10
@@ -196,7 +195,8 @@ const EditUserForm = ({user}) => {
                 <div className="editUserFormPhone">
                     
                     <input 
-                        type="text" className='
+                        type="text" 
+                        className={`
                             w-full
                             tracking-[2px]
                             text-sm md:text-lg
@@ -205,7 +205,8 @@ const EditUserForm = ({user}) => {
                             bg-white
                             rounded-lg 
                             p-1.5 
-                        '
+                            ${validPhoneClass}
+                        `}
                         title="editUserFormInput"
                         id='user-phone'
                         name='user-phone' 

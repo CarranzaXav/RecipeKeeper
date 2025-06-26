@@ -75,15 +75,3 @@ if(isSuccess){
 }
 
 export default RecipesList
-
-
-  // const {ids} = recipes
-
-  // const recipeContent = ids?.length
-  // ? ids.map(recipeId => <Recipe key={recipeId} recipeId={recipeId} />) : null
-
-  // return (
-  //   <div className="recipesList">
-  //     {recipeContent}
-  //   </div>
-  // )

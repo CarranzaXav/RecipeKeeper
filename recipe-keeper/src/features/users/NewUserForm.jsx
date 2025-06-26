@@ -7,7 +7,7 @@ const PWD_REGEX = /^[0-9]{4}/
 
 const NewUserForm = () => {
 
-    const [addNewUser, {isLoading, isSuccess, isError}] = useAddNewUserMutation()
+    const [addNewUser, {isLoading, isSuccess, isError, error}] = useAddNewUserMutation()
 
     const navigate = useNavigate()
 
@@ -52,7 +52,18 @@ const NewUserForm = () => {
         )
     }
 
+    const errClass = isError || isDelError ? 'errmsg' : ''
+    const validUserClass = !validUsername ? 'formInput--incomplete' : ''
+    const validPWDClass = password && !validPassword ? 'formInput--incomplete' : ''
+    const validPhoneClass = !phone ? 'formInput--incomplete' : ''
+
+    const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
+
     return(
+        <>
+
+        <p className={errClass}>{errContent}</p>
+
         <div className='w-full pt-12 h-96'>
             <form className='
                 grid
@@ -104,7 +115,7 @@ const NewUserForm = () => {
                         title='userFormUsernameBlk'
                     >
                         <input
-                            className='
+                            className={`
                             py-1 px-2
                             bg-white
                             text-purple-700
@@ -113,7 +124,8 @@ const NewUserForm = () => {
                             flex
                             w-full lg:w-9/10
                             justify-center
-                            '
+                            ${validUserClass}
+                            `}
                             title='userFormInput'
                             type="text" 
                             id='username'
@@ -133,7 +145,7 @@ const NewUserForm = () => {
                     >
                         <input 
                             type="password" 
-                            className="
+                            className={`
                                 py-1 px-2
                                 bg-white
                                 text-purple-700
@@ -142,7 +154,8 @@ const NewUserForm = () => {
                                 flex
                                 w-full lg:w-9/10
                                 justify-center
-                                "
+                                ${validPWDClass}
+                                `}
                             title='userFormInput' 
                             id='password'
                             name='password'
@@ -161,7 +174,7 @@ const NewUserForm = () => {
 
                         <input 
                             type="text" 
-                            className="
+                            className={`
                             py-1 px-2
                             bg-white
                             text-purple-700
@@ -169,7 +182,9 @@ const NewUserForm = () => {
                             rounded-xl
                             flex
                             w-full lg:w-9/10
-                            justify-center"
+                            justify-center
+                            ${validPhoneClass}
+                            `}
                             title='userFormInput'
                             id='phone'
                             name='phone'
@@ -260,6 +275,7 @@ const NewUserForm = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 
 }

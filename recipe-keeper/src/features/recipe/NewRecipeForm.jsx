@@ -92,8 +92,17 @@ const onInstructionsChanged = (e) => {
     autoResizeTextarea(instructionsBox)
   }, [ingredients, instructions])
 
+  const errClass = isError ? "errmsg" : ""
+  const validTitleClass = !title ? 'form-input--incomplete' : ''
+  const validIngreClass = !ingredients ? 'form-input--incomplete' : ''
+  const validInstrClass = !instructions ? 'form-input--incomplete' : ''
+  
+  const errContent = (error?.data?.message || delerror?.data?.message) ?? ""
+
   return (
     <>
+        <p className={errClass}>{error?.data?.message}</p>
+
         <form className="
         w-full md:w-8/10
         min-h-48
@@ -143,7 +152,7 @@ const onInstructionsChanged = (e) => {
                     title="newRecipeFormBodyTitleBlock"
                 >
                     <input 
-                        className='
+                        className={`
                            flex
                             w-full
                             tracking-[2px]
@@ -154,7 +163,8 @@ const onInstructionsChanged = (e) => {
                             rounded-lg 
                             py-1.5
                             px-1
-                        '
+                            ${validTitleClass}
+                        `}
                         title="newRecipeFormInputTitle"
                         type="text"
                         name="title" 
@@ -277,7 +287,7 @@ const onInstructionsChanged = (e) => {
                 title="newRecipeFormBodyIngredientsBlock">
 
                     <textarea 
-                        className='          
+                        className={`          
                            w-full
                            bg-white
                            p-1
@@ -287,7 +297,8 @@ const onInstructionsChanged = (e) => {
                            min-h-16
                            whitespace-pre-wrap
                            text-sm md:text-lg lg:text-xl
-                        '
+                           ${validIngreClass}
+                        `}
                         title="newRecipeFormInput"
                         name="ingredients" 
                         id="ingredients"
@@ -317,7 +328,7 @@ const onInstructionsChanged = (e) => {
 
                 <div className='' title="newRecipeFormBodyInstructionsBlock">
                     <textarea 
-                        className='    
+                        className={`    
                            w-full
                            bg-white
                            p-1
@@ -327,7 +338,8 @@ const onInstructionsChanged = (e) => {
                            min-h-16
                            whitespace-pre-wrap
                            text-sm md:text-lg lg:text-xl
-                        '
+                           ${validInstrClass}
+                        `}
                         title="newRecipeFormInput"
                         name="instructions" 
                         id="instructions"

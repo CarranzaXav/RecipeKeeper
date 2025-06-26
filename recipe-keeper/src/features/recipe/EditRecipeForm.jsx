@@ -91,6 +91,15 @@ const EditRecipeForm = ({recipe}) => {
 
   const canSave = [title, ingredients, instructions].every(Boolean) && !isLoading
 
+  const errClass = isError || isDelError ? 'errmsg' : ''
+  const validTitleClass = !title ? 'form-input--incomplete' : ''
+  const validIngreClass = !ingredients ? 'form-input--incomplete' : ''
+  const validInstrClass = !instructions ? 'form-input--incomplete' : ''
+  
+  const errContent = (error?.data?.message || delerror?.data?.message) ?? ""
+
+
+
   const onSaveRecipeClicked = async (e) => {
     
     if(canSave){
@@ -122,6 +131,8 @@ const EditRecipeForm = ({recipe}) => {
    })
 
   return (
+    <>
+        <p className={errClass}>{errContent}</p>
         <form className="
             w-full md:w-9/10 lg:w-8/10 xl:w-7/10
             min-h-48
@@ -196,7 +207,7 @@ const EditRecipeForm = ({recipe}) => {
                 <div className='' title="editRecipeFormBodyTitle">                    
                 <input 
                         type="text" 
-                        className='
+                        className={`
                             flex
                             w-full
                             tracking-[2px]
@@ -205,8 +216,9 @@ const EditRecipeForm = ({recipe}) => {
                             self-center
                             bg-white
                             rounded-lg 
-                            p-1.5 
-                        '
+                            p-1.5
+                            ${validTitleClass}
+                        `}
                         title='editRecipeFormInput'
                         id='recipe-title'
                         name='title'
@@ -357,7 +369,7 @@ const EditRecipeForm = ({recipe}) => {
                     </label>
 
                     <textarea 
-                    className='
+                    className={`
                         w-full
                         bg-white
                         p-1
@@ -367,7 +379,8 @@ const EditRecipeForm = ({recipe}) => {
                         min-h-16
                         whitespace-pre-wrap
                         text-sm md:text-lg lg:text-xl
-                    '
+                        ${validIngreClass}
+                    `}
                     title='editRecipeFormInput'
                     name="ingredients" id="recipe-ingredients"
                     value={ingredients} 
@@ -408,7 +421,7 @@ const EditRecipeForm = ({recipe}) => {
                     </label>
 
                     <textarea 
-                    className='
+                    className={`
                         w-full
                         bg-white
                         p-1
@@ -418,7 +431,8 @@ const EditRecipeForm = ({recipe}) => {
                         min-h-16
                         whitespace-pre-wrap
                         text-sm md:text-lg lg:text-xl
-                    '
+                        ${validInstrClass}
+                    `}
                     title='editRecipeFormInput'
                     name="instructions" id="recipe-instructions"
                     value={instructions} 
@@ -479,6 +493,7 @@ const EditRecipeForm = ({recipe}) => {
                 </button>}
             </div>
         </form>
+    </>
   )
 }
 

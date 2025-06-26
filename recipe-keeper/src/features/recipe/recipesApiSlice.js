@@ -38,35 +38,6 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Recipe", id: "LIST" }],
     }),
-    // updateRecipe: builder.mutation({
-    //   query: (initialRecipe) => ({
-    //     url: "/recipes",
-    //     method: "PATCH",
-    //     body: { ...initialRecipe },
-    //   }),
-    //   // Update the cache manually
-    //   async onQueryStarted(initialRecipe, { dispatch, queryFulfilled }) {
-    //     try {
-    //       const { data: updatedRecipe } = await queryFulfilled;
-
-    //       dispatch(
-    //         apiSlice.util.updateQueryData(
-    //           "getRecipes",
-    //           "recipesList",
-    //           (draft) => {
-    //             draft.entities[updatedRecipe.id] = {
-    //               ...updatedRecipe,
-    //               favorited: { ...(updatedRecipe.favorited || {}) },
-    //             };
-    //           }
-    //         )
-    //       );
-    //     } catch (err) {
-    //       console.error("Failed to update cache after recipe update:", err);
-    //     }
-    //   },
-    //   invalidatesTags: (result, error, arg) => [{ type: "Recipe", id: arg.id }],
-    // }),
     updateRecipe: builder.mutation({
       query: (initialRecipe) => ({
         url: "/recipes",
@@ -82,12 +53,6 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
               "getRecipes",
               "recipesList",
               (draft) => {
-                // draft.entities[updatedRecipe.id] = {
-                //   ...updatedRecipe,
-                //   favorited: JSON.parse(
-                //     JSON.stringify(updatedRecipe.favorited || {})
-                //   ),
-                // };
                 recipesAdapter.updateOne(draft, {
                   id: updatedRecipe.id,
                   changes: {
@@ -103,7 +68,7 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
           console.error("❌ Failed to update recipe cache:", err);
         }
       },
-      invalidatesTags: (result, error, arg) => [{ type: "Recipe", id: arg.id }], // ✅ ADD THIS
+      invalidatesTags: (result, error, arg) => [{ type: "Recipe", id: arg.id }],
     }),
 
     deleteRecipe: builder.mutation({
