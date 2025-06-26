@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth"
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faStar} from '@fortawesome/free-solid-svg-icons'
+import Loader from '../../Components/Loader'
 
 const Recipe = () => {
 
@@ -33,7 +34,7 @@ const Recipe = () => {
 
   const navigate = useNavigate()
 
-  if(isLoading) return <p>Loading ...</p>
+  if(isLoading) return <Loader/>
 
   if (!recipe && isSuccess) return <p>Recipe not found</p>
 
@@ -61,7 +62,7 @@ const Recipe = () => {
     console.log("Submitting PATCH with:", {
   id: recipe?.id,
   favorited: favoritedMap
-})
+  })
 
 
     try {

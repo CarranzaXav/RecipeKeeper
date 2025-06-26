@@ -2,10 +2,14 @@ import { useState, useEffect} from 'react'
 import { useUpdateRecipeMutation, useDeleteRecipeMutation } from './recipesApiSlice'
 import { useNavigate } from 'react-router-dom'
 import { COURSES } from '../../../config/courses'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faStar} from '@fortawesome/free-solid-svg-icons'
+import useAuth from '../../hooks/useAuth'
 
 
-// const EditRecipeForm = ({recipe, users}) => {
 const EditRecipeForm = ({recipe}) => {
+
+  const {id: userId} = useAuth()
 
   const [updateRecipe, {
     isLoading,
@@ -37,9 +41,10 @@ const EditRecipeForm = ({recipe}) => {
     : recipe.instructions
   )
 
-
-//   const [instructions, setInstructions] = useState(recipe.instructions)
-  const [favorited, isFavorited] = useState(recipe.favorited)
+  const [favorited, setFavorited] = useState(() => {
+    const initial = typeof recipe.favorited === 'object' ? { ...recipe.favorited } : {}
+    return initial
+  })
 
   useEffect(() => {
 
@@ -50,7 +55,7 @@ const EditRecipeForm = ({recipe}) => {
         setTime()
         setIngredients([])
         setInstructions([])
-        isFavorited(recipe.favorited || false)
+        setFavorited(recipe.favorited || false)
         navigate('/recipes')
     }
   }, [isSuccess, isDelSuccess, navigate])
@@ -58,7 +63,14 @@ const EditRecipeForm = ({recipe}) => {
   const onTitleChanged = (e) => setTitle(e.target.value)
   const onPhotoChanged = (e) => setPhoto(e.target.value)
   const onTimeChanged = (e) => setTime(e.target.value)
-//   const onFavorited = (e) => isFavorited(e.target.value)
+
+  const onFavorited = () => {
+    setFavorited(prev => ({
+        ...prev,
+        [userId]: !prev?.[userId]
+    }))
+  }
+
 
     const onIngredientsChanged = (e) => {
     setIngredients(e.target.value)
@@ -92,8 +104,8 @@ const EditRecipeForm = ({recipe}) => {
             ingredients: ingredients.split(',').map(i => i.trim()).filter(Boolean),
             instructions: instructions.split(',').map(i => i.trim()).filter(Boolean),
             favorited
-})
-
+    })
+    navigate('/recipes')
     }
   }
 
@@ -132,16 +144,13 @@ const EditRecipeForm = ({recipe}) => {
             '
                 title="editRecipeFormHead"
             >
-                <label className="editRecipeHeadBodyFavorited"
+                <div className="editRecipeHeadBodyFavorited cursor-pointer"
+                    onClick={onFavorited}
+                    value={favorited}
                 >
-                    <input 
-                        type="checkbox"
-                        checked={favorited}
-                        onChange={() => isFavorited(prev => !prev)}
+                    <FontAwesomeIcon icon={faStar} style={{color: favorited?.[userId] ? '#FFD43B' : '#bababa'}}
                     />
-                    Favorited
-                    {/* {recipe.favorited ? '⭐' : 'not ⭐'} */}
-                </label>
+                </div>
 
             <h2 className='
                 text-white
@@ -194,13 +203,16 @@ const EditRecipeForm = ({recipe}) => {
                     />
                 </div>
 
-                <div className=''
+                 <div className='
+                flex
+                    my-3
+                '
                     title="editRecipeFormPhoto"
                 >
                     <label htmlFor="recipe-photo"
                     className='
-                        w-full
-                        flex
+                        w-4/10
+                        grid
                         text-sm
                         tracking-[2px]
                         self-center
@@ -208,12 +220,14 @@ const EditRecipeForm = ({recipe}) => {
                     '
                         title='editRecipeFormLabel'
                     >
-                        Photo(Optional)
+                        <h2>Photo</h2>
+                        <h4>(Optional)</h4>
                     </label>
 
-                    <input 
+
+                    <input
                         className='
-                            w-full
+                           w-6/10
                            p-1
                            rounded-lg
                            resize-none
@@ -223,13 +237,14 @@ const EditRecipeForm = ({recipe}) => {
                            whitespace-pre-wrap
                         '
                         title='editRecipeFormInput'
-                        type="text" 
+                        type="text"
                         id='recipe-photo'
                         name='photo'
                         value={photo}
                         onChange={onPhotoChanged}    
                     />
                 </div>
+
 
                 <div className='
                     flex
