@@ -3,6 +3,8 @@ import { useUpdateUserMutation, useDeleteUserMutation } from './usersApiSlice'
 import { useNavigate } from 'react-router-dom'
 import {ROLES} from '../../../config/roles'
 import useAuth from '../../hooks/useAuth'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { faTrash} from '@fortawesome/free-solid-svg-icons'
 
 const USER_REGEX =/^[A-z_]{3,20}$/
 const PWD_REGEX =/^[0-9]{4}$/
@@ -103,51 +105,108 @@ const EditUserForm = ({user}) => {
             title='editUserForm'
             onSubmit={(e) => e.preventDefault()}
         >
-            <div className="editUserFormHead">
-                <h2 className="editUserFormTitle">Edit User</h2>
-                {(isAdmin) && <button className="editUserFormDeleteButton"
+            <div className='
+                w-full
+                h-auto
+                flex
+                justify-center
+                mb-2
+            '
+                title="editUserFormHead"
+            >
+                <h2 className='
+                w-8/10
+                grid lg:flex
+                text-white
+                text-xl md:text-2xl lg:text-3xl xl:text-4xl
+                tracking-[3px]
+                font-semibold
+                justify-items-center lg:justify-evenly' title="editUserFormTitle"
+                >
+                Edit User</h2>
+                {(isAdmin) && <button className='
+                    text-sm md:text-lg lg:text-xl
+                '
+                    title="DeleteButton"
                     onClick={onDeleteUserClicked}
-                >Delete</button>}
+                >
+                    <FontAwesomeIcon icon={faTrash} className='text-white hover:text-purple-500 cursor-pointer'/>
+                </button>}
             </div>
 
-            <div className="editUserFormBody">
+            <div className='
+                w-full
+                mx-auto
+                bg-[#f9f4fc]
+                p-4
+                rounded-2xl
+                mb-2.5
+            ' 
+                title="editUserFormBody"
+            >
 
                <div className="editUserFormUsername">
-                    <label htmlFor="user-username" className="editUserFormLabelUsername">
-                    </label>
 
                     <input 
                         type="text" 
-                        className={`editUserFormInput ${validUserClass}`} 
+                        className={`
+                            flex
+                            w-full
+                            tracking-[2px]
+                            text-sm md:text-lg
+                            text-purple-500
+                            self-center
+                            bg-white
+                            rounded-lg 
+                            p-1.5 
+                         ${validUserClass}`}
+                        title='editUserFormInput' 
                         id='user-username'
                         value={username}
                         name='user-username'
                         onChange={onUsernameChanged}
                         autoComplete='off'
+                        placeholder='Username'
                     />
                </div>
 
                 <div className="editUserFormPassword">
-                    <label htmlFor="user-password" className="editUserFormLabelPassword">
-                        Passcode
-                        <span>Must be 4 digits</span>
-                    </label>
                     
                     <input 
                         type="password" 
-                        className={`editUserFormInput ${validPWDClass}`} 
+                        className={`flex
+                            w-full
+                            tracking-[2px]
+                            text-sm md:text-lg
+                            text-purple-500
+                            self-center
+                            bg-white
+                            rounded-lg 
+                            p-1.5  
+                            ${validPWDClass}`} 
+                        title='editUserFormInput'
                         id='user-password'
                         name='password'
                         value={password}
                         onChange={onPasswordChanged}
+                        placeholder='Enter 4 digit Passcode'
                     />
                 </div>
 
                 <div className="editUserFormPhone">
-                    <label htmlFor="user-phone" className="editUserFormLabelPhone">Phone:</label>
                     
                     <input 
-                        type="text" className="editUserFormInput"
+                        type="text" className='
+                            w-full
+                            tracking-[2px]
+                            text-sm md:text-lg
+                            text-purple-500
+                            self-center
+                            bg-white
+                            rounded-lg 
+                            p-1.5 
+                        '
+                        title="editUserFormInput"
                         id='user-phone'
                         name='user-phone' 
                         value={phone}
@@ -155,26 +214,62 @@ const EditUserForm = ({user}) => {
                     />
                 </div>
                 
-                <div className="editUserFormActive">
-                    <label htmlFor="user-active" className="editUserFormLabelActive">Active: </label>
+                <div className='
+                    flex
+                    justify-center
+                    my-2
+                    text-sm
+                '
+                    title="editUserFormActive"
+                >
+                    <label htmlFor="user-active" className='mr-2'
+                    title="editUserFormLabelActive">Is Active: </label>
                     
                     <input 
-                        type="checkbox" className="editUserFormInput" 
+                        type="checkbox" className='
+                            accent-transparent checked:accent-purple-500/25
+                        '
+                        title="editUserFormInput" 
                         id='user-active'
                         name='user-active'
                         checked={active}
-                        onChange={onActiveChanged}    
+                        onChange={onActiveChanged}
                     />
                 </div>
                 
                 
             </div>
 
-            <div className="editUserFormFooter">
+            <div className='
+                h-15/100
+                w-full
+                flex
+                justify-center 
+            '
+            title="editUserFormFooter">
                 {(canSave) && 
                 
                 <button 
-                    className='editUserFormSaveButton'
+                    className='
+                        h-8/10
+                        p-2.5
+                        justify-items-center
+                        flex
+                        cursor-pointer
+                        bg-[var(--BUTTON-COLOR)] hover:bg-white
+                        text-white hover:text-[var(--BUTTON-COLOR)]
+                        tracking-[2px]
+                        font-semibold
+                        rounded-2xl
+                        border-solid
+                        border-t-2 border-t-white 
+                        border-l-2 border-l-white 
+                        border-b-2 border-b-[#aba6d2] 
+                        border-r-2 border-r-[#aba6d2] 
+                        hover:shadow-[4px 4px]
+                        hover:shadow-[var(--BUTTON-COLOR)]
+                        hover:transform-[translate(-4px,-4px)]
+                    '
                     onClick={onSaveUserClicked}
                     title='Save'
                 >
