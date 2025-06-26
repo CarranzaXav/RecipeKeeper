@@ -38,7 +38,7 @@ const MainPage = () => {
 
   return (
     <section className='
-      w-full md:w-9/10 xl:w-8/10
+      w-full lg:w-9/10 xl:w-8/10
       h-auto
       bg-[#c9b9d6]
       xl:mt-3
@@ -85,6 +85,7 @@ const MainPage = () => {
 
     <div className='
       pb-5
+      mb-3
     '
       title="mainPageBody"
     >

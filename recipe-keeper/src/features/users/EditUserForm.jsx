@@ -90,7 +90,17 @@ const EditUserForm = ({user}) => {
         <p className={errClass}>{errContent}</p>
 
         <form 
-            className='editUserForm'
+            className='
+            w-full md:w-9/10 lg:w-8/10 xl:w-7/10
+            min-h-48
+            h-auto
+            bg-[var(--FORM-COLOR)]
+            p-5
+            justify-self-center
+            rounded-2xl
+            mb-4
+        ' 
+            title='editUserForm'
             onSubmit={(e) => e.preventDefault()}
         >
             <div className="editUserFormHead">

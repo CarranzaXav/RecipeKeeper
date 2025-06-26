@@ -3,7 +3,7 @@ import { useUpdateRecipeMutation, useDeleteRecipeMutation } from './recipesApiSl
 import { useNavigate } from 'react-router-dom'
 import { COURSES } from '../../../config/courses'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faStar} from '@fortawesome/free-solid-svg-icons'
+import {faStar, faTrash} from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../../hooks/useAuth'
 
 
@@ -123,7 +123,7 @@ const EditRecipeForm = ({recipe}) => {
 
   return (
         <form className="
-            w-full md:w-8/10
+            w-full md:w-9/10 lg:w-8/10 xl:w-7/10
             min-h-48
             h-auto
             bg-[var(--FORM-COLOR)]
@@ -144,7 +144,13 @@ const EditRecipeForm = ({recipe}) => {
             '
                 title="editRecipeFormHead"
             >
-                <div className="editRecipeHeadBodyFavorited cursor-pointer"
+                <div className='
+                    cursor-
+                    mr-1
+                    text-2xl
+                    self-center
+                ' 
+                    title="editRecipeHeadBodyFavorited"
                     onClick={onFavorited}
                     value={favorited}
                 >
@@ -153,20 +159,27 @@ const EditRecipeForm = ({recipe}) => {
                 </div>
 
             <h2 className='
+                w-8/10
+                grid lg:flex
                 text-white
-                text-2xl md:text-3xl lg:text-4xl
+                text-xl md:text-2xl lg:text-3xl xl:text-4xl
                 tracking-[3px]
                 font-semibold
+                justify-items-center lg:justify-evenly
             ' 
                 title="editRecipeFormHeadTitle"
             >
-                Edit {recipe.title} Recipe
+                <h3>Edit</h3>
+                <p>{recipe.title}</p>
+                <h3>Recipe</h3>
             </h2>
             <button
-                className='editRecipeDeleteBtn'
+                className='text-2xl '
                 title='Delete'
                 onClick={onDeleteRecipeClicked}
-            >🗑</button>
+            >
+                <FontAwesomeIcon icon={faTrash} className='text-white hover:text-purple-500 cursor-pointer'/>
+            </button>
             </div>
 
             <div className='
@@ -253,7 +266,7 @@ const EditRecipeForm = ({recipe}) => {
                 title="editRecipeFormTime">
                     <label
                      className='
-                        w-3/10
+                        w-3/10 lg:w-4/10
                         flex
                         text-sm
                         tracking-[2px]
@@ -268,7 +281,7 @@ const EditRecipeForm = ({recipe}) => {
 
                      <input 
                         className='
-                            w-7/10
+                            w-7/10 lg:w-6/10
                             py-1
                             px-2
                             mb-1.5
