@@ -2,28 +2,37 @@ import { useGetRecipesQuery } from "./recipesApiSlice"
 import { Link } from "react-router-dom"
 import RecipeCard from "./RecipeCard"
 import Loader from "../../Components/Loader"
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { faCircleChevronDown} from '@fortawesome/free-solid-svg-icons'
+import { useState } from "react"
 
 import useAuth from "../../hooks/useAuth"
 
 const RecipesList = () => {
 
-  const {username,status, isAdmin} = useAuth()
+  const {username} = useAuth()
+
+  const [visibleCount, setVisibleCount] = useState(9);
 
   const {
     data: recipes,
     isLoading, isSuccess, isError, error
   } = useGetRecipesQuery("recipesList")
 
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 9)
+  }
+
   if (isLoading) return <Loader/>
 
   if(isError) return <p className="errmsg">{error?.data?.message}</p>
 
 
-if(isSuccess){
+  if(isSuccess){
   const {ids} = recipes
 
 
-  const recipeContent = ids?.length ? ids.map(recipeCardId => <RecipeCard key={recipeCardId} recipeCardId={recipeCardId}/>) : null
+  const recipeContent = ids?.length ? ids.slice(0,visibleCount).map(recipeCardId => <RecipeCard key={recipeCardId} recipeCardId={recipeCardId}/>) : null
 
   return (
     <div
@@ -67,8 +76,19 @@ if(isSuccess){
       gap-x-2 gap-y-6">
 
         {recipeContent}
-
       </div>
+      {visibleCount > ids.length &&
+        <div className="
+          w-full
+          text-lg lg:text-4xl
+          flex
+          justify-center
+        "
+        onScroll={handleLoadMore}
+        >
+          <FontAwesomeIcon icon={faCircleChevronDown} className="text-purple-300"/>
+        </div>
+      }
     </div>
   )
 }

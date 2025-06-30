@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Layout from './Components/Layout'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
@@ -14,7 +13,7 @@ import EditRecipe from './features/recipe/EditRecipe'
 import PersistLogin from './features/auth/PersistLogin'
 import RequireAuth from './features/auth/RequireAuth'
 import NewUserForm from './features/users/NewUserForm'
-import { ROLES } from '../config/roles'
+import { ROLES } from './config/roles'
 import EditUser from './features/users/EditUser'
 import Loader from './Components/Loader'
 
@@ -28,7 +27,7 @@ function App() {
         {/* <Route path='loader' element={<Loader/>}/> */}
 
         <Route path='users/new' element={<NewUserForm/>}/>
-        {/* <Route path='recipes' element={<RecipesList/>}/> */}
+
         <Route path='recipes'>
           <Route index element={<RecipesList/>}/>
           <Route path=':id' element={<Recipe/>}/>
@@ -36,13 +35,12 @@ function App() {
 
           <Route element={<PersistLogin/>}>
           <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]}/>}>
+
         <Route element={<Prefetch/>}>
           <Route path='dash' element={<DashLayout/>}>
 
             {/* Recipes Route */}
             <Route  path='recipes'>
-              {/* <Route index element={<RecipesList/>}/> */}
-              {/* <Route path=':id' element={<Recipe/>}/> */}
               <Route path='edit/:id' element={<EditRecipe/>}/>
               <Route path='new' element={<NewRecipe/>} />
             </Route>

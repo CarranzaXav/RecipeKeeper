@@ -13,7 +13,7 @@ const EditUser = () => {
         }),
     })
 
-    if(!user) return <div className="loader"><Loader/></div>
+    if(!user) return <Loader/>
 
     return <EditUserForm user={user} />
 

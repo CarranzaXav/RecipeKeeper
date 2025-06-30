@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth"
 
 const RequireAuth = ({allowedRoles = []}) => {
     const location = useLocation()
-    const {roles} = useAuth()
+    const { roles } = useAuth()
 
     const hasRequiredRole = Array.isArray(roles) && roles.some(role => allowedRoles.includes(role))
 

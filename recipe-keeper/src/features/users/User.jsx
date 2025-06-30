@@ -71,4 +71,4 @@ const User = ({ userId }) => {
 
 const memoizedUser = memo(User)
 
-export default User;
+export default memoizedUser;

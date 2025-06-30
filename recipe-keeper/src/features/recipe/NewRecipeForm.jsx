@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useAddNewRecipeMutation } from "./recipesApiSlice"
 import { useNavigate } from "react-router-dom"
-import { COURSES } from "../../../config/courses"
+import { COURSES } from "../../config/courses"
 
 import useAuth from "../../hooks/useAuth"
 
@@ -101,7 +101,7 @@ const onInstructionsChanged = (e) => {
 
   return (
     <>
-        <p className={errClass}>{error?.data?.message}</p>
+        <p className={errClass}>{errContent}</p>
 
         <form className="
         w-full md:w-8/10

@@ -1,7 +1,7 @@
 import { useState, useEffect} from 'react'
 import { useUpdateRecipeMutation, useDeleteRecipeMutation } from './recipesApiSlice'
 import { useNavigate } from 'react-router-dom'
-import { COURSES } from '../../../config/courses'
+import { COURSES } from '../../config/courses'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faStar, faTrash} from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../../hooks/useAuth'

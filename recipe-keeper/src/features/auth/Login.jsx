@@ -36,13 +36,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try{
-      const { accessToken} = await login({ username, password}).unwrap()
-      dispatch(setCredentials({accessToken}))
+      const { accessToken } = await login({ username, password}).unwrap()
+      dispatch(setCredentials({ accessToken }))
       setUsername('')
       setPassword('')
       navigate('/', {replace: true})
-      // window.location.reload()
-    } catch (err) {
+    } 
+    catch (err) {
       if(!err.status){
         setErrMsg('No Server Response')
       } else if (err.status === 400){

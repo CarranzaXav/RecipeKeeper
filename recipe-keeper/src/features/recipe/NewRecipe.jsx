@@ -1,6 +1,7 @@
 import { useGetRecipesQuery } from "./recipesApiSlice"
 import NewRecipeForm from './NewRecipeForm'
 import { useGetUsersQuery } from "../users/usersApiSlice"
+import Loader from "../../Components/Loader"
 
 const NewRecipe = () => {
 
@@ -10,10 +11,7 @@ const NewRecipe = () => {
         }),
     })
 
-    if (!users?.length) {
-        return (
-        <div className="loader">Loading ...</div>
-        )}
+    if (!users?.length) return <Loader/>
 
   return (
     <div>

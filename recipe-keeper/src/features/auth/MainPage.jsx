@@ -15,13 +15,19 @@ const MainPage = () => {
        isLoading, isSuccess, isError, error
       } = useGetRecipesQuery("recipesList")
 
-    useEffect(() => {
-      const timer = setTimeout(() => isLoading, 1500)
-      return () => clearTimeout(timer)
-    }, [])
+    const [time, setTime] = useState(() => 
+      new Intl.DateTimeFormat('en-us', { timeStyle: 'short'}).format(new Date())
+    )
 
-    const date = new Date()
-    const today = new Intl.DateTimeFormat('en-us', { dataStyle: 'full', timeStyle: 'short'}).format(date)
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setTime(
+          new Intl.DateTimeFormat('en-us', {timeStyle:'short' }).format(new Date())
+        )
+      }, 1000)
+
+      return () => clearInterval(interval)
+    }, [])
     
     if (isLoading) return  <Loader />
 
@@ -79,7 +85,7 @@ const MainPage = () => {
         text-xs md:text-lg xl:text-2xl
       '
       title='mainPageDate'>
-        {today}
+        {time}
       </p>
     </div>
 

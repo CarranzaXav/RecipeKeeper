@@ -52,12 +52,12 @@ const NewUserForm = () => {
         )
     }
 
-    const errClass = isError || isDelError ? 'errmsg' : ''
+    const errClass = isError ? 'errmsg' : ''
     const validUserClass = !validUsername ? 'formInput--incomplete' : ''
     const validPWDClass = password && !validPassword ? 'formInput--incomplete' : ''
     const validPhoneClass = !phone ? 'formInput--incomplete' : ''
 
-    const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
+    const errContent = (error?.data?.message) ?? ''
 
     return(
         <>

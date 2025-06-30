@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { selectRecipeById } from "./recipesApiSlice"
 import { selectAllUsers } from "../users/usersApiSlice"
 import EditRecipeForm from './EditRecipeForm'
+import Loader from "../../Components/Loader"
 
 const EditRecipe = () => {
     const { id } = useParams()
@@ -10,7 +11,7 @@ const EditRecipe = () => {
     const recipe = useSelector(state => selectRecipeById(state, id))
     const users = useSelector(selectAllUsers)
 
-  return recipe && users ? <EditRecipeForm recipe={recipe} users={users} /> : <p>Loading ...</p>
+  return recipe && users ? <EditRecipeForm recipe={recipe} users={users} /> : <Loader/>
 }
 
 export default EditRecipe

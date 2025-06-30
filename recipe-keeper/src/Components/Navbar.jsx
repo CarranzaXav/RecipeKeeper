@@ -25,6 +25,7 @@ const Navbar = () => {
   return (
     <header className="navbarContainer
       flex
+      px-1
       w-full
       bg-[var(--NAVBAR)]
       text-white
