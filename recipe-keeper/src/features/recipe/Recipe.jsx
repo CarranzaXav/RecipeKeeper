@@ -177,6 +177,7 @@ const isFavorited = userId && recipe?.favorited?.[userId]
             ))}
         </ol>
 
+      {userId === recipe.user && 
         <div className='
             w-full
             flex
@@ -201,7 +202,7 @@ const isFavorited = userId && recipe?.favorited?.[userId]
             >
             Edit
             </button>
-        </div>
+        </div>}
     </div>
   )
 }

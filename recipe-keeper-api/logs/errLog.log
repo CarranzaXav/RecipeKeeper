@@ -47,3 +47,13 @@
 20250608	22:51:06	792532e6-eec1-447b-a8ab-f963d59b4134	ReferenceError: result is not defined	PATCH	/recipes	http://localhost:5173
 20250608	22:51:10	1a64c880-3033-4ae0-9011-12df2e1792f0	ReferenceError: result is not defined	PATCH	/recipes	http://localhost:5173
 20250608	22:57:26	9bfcb050-24fb-4990-99bc-0f1d7337979e	ReferenceError: result is not defined	PATCH	/recipes	http://localhost:5173
+20250630	23:56:34	c6f869ae-b06a-437d-8db9-7a40e8f98dfc	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	http://localhost:5173
+20250630	23:57:12	75f3ae4f-436f-4aab-b1e0-af0b453ef37f	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	http://localhost:5173
+20250630	23:57:27	d4149c9b-bcc1-45ad-bea9-f2b90621f5ac	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	http://localhost:5173
+20250630	23:59:07	87c7a4cf-6324-43f4-887c-921e427fd0bb	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	http://localhost:5173
+20250630	23:59:46	c6c7cd3b-4f11-47e9-92f3-570287d0d281	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	undefined
+20250701	00:02:30	4bf3ee42-f840-4a93-9a07-f85c27259440	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	undefined
+20250701	00:02:33	5ee67351-9ecb-4351-87c5-f9d107c5e121	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	undefined
+20250701	00:03:50	42ae2618-437c-48fa-9686-9b7ebf5d11fa	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	http://localhost:5173
+20250701	00:04:05	b152b44b-e9f4-4753-a6b9-594becf7c311	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	http://localhost:5173
+20250701	00:07:52	753f4ed6-e49f-4a0f-b653-fb49ba8f9c78	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	undefined

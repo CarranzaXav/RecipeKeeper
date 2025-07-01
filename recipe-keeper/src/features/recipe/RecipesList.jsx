@@ -41,7 +41,7 @@ const RecipesList = () => {
       h-full
       "
     >
-        {(username) ?
+        {(!username) ?
       <Link className="recipeListCreate
        flex 
       bg-gray-300 
@@ -77,9 +77,10 @@ const RecipesList = () => {
 
         {recipeContent}
       </div>
-      {visibleCount > ids.length &&
+      {visibleCount < ids.length &&
         <div className="
           w-full
+          mt-2
           text-lg lg:text-4xl
           flex
           justify-center

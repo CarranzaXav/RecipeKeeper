@@ -25,7 +25,7 @@ const Navbar = () => {
   return (
     <header className="navbarContainer
       flex
-      px-1
+      pl-3
       w-full
       bg-[var(--NAVBAR)]
       text-white
@@ -49,7 +49,7 @@ const Navbar = () => {
             flex
             justify-end
             py-2
-            pr-[2%] hover:pr-0
+            pr-[2%] hover:pr-1
             cursor-pointer
             bg-linear-270 from-[#b393cc] from-75% to-[var(--NAVBAR)]'
             onMouseEnter={hover}

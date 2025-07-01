@@ -71,6 +71,7 @@ const NewUserForm = () => {
                 h-72 md:h-60
                 my-auto
                 px-1.5
+                lg:pt-1.5
                 justify-self-center
                 bg-[var(--LOGIN-SIGNUP)]
                 rounded-t-xl
@@ -204,6 +205,7 @@ const NewUserForm = () => {
                 >
                     {(canSave) && <button 
                         className='
+                            lg:mt-1.5
                             py-1 px-2
                             bg-purple-700
                             font-bold

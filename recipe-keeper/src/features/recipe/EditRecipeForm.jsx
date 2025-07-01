@@ -110,8 +110,8 @@ const EditRecipeForm = ({recipe}) => {
             course,
             time,
             photo,
-            ingredients: ingredients.split(',').map(i => i.trim()).filter(Boolean),
-            instructions: instructions.split(',').map(i => i.trim()).filter(Boolean),
+            ingredients: ingredients.split(', ').map(i => i.trim()).filter(Boolean),
+            instructions: instructions.split(', ').map(i => i.trim()).filter(Boolean),
             favorited
     })
     navigate('/recipes')
@@ -173,15 +173,27 @@ const EditRecipeForm = ({recipe}) => {
                 w-8/10
                 grid lg:flex
                 text-white
-                text-xl md:text-2xl lg:text-3xl xl:text-4xl
+                text-xl md:text-2xl lg:text-3xl
                 tracking-[3px]
                 font-semibold
-                justify-items-center lg:justify-evenly
+                justify-items-center 
+                justify-center
+                px-4
             ' 
                 title="editRecipeFormHeadTitle"
             >
                 <h3>Edit</h3>
-                <p>{recipe.title}</p>
+                <p className='
+                w-1/2 lg:w-auto
+                flex
+                justify-center
+                text-lg xl:text-2xl 
+                xl:self-end
+                px-4
+                '
+                >
+                    {recipe.title}
+                </p>
                 <h3>Recipe</h3>
             </h2>
             <button
@@ -442,7 +454,7 @@ const EditRecipeForm = ({recipe}) => {
                 <div id="PrevInstructions">
                         <ul className="px-4">
                             {instructions
-                                .split(/[\n,]+/) //splitby newline or comma
+                                .split(/[\n]+/) //splitby newline or comma
                                 .map((item, index) => item.trim())
                                 .filter(item => item.trim() !== '') //remove empty entries
                                 .map((item, index)=> (

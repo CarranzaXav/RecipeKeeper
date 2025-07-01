@@ -1,12 +1,11 @@
 const User = require("../models/User");
 const Recipe = require("../models/Recipe");
-const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 
 // @desc Get all Users
 // @route GET /users
 // @access Private
-const getAllUsers = asyncHandler(async (req, res) => {
+const getAllUsers = async (req, res) => {
   // Get all users from MongoDB
   const users = await User.find().select("-password").lean();
 
@@ -16,12 +15,12 @@ const getAllUsers = asyncHandler(async (req, res) => {
   }
 
   res.json(users);
-});
+};
 
 // @desc Create new user
 // @route POST /users
 // @access Private
-const createNewUser = asyncHandler(async (req, res) => {
+const createNewUser = async (req, res) => {
   const { username, password, phone, roles } = req.body;
 
   // Confirm data
@@ -39,7 +38,6 @@ const createNewUser = asyncHandler(async (req, res) => {
   // Hash password
   const hashedPwd = await bcrypt.hash(password, 10); // salt rounds
 
-  // Double check if passsword is fine without the quotes around it.
   const userObject = { username, password: hashedPwd, phone, roles };
 
   const user = await User.create(userObject);
@@ -49,12 +47,12 @@ const createNewUser = asyncHandler(async (req, res) => {
   } else {
     res.status(400).json({ message: "Invalid user data recieved" });
   }
-});
+};
 
 // @desc Update a user
 // @route PATCH /users
 // @access Private
-const updateUser = asyncHandler(async (req, res) => {
+const updateUser = async (req, res) => {
   const { id, username, password, phone, roles, active } = req.body;
 
   // Confirm data
@@ -92,12 +90,12 @@ const updateUser = asyncHandler(async (req, res) => {
   const updatedUser = await user.save();
 
   res.json({ message: `${updatedUser.username} updated` });
-});
+};
 
 // @desc Delete a User
 // @route DELETE /users
 // @access Private
-const deleteUser = asyncHandler(async (req, res) => {
+const deleteUser = async (req, res) => {
   const { id } = req.body;
 
   // Confirm data
@@ -106,10 +104,10 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 
   // Does the user still have assigned notes?
-  const recipe = await Recipe.findOne({ user: id }).lean().exec();
-  if (recipe) {
-    return res.status(400).json({ message: "User has assigned recipes" });
-  }
+  // const recipe = await Recipe.findOne({ user: id }).lean().exec();
+  // if (recipe) {
+  //   return res.status(400).json({ message: "User has assigned recipes" });
+  // }
 
   // Does the user exist to delete?
   const user = await User.findById(id).exec();
@@ -123,7 +121,7 @@ const deleteUser = asyncHandler(async (req, res) => {
   const reply = `Username ${result.username} with ID ${result._id} deleted`;
 
   res.json(reply);
-});
+};
 
 module.exports = {
   getAllUsers,

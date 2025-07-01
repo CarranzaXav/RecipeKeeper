@@ -1,30 +1,12 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const asyncHandler = require("express-async-handler");
-
-// // Token need to authenticate with JWT
-// const user = {
-//   username: "XavierCarranza",
-//   phone: "3525072571",
-//   roles: ["Admin"],
-// };
-// const token = jwt.sign(
-//   {
-//     UserInfo: {
-//       username: user.username,
-//       phone: user.phone,
-//       roles: user.roles,
-//     },
-//   },
-//   process.env.ACCESS_TOKEN_SECRET,
-//   { expiresIn: "15m" }
-// );
+// const asyncHandler = require("express-async-handler");
 
 // @desc Login
 // @route POST /auth
 // @access Public
-const login = asyncHandler(async (req, res) => {
+const login = async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -65,13 +47,15 @@ const login = asyncHandler(async (req, res) => {
   res.cookie("jwt", refreshToken, {
     httpOnly: true, //accessible only by web server
     secure: true, //https
+    // secure: false, //Dev Mode
     sameSite: "None", //cross-site cookie
-    maxAge: 7 * 24 * 60 * 60 * 60 * 1000,
+    // sameSite: "Lax", //Dev Mode
+    maxAge: 14 * 24 * 60 * 60 * 60 * 1000,
   });
 
   // Send accessToken containing username and roles
   res.json({ accessToken });
-});
+};
 
 // @desc Refresh
 // @route GET /auth/refresh
@@ -87,7 +71,7 @@ const refresh = (req, res) => {
   jwt.verify(
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
-    asyncHandler(async (err, decoded) => {
+    async (err, decoded) => {
       if (err) return res.status(403).json({ message: "Forbidden" });
 
       const foundUser = await User.findOne({
@@ -110,7 +94,7 @@ const refresh = (req, res) => {
       );
 
       res.json({ accessToken });
-    })
+    }
   );
 };
 

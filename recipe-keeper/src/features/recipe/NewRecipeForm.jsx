@@ -5,7 +5,7 @@ import { COURSES } from "../../config/courses"
 
 import useAuth from "../../hooks/useAuth"
 
-const NewRecipeForm = ({users}) => {
+const NewRecipeForm = ({users, recipe}) => {
 // Authenticate current user
   const {id: userId, username} = useAuth()
 
@@ -64,8 +64,8 @@ const onInstructionsChanged = (e) => {
             title, 
             // split ingredients and instruction 
             // into arrays before mutation
-            ingredients: ingredients.split(/[\s\n,]+/).map(i => i.trim()).filter(Boolean),
-            instructions: instructions.split(/[\s\n,]+/).map(i => i.trim()).filter(Boolean),
+            ingredients: ingredients.split(', ').map(i => i.trim()).filter(Boolean),
+            instructions: instructions.split(', ').map(i => i.trim()).filter(Boolean),
         })
     }
   }
@@ -97,7 +97,7 @@ const onInstructionsChanged = (e) => {
   const validIngreClass = !ingredients ? 'form-input--incomplete' : ''
   const validInstrClass = !instructions ? 'form-input--incomplete' : ''
   
-  const errContent = (error?.data?.message || delerror?.data?.message) ?? ""
+  const errContent = (error?.data?.message) ?? ""
 
   return (
     <>
@@ -345,13 +345,13 @@ const onInstructionsChanged = (e) => {
                         id="instructions"
                         value={instructions}
                         onChange={onInstructionsChanged}
-                        placeholder="Enter Instructions (Separate by comma)..."
+                        placeholder="Enter Instructions (Separate by new line)..."
                     />
 
                     <div id="PrevInstructions">
                         <ul className="px-4">
                             {instructions
-                                .split(/[\n,]+/) //splitby newline or comma
+                                .split(/[\n]+/) //splitby newline
                                 .map((item, index) => item.trim())
                                 .filter(item => item.trim() !== '') //remove empty entries
                                 .map((item, index)=> (

@@ -1,6 +1,6 @@
-node_modules/
 logs
 .env
+node_modules/
 
 # {
 #   "id": "682a4d6ad58aa599643b5948",
