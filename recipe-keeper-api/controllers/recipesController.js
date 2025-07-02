@@ -50,7 +50,10 @@ const createNewRecipe = async (req, res) => {
     title,
     course,
     photo,
-    time,
+    time: {
+      hours: Number(time?.hours) || 0,
+      minutes: Number(time?.minutes) || 0,
+    },
     ingredients,
     instructions,
     favorited,
@@ -94,7 +97,12 @@ const updateRecipe = async (req, res) => {
   if (title !== undefined) recipe.title = title;
   if (course !== undefined) recipe.course = course;
   if (photo !== undefined) recipe.photo = photo;
-  if (time !== undefined) recipe.time = time;
+  if (time !== undefined) {
+    recipe.time = {
+      hours: Number(time?.hours) || 0,
+      minutes: Number(time?.minutes) || 0,
+    };
+  }
   if (ingredients !== undefined) recipe.ingredients = ingredients;
   if (instructions !== undefined) recipe.instructions = instructions;
   if (favorited !== undefined) recipe.favorited = favorited;

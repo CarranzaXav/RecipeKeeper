@@ -79,8 +79,9 @@ const updateUser = async (req, res) => {
 
   user.username = username;
   user.phone = phone;
-  user.roles = roles;
   user.active = active;
+
+  if (roles !== undefined) user.roles = roles;
 
   if (password) {
     // Hash password

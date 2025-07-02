@@ -41,7 +41,7 @@ const RecipesList = () => {
       h-full
       "
     >
-        {(!username) ?
+        {(username) &&
       <Link className="recipeListCreate
        flex 
       bg-gray-300 
@@ -66,7 +66,6 @@ const RecipesList = () => {
           ➕
         </div>
       </Link>
-      : ''
       }
       <div className="recipeList 
       grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 

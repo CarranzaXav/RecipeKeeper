@@ -29,7 +29,9 @@ const EditRecipeForm = ({recipe}) => {
   const [title, setTitle] = useState(recipe.title)
   const [course,setCourse] = useState(recipe.course)
   const [photo, setPhoto] = useState(recipe.photo)
-  const [time, setTime] = useState(recipe.time)
+//   const [time, setTime] = useState(recipe.time)
+  const [hours, setHours] = useState(recipe?.time?.hours || '')
+  const [minutes, setMinutes] = useState(recipe?.time?.minutes || '')
   const [ingredients, setIngredients] = useState(
   Array.isArray(recipe.ingredients)
     ? recipe.ingredients.join(', ')
@@ -52,7 +54,9 @@ const EditRecipeForm = ({recipe}) => {
         setTitle('')
         setCourse([])
         setPhoto('')
-        setTime()
+        // setTime()
+        setHours()
+        setMinutes()
         setIngredients([])
         setInstructions([])
         setFavorited(recipe.favorited || false)
@@ -62,7 +66,9 @@ const EditRecipeForm = ({recipe}) => {
 
   const onTitleChanged = (e) => setTitle(e.target.value)
   const onPhotoChanged = (e) => setPhoto(e.target.value)
-  const onTimeChanged = (e) => setTime(e.target.value)
+//   const onTimeChanged = (e) => setTime(e.target.value)
+  const onHoursChanged = (e) => setHours(Number(e.target.value))
+  const onMinutesChanged = (e) => setMinutes(Number(e.target.value))
 
   const onFavorited = () => {
     setFavorited(prev => ({
@@ -108,10 +114,12 @@ const EditRecipeForm = ({recipe}) => {
             user: recipe.user,
             title,
             course,
-            time,
+            time:{
+                hours, minutes
+            },
             photo,
             ingredients: ingredients.split(', ').map(i => i.trim()).filter(Boolean),
-            instructions: instructions.split(', ').map(i => i.trim()).filter(Boolean),
+            instructions: instructions.split(/[\n]/).map(i => i.trim()).filter(Boolean),
             favorited
     })
     navigate('/recipes')
@@ -171,7 +179,7 @@ const EditRecipeForm = ({recipe}) => {
 
             <h2 className='
                 w-8/10
-                grid lg:flex
+                grid md:flex
                 text-white
                 text-xl md:text-2xl lg:text-3xl
                 tracking-[3px]
@@ -305,7 +313,7 @@ const EditRecipeForm = ({recipe}) => {
 
                      <input 
                         className='
-                            w-7/10 lg:w-6/10
+                            w-1/2 lg:w-6/10
                             py-1
                             px-2
                             mb-1.5
@@ -315,11 +323,31 @@ const EditRecipeForm = ({recipe}) => {
                             bg-white
                         '
                         title='editRecipeFormInput'
-                        id='recipe-time'
+                        id='recipe-hours'
                         type="number" 
-                        name='time'
-                        value={time}
-                        onChange={onTimeChanged}
+                        name='hours'
+                        value={hours}
+                        onChange={onHoursChanged}
+                        placeholder='Hours'
+                     />
+                     <input 
+                        className='
+                            w-1/2 lg:w-6/10
+                            py-1
+                            px-2
+                            mb-1.5
+                            text-sm md:text-lg
+                            justify-end
+                            rounded-xl
+                            bg-white
+                        '
+                        title='editRecipeFormInput'
+                        id='recipe-minutes'
+                        type="number" 
+                        name='minutes'
+                        value={minutes}
+                        onChange={onMinutesChanged}
+                        placeholder='Minutes'
                      />
                 </div>
 

@@ -61,6 +61,7 @@ const EditUserForm = ({user}) => {
                 username,
                 password,
                 phone,
+                roles,
                 active
             })
         } else {

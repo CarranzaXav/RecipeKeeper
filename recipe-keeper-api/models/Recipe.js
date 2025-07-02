@@ -20,7 +20,8 @@ const recipeSchema = new mongoose.Schema(
       type: String,
     },
     time: {
-      type: Number,
+      hours: { type: Number, default: 0 },
+      minutes: { type: Number, default: 0 },
     },
     ingredients: {
       type: Array,

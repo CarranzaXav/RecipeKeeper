@@ -16,7 +16,9 @@ const NewRecipeForm = ({users, recipe}) => {
   const [title, setTitle] = useState('')
   const [course, setCourse] = useState([''])
   const [photo, setPhoto] = useState('')
-  const [time, setTime] = useState()
+//   const [time, setTime] = useState()
+  const [hours, setHours] = useState()
+  const [minutes, setMinutes] = useState()
   const [ingredients, setIngredients] = useState('')
   const [instructions, setInstructions] = useState('')
 
@@ -25,7 +27,9 @@ const NewRecipeForm = ({users, recipe}) => {
         setTitle('')
         setCourse([])
         setPhoto('')
-        setTime()
+        // setTime()
+        setHours()
+        setMinutes()
         setIngredients('')
         setInstructions('')
         navigate('/recipes')
@@ -34,7 +38,9 @@ const NewRecipeForm = ({users, recipe}) => {
 
   const onTitleChanged = (e) => setTitle(e.target.value)
   const onPhotoChanged = (e) => setPhoto(e.target.value)
-  const onTimeChanged = (e) => setTime(e.target.value)
+//   const onTimeChanged = (e) => setTime(e.target.value)
+  const onHoursChanged = (e) => setHours(e.target.value)
+  const onMinutesChanged = (e) => setMinutes(e.target.value)
 
 const onIngredientsChanged = (e) => {
     setIngredients(e.target.value)
@@ -65,7 +71,7 @@ const onInstructionsChanged = (e) => {
             // split ingredients and instruction 
             // into arrays before mutation
             ingredients: ingredients.split(', ').map(i => i.trim()).filter(Boolean),
-            instructions: instructions.split(', ').map(i => i.trim()).filter(Boolean),
+            instructions: instructions.split(/[\n]/).map(i => i.trim()).filter(Boolean),
         })
     }
   }
@@ -264,7 +270,7 @@ const onInstructionsChanged = (e) => {
                     </label>
                     <input 
                         className='
-                           w-full
+                           w-1/2
                            p-1
                            rounded-lg
                            resize-none
@@ -275,11 +281,32 @@ const onInstructionsChanged = (e) => {
                            mb-2
                         '
                         title="newRecipeFormInput"
-                        name="time" 
-                        id="time" 
+                        name="hours" 
+                        id="hours" 
                         type="number"
-                        value={time}
-                        onChange={onTimeChanged}
+                        value={hours}
+                        onChange={onHoursChanged}
+                        placeholder="0 Hours"
+                    />
+                    <input 
+                        className='
+                           w-1/2
+                           p-1
+                           rounded-lg
+                           resize-none
+                           overflow-hidden
+                           h-8
+                           whitespace-pre-wrap
+                           bg-white 
+                           mb-2
+                        '
+                        title="newRecipeFormInput"
+                        name="minutes" 
+                        id="minutes" 
+                        type="number"
+                        value={minutes}
+                        onChange={onMinutesChanged}
+                        placeholder="0 Minutes"
                     />
                 </div>
 

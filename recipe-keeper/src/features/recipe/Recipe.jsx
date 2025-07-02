@@ -1,14 +1,14 @@
 import {useNavigate, useParams} from 'react-router-dom'
-import {useUpdateRecipeMutation, selectRecipeById, useGetRecipesQuery} from './recipesApiSlice'
+import {useUpdateRecipeMutation, useDeleteRecipeMutation, useGetRecipesQuery} from './recipesApiSlice'
 import useAuth from "../../hooks/useAuth"
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faStar} from '@fortawesome/free-solid-svg-icons'
+import {faStar, faTrash} from '@fortawesome/free-solid-svg-icons'
 import Loader from '../../Components/Loader'
 
 const Recipe = () => {
 
-  const {id: userId, username} = useAuth()
+  const {id: userId, isAdmin} = useAuth()
 
   const {id} = useParams()
 
@@ -29,7 +29,9 @@ const Recipe = () => {
 
 // End of Data Called
 
-    const [updateRecipe] = useUpdateRecipeMutation()
+  const [updateRecipe] = useUpdateRecipeMutation()
+
+  const [deleteRecipe] = useDeleteRecipeMutation()
 
   const navigate = useNavigate()
 
@@ -38,6 +40,11 @@ const Recipe = () => {
   if (!recipe && isSuccess) return <p>Recipe not found</p>
 
   const handleEdit = () => navigate(`/dash/recipes/edit/${id}`)
+
+   const onDeleteRecipeClicked = async () => {
+    await deleteRecipe({id: recipe.id})
+    navigate('/recipes')
+  }
 
   const handleFavorited = async () => {
   if (!recipe || !userId) return;
@@ -131,7 +138,10 @@ const isFavorited = userId && recipe?.favorited?.[userId]
           ' 
         title="recipeTime"
         >
-            {recipe.time} mins
+            {/* {recipe.time} mins */}
+            {recipe.time?.hours > 0 && `${recipe.time.hours} hr`}
+            {recipe.time?.hours > 0 && recipe.time?.minutes > 0 && ' '}
+            {recipe.time?.minutes > 0 && `${recipe.time.minutes} min`}
         </div>
         <div className='
             w-full
@@ -177,16 +187,24 @@ const isFavorited = userId && recipe?.favorited?.[userId]
             ))}
         </ol>
 
-      {userId === recipe.user && 
         <div className='
             w-full
             flex
-            flex-row-reverse
             relative
             bottom-0
+            justify-between
           ' 
-        title="recipeEditContainer"
+        title="recipeEditFooter"
         >
+          {(isAdmin) && <button
+            className='text-2xl '
+            title='Delete'
+            onClick={onDeleteRecipeClicked}
+          >
+              <FontAwesomeIcon icon={faTrash} className='text-white hover:text-purple-500 cursor-pointer'/>
+          </button>}
+
+      {userId === recipe.user && 
             <button className='
                 text-[var(--BORDER-COLOR)]
                 p-2
@@ -202,7 +220,8 @@ const isFavorited = userId && recipe?.favorited?.[userId]
             >
             Edit
             </button>
-        </div>}
+        }
+        </div>
     </div>
   )
 }
