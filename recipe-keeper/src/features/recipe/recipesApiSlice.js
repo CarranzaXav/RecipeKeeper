@@ -79,6 +79,14 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Recipe", id: arg.id }],
     }),
+
+    scrapeRecipe: builder.mutation({
+      query: (url) => ({
+        url: "/scrape",
+        method: "POST",
+        body: { url },
+      }),
+    }),
   }),
 });
 
@@ -87,6 +95,7 @@ export const {
   useAddNewRecipeMutation,
   useUpdateRecipeMutation,
   useDeleteRecipeMutation,
+  useScrapeRecipeMutation,
 } = recipesApiSlice;
 
 // return the query result object

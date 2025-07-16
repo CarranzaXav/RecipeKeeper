@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "nodemon server.js",
     "check:routes": "node scripts/checkRoutes.js"
@@ -13,6 +12,8 @@
   "license": "ISC",
   "description": "RecipeKeeper MERN app",
   "devDependencies": {
+    "@playwright/test": "^1.53.2",
+    "@types/node": "^24.0.10",
     "nodemon": "^3.1.10"
   },
   "dependencies": {

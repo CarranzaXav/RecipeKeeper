@@ -7,3 +7,9 @@ node_modules/
 #   "username": "XavierCarranza",
 #   "password": "1107"
 # }
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

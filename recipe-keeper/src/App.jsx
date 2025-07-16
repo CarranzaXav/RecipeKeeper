@@ -13,6 +13,7 @@ import EditRecipe from './features/recipe/EditRecipe'
 import PersistLogin from './features/auth/PersistLogin'
 import RequireAuth from './features/auth/RequireAuth'
 import NewUserForm from './features/users/NewUserForm'
+import ScrapeRecipe from './features/recipe/ScrapeRecipe'
 import { ROLES } from './config/roles'
 import EditUser from './features/users/EditUser'
 import Loader from './Components/Loader'
@@ -43,6 +44,7 @@ function App() {
             <Route  path='recipes'>
               <Route path='edit/:id' element={<EditRecipe/>}/>
               <Route path='new' element={<NewRecipe/>} />
+              <Route path='scrape' element={<ScrapeRecipe/>}/>
             </Route>
 
             {/* Users Route */}
