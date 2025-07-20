@@ -24,85 +24,133 @@ const scrapeRecipe = async (req, res) => {
     await page.goto(url, { waitUntil: "load", timeout: 30000 });
     console.log("✅ Page loaded");
 
-    // Wait for ld+json to appear (up to 5 seconds)
-    await page.waitForSelector('script[type="application/ld+json"]', {
-      timeout: 5000,
-      state: "attached",
-    });
+    let recipeData = null;
 
-    console.log("📦 JSON-LD script found");
+    // Try JSON-LD first
+    try {
+      await page.waitForSelector('script[type="application/ld+json"]', {
+        timeout: 5000,
+        state: "attached",
+      });
 
-    const ldJson = await page.$$eval(
-      'script[type="application/ld+json"]',
-      (scripts) =>
-        scripts
-          .map((script) => {
-            try {
-              return JSON.parse(script.innerText);
-            } catch (e) {
-              return null;
-            }
-          })
-          .filter(Boolean)
-    );
+      console.log("📦 JSON-LD script found");
 
-    // Flatten in case one of the blocks is an array
-    const flatLdJson = ldJson.flat();
+      const ldJson = await page.$$eval(
+        'script[type="application/ld+json"]',
+        (scripts) =>
+          scripts
+            .map((script) => {
+              try {
+                return JSON.parse(script.innerText);
+              } catch {
+                return null;
+              }
+            })
+            .filter(Boolean)
+            .flat()
+      );
 
-    const recipeData = flatLdJson.find(
-      (entry) =>
-        entry?.["@type"] === "Recipe" ||
-        (Array.isArray(entry?.["@type"]) && entry["@type"].includes("Recipe"))
-    );
-
-    if (!recipeData) {
-      console.log("⚠️ No Recipe data found in JSON-LD");
-      await browser.close();
-      return res.status(400).json({ message: "No recipe data found" });
+      recipeData = ldJson.find(
+        (entry) =>
+          entry?.["@type"] === "Recipe" ||
+          (Array.isArray(entry?.["@type"]) && entry["@type"].includes("Recipe"))
+      );
+    } catch {
+      console.log("⚠️ No JSON-LD or parsing failed.");
     }
 
-    const title = recipeData.name || "Untitled Recipe";
-    const ingredients = recipeData.recipeIngredient || [];
-    const instructions =
-      recipeData.recipeInstructions?.map((step) =>
-        typeof step === "string" ? step : step.text
-      ) || [];
-
-    const time = parseISODuration(
-      recipeData.totalTime || recipeData.cookTime || recipeData.prepTime || ""
-    );
-
+    let title = "";
+    let ingredients = [];
+    let instructions = [];
     let photo = "";
+    let time = { hours: 0, minutes: 0 };
+    let course = [];
 
-    if (Array.isArray(recipeData.image)) {
-      const first = recipeData.image[0];
-      photo = typeof first === "string" ? first : first?.url || "";
-    } else if (
-      typeof recipeData.image === "object" &&
-      recipeData.image !== null
-    ) {
-      photo = recipeData.image.url || "";
-    } else if (typeof recipeData.image === "string") {
-      photo = recipeData.image;
+    if (recipeData) {
+      console.log("✅ Extracting from JSON-LD...");
+
+      title = recipeData.name || "Untitled Recipe";
+      ingredients = recipeData.recipeIngredient || [];
+      instructions =
+        recipeData.recipeInstructions?.map((step) =>
+          typeof step === "string" ? step : step.text
+        ) || [];
+
+      time = parseISODuration(
+        recipeData.totalTime || recipeData.cookTime || recipeData.prepTime || ""
+      );
+
+      if (Array.isArray(recipeData.image)) {
+        const first = recipeData.image[0];
+        photo = typeof first === "string" ? first : first?.url || "";
+      } else if (
+        typeof recipeData.image === "object" &&
+        recipeData.image !== null
+      ) {
+        photo = recipeData.image.url || "";
+      } else if (typeof recipeData.image === "string") {
+        photo = recipeData.image;
+      }
+
+      course = recipeData.recipeCategory
+        ? Array.isArray(recipeData.recipeCategory)
+          ? recipeData.recipeCategory
+          : [recipeData.recipeCategory]
+        : [];
+    } else {
+      console.log("🔁 Falling back to manual selectors...");
+
+      title = await page.title();
+
+      ingredients = await page.$$eval(".wprm-recipe-ingredient", (nodes) =>
+        nodes.map((node) => node.innerText.trim())
+      );
+
+      instructions = await page.$$eval(
+        ".wprm-recipe-instruction-text",
+        (nodes) => nodes.map((node) => node.innerText.trim())
+      );
+
+      // Try to extract a real image (skip SVG placeholders)
+      photo = await page
+        .$eval("figure.wp-block-image.size-full img", (img) => img.src)
+        .catch(async () => {
+          const src = await page.$$eval("img", (imgs) => {
+            const valid = imgs.find(
+              (img) =>
+                img.src &&
+                !img.src.startsWith("data:image/svg+xml") &&
+                img.naturalWidth > 100
+            );
+            return valid?.src || "";
+          });
+          return src;
+        });
+
+      if (!photo) {
+        photo = await page
+          .$eval('meta[property="og:image"]', (meta) => meta.content)
+          .catch(() => "");
+      }
+
+      // Optional: scrape time or course if they exist in page visually
     }
-
-    const course = recipeData.recipeCategory
-      ? Array.isArray(recipeData.recipeCategory)
-        ? recipeData.recipeCategory
-        : [recipeData.recipeCategory]
-      : [];
 
     await browser.close();
 
-    console.log("✅ Scraped:", {
+    if (!ingredients.length || !instructions.length) {
+      console.log("⚠️ Missing critical data, aborting...");
+      return res.status(400).json({ message: "Could not extract recipe data" });
+    }
+
+    console.log("✅ Final scraped result:", {
       title,
       ingredientsCount: ingredients.length,
       instructionsCount: instructions.length,
-      time,
       photo,
     });
 
-    res.json({
+    return res.json({
       title,
       ingredients,
       instructions,
@@ -113,7 +161,7 @@ const scrapeRecipe = async (req, res) => {
   } catch (err) {
     console.error("❌ Scraping failed:", err);
     await browser.close();
-    res.status(500).json({ message: "Error scraping recipe" });
+    return res.status(500).json({ message: "Error scraping recipe" });
   }
 };
 
