@@ -380,7 +380,7 @@ const EditRecipeForm = ({recipe}) => {
                             bg-white
                         '
                         title='editRecipeFormSelect'
-                        multiple={true}
+                        multiple={false}
                         size='1'
                         value={course}
                         onChange={onCourseChanged}

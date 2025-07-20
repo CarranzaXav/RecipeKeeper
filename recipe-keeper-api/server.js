@@ -32,7 +32,7 @@ app.use("/", require("./routes/root"));
 app.use("/auth", require("./routes/authRoutes"));
 app.use("/users", require("./routes/userRoutes"));
 app.use("/recipes", require("./routes/recipeRoutes"));
-app.use("/api/scrape", require("./routes/scrapeRoutes"));
+app.use("/scrape", require("./routes/scrapeRoutes"));
 
 // Express 5 no longer allows regex-style
 // i.e."^/$|/index(.html)?"

@@ -57,3 +57,9 @@
 20250701	00:03:50	42ae2618-437c-48fa-9686-9b7ebf5d11fa	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	http://localhost:5173
 20250701	00:04:05	b152b44b-e9f4-4753-a6b9-594becf7c311	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	http://localhost:5173
 20250701	00:07:52	753f4ed6-e49f-4a0f-b653-fb49ba8f9c78	TypeError: Cannot read properties of null (reading 'username')	GET	/recipes	undefined
+20250719	22:49:35	3f6ab97c-c2bd-4847-b3f1-9892c488f51e	ValidationError: Recipe validation failed: photo: Cast to string failed for value "{
+  '@type': 'ImageObject',
+  url: 'https://www.allrecipes.com/thmb/AalxQlIAcGzwyONFjXzAzCtho6o=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/8349113-garlic-chicken-fried-chicken-Tacita-Lady_T-Beautiful-1x1-1-434fa1b59efc48db9a0a351322e3f45a.jpg',
+  height: 1500,
+  width: 1500
+}" (type Object) at path "photo"	POST	/recipes	http://localhost:5173

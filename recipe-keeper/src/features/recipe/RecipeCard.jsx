@@ -123,7 +123,14 @@ const handleFavorited = async () => {
         "
           title="recipeCardPhoto"
         >
-          {recipe.photo || "📷"}
+          {(recipe.photo) ? 
+        <img 
+                src={recipe.photo} 
+                alt={recipe.title} 
+                className="recipeImage w-11/10 h-14/10"
+            />
+          :
+          "📷"}
         </div>
 
         {/* User Can Only Edit Their Own Recipes */}
