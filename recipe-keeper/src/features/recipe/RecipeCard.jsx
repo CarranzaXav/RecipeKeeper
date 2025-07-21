@@ -64,18 +64,22 @@ const handleFavorited = async () => {
     const handleEdit = () => navigate(`/dash/recipes/edit/${recipeCardId}`)
 
     const viewRecipeCard = () => navigate(`/recipes/${recipeCardId}`)
-    
+
+    const truncate = (str,n) => {
+    return str?.length > n ? str.substr(0, n-1) + "..." : str;
+    }    
 
   return (
 
     <div 
     className=" 
       w-full 
-      h-64 m:h-48 lg:h-72
+      h-72 m:h-48 lg:h-80
       bg-[var(--FORM-COLOR)] 
       px-[0.75em] py-[0.5em]
       rounded-xl
       inset-shadow-sm inset-shadow-purple-700
+      pb-6
     "
     title='recipeCard'
     >
@@ -84,17 +88,21 @@ const handleFavorited = async () => {
           w-full
           h-1/10
           justify-center
-          mb-2
+          items-center
+          pt-4
+          mb-5
         "
         title="recipeCardHeader"
         >
             <div className="
             w-8/10
-            text-sm lg:text-xl
+            text-sm lg:text-base
+            font-extrabold
+            relative
             "
             title='recipeCardTitle'
             >
-              {recipe.title}
+              {truncate(recipe.title,35)}
             </div>
 
             {(username) && 
@@ -102,7 +110,7 @@ const handleFavorited = async () => {
             w-1/10
             text-xl
             cursor-pointer
-            self-start
+            self-center
             "
               title="recipeCardFavorited"
               onClick={handleFavorited}
@@ -127,7 +135,7 @@ const handleFavorited = async () => {
         <img 
                 src={recipe.photo} 
                 alt={recipe.title} 
-                className="recipeImage w-11/10 h-14/10"
+                className="recipeImage w-full h-full rounded-xl"
             />
           :
           "📷"}
@@ -138,7 +146,8 @@ const handleFavorited = async () => {
           justify-self-center
           h-auto
           w-9/10
-          pt-1
+          pt-2
+          mb-4
           flex
         "
           title="recipeCardFooter"

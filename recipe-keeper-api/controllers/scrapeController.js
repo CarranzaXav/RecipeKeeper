@@ -1,5 +1,28 @@
 const { chromium } = require("playwright");
 
+// ⬇️ NEW: Handles nested "HowToSection" and flat "HowToStep" from JSON-LD
+const flattenInstructions = (rawInstructions) => {
+  const steps = [];
+
+  rawInstructions.forEach((entry) => {
+    if (typeof entry === "string") {
+      steps.push(entry);
+    } else if (entry?.text) {
+      steps.push(entry.text.trim());
+    } else if (entry?.itemListElement?.length) {
+      entry.itemListElement.forEach((subStep) => {
+        if (typeof subStep === "string") {
+          steps.push(subStep);
+        } else if (subStep?.text) {
+          steps.push(subStep.text.trim());
+        }
+      });
+    }
+  });
+
+  return steps;
+};
+
 const parseISODuration = (isoString) => {
   const match = isoString.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
   return {
@@ -71,10 +94,9 @@ const scrapeRecipe = async (req, res) => {
 
       title = recipeData.name || "Untitled Recipe";
       ingredients = recipeData.recipeIngredient || [];
-      instructions =
-        recipeData.recipeInstructions?.map((step) =>
-          typeof step === "string" ? step : step.text
-        ) || [];
+
+      // ⬇️ CHANGED: Use new flattenInstructions function
+      instructions = flattenInstructions(recipeData.recipeInstructions || []);
 
       time = parseISODuration(
         recipeData.totalTime || recipeData.cookTime || recipeData.prepTime || ""

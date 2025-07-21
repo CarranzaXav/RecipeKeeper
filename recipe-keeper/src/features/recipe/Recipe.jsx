@@ -84,7 +84,6 @@ const Recipe = () => {
     }
   };
 
-
 const isFavorited = userId && recipe?.favorited?.[userId]
 
 
@@ -109,7 +108,7 @@ const isFavorited = userId && recipe?.favorited?.[userId]
     >
         <div className='
             w-8/10
-            text-2xl
+            text-lg md:text-2xl
             px-1
           ' 
         title="recipeTitle"
@@ -120,7 +119,7 @@ const isFavorited = userId && recipe?.favorited?.[userId]
         {(userId) &&
         <div className='
             w-2/10 md:w-15/100 lg:w-18/100
-            text-lg md:text-2xl
+            text-xl md:text-2xl
             self-center
             flex flex-row-reverse
           '
@@ -134,7 +133,9 @@ const isFavorited = userId && recipe?.favorited?.[userId]
         
         <div className='
             w-full
-            text-sm
+            text-sm md:text-base
+            pl-4
+            my-1
           ' 
         title="recipeTime"
         >
@@ -145,19 +146,23 @@ const isFavorited = userId && recipe?.favorited?.[userId]
         </div>
         <div className='
             w-full
+            h-64 md:h-96
+            flex
+            justify-center
+            mb-4
           ' 
         title="recipePhoto"
         >
             <img 
                 src={recipe.photo || "/images/placeholder.jpg"} 
                 alt={recipe.title} 
-                className="recipeImage"
+                className="recipeImage w-full md:w-2/3 h-full rounded-xl"
             />
         </div>
-        <div className='' 
+        <div className=' flex justify-center' 
         title="recipeCourse"
         >
-            {recipe.course}
+          Course:  {recipe.course}
         </div>
 
         <ul className='
@@ -165,19 +170,19 @@ const isFavorited = userId && recipe?.favorited?.[userId]
             p-4
             text-sm 
             list-disc
-            grid grid-cols-2
+            md:grid md:grid-cols-2
           ' 
         title='recipeIngredients'
         >
             {recipe.ingredients.map((ing, index) =>(
-                <li className='px-1' key={index}>{ing}</li>
+                <li className='pr-2 py-1' key={index}>{ing}</li>
             ))}
         </ul>
 
         <ol className='
             w-full
             p-4
-            text-lg
+            text-base md:text-lg
             list-decimal
           ' 
         title="recipeInstructions"
