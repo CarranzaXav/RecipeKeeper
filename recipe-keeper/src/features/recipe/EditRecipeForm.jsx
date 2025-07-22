@@ -277,7 +277,7 @@ const EditRecipeForm = ({recipe}) => {
                            rounded-lg
                            resize-none
                            overflow-hidden
-                           min-h-16
+                           min-h-10
                            bg-white
                            whitespace-pre-wrap
                         '

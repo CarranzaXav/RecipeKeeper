@@ -7,6 +7,7 @@ import { faCircleChevronDown} from '@fortawesome/free-solid-svg-icons'
 import { useState } from "react"
 
 import useAuth from "../../hooks/useAuth"
+import { useEffect } from "react"
 
 const RecipesList = () => {
 
@@ -33,6 +34,24 @@ const RecipesList = () => {
 
 
   const recipeContent = ids?.length ? ids.slice(0,visibleCount).map(recipeCardId => <RecipeCard key={recipeCardId} recipeCardId={recipeCardId}/>) : null
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowTop = window.scrollY
+      const windowHeight = window.innerHeight
+      const docHeight = document.documentElement.scrollHeight
+
+      if (windowTop + windowHeight >= docHeight - 150) {
+        handleLoadMore()
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
     <div
@@ -72,8 +91,8 @@ const RecipesList = () => {
       w-full lg:w-full
       h-full
       justify-evenly 
-      gap-x-2 gap-y-6">
-
+      gap-x-2 gap-y-6"
+      >
         {recipeContent}
       </div>
       {visibleCount < ids.length &&
@@ -84,9 +103,9 @@ const RecipesList = () => {
           flex
           justify-center
         "
-        onScroll={handleLoadMore}
+        onClick={handleLoadMore}
         >
-          <FontAwesomeIcon icon={faCircleChevronDown} className="text-purple-300"/>
+          <FontAwesomeIcon icon={faCircleChevronDown} className="text-purple-300 cursor-pointer"/>
         </div>
       }
     </div>
