@@ -28,8 +28,9 @@ const EditRecipeForm = ({recipe}) => {
 
   const [title, setTitle] = useState(recipe.title)
   const [course,setCourse] = useState(recipe.course)
-  const [photo, setPhoto] = useState(recipe.photo)
-//   const [time, setTime] = useState(recipe.time)
+  const [photo, setPhoto] = useState(recipe.photo || [])
+  const [photoSource, setPhotoSource] = useState("existing")
+  const [photoURL, setPhotoURL] = useState("") 
   const [hours, setHours] = useState(recipe?.time?.hours || '')
   const [minutes, setMinutes] = useState(recipe?.time?.minutes || '')
   const [ingredients, setIngredients] = useState(
@@ -43,29 +44,25 @@ const EditRecipeForm = ({recipe}) => {
     : recipe.instructions
   )
 
-  const [favorited, setFavorited] = useState(() => {
-    const initial = typeof recipe.favorited === 'object' ? { ...recipe.favorited } : {}
-    return initial
-  })
+  const [favorited, setFavorited] = useState(() => typeof recipe.favorited === 'object' ? { ...recipe.favorited } : {})
 
   useEffect(() => {
 
     if(isSuccess || isDelSuccess){
         setTitle('')
         setCourse([])
-        setPhoto('')
-        // setTime()
+        setPhoto([])
         setHours()
         setMinutes()
-        setIngredients([])
-        setInstructions([])
+        setIngredients('')
+        setInstructions('')
         setFavorited(recipe.favorited || false)
         navigate('/recipes')
     }
   }, [isSuccess, isDelSuccess, navigate])
 
   const onTitleChanged = (e) => setTitle(e.target.value)
-  const onPhotoChanged = (e) => setPhoto(e.target.value)
+//   const onPhotoChanged = (e) => setPhoto(e.target.value)
 //   const onTimeChanged = (e) => setTime(e.target.value)
   const onHoursChanged = (e) => setHours(Number(e.target.value))
   const onMinutesChanged = (e) => setMinutes(Number(e.target.value))
@@ -106,25 +103,57 @@ const EditRecipeForm = ({recipe}) => {
 
 
 
-  const onSaveRecipeClicked = async (e) => {
+//   const onSaveRecipeClicked = async (e) => {
     
-    if(canSave){
-        await updateRecipe({
-            id: recipe.id,
-            user: recipe.user,
-            title,
-            course,
-            time:{
-                hours, minutes
-            },
-            photo,
-            ingredients: ingredients.split(', ').map(i => i.trim()).filter(Boolean),
-            instructions: instructions.split(/[\n]/).map(i => i.trim()).filter(Boolean),
-            favorited
-    })
-    navigate('/recipes')
+//     if(canSave){
+//         await updateRecipe({
+//             id: recipe.id,
+//             user: recipe.user,
+//             title,
+//             course,
+//             time:{
+//                 hours, minutes
+//             },
+//             photo,
+//             ingredients: ingredients.split(', ').map(i => i.trim()).filter(Boolean),
+//             instructions: instructions.split(/[\n]/).map(i => i.trim()).filter(Boolean),
+//             favorited
+//     })
+//     navigate('/recipes')
+//     }
+//   }
+
+  const onSaveRecipeClicked = async (e) => {
+    e.preventDefault()
+    if (!canSave) return
+
+    const formData = new FormData()
+    formData.append('id', recipe.id)
+    formData.append('user', userId)
+    formData.append('title', title)
+    course.forEach(c => formData.append('course', c))
+
+    if (photoSource === 'upload' && Array.isArray(photo)) {
+      photo.forEach(file => formData.append('photo', file))
+    } else if (photoSource === 'url' && photoURL) {
+      formData.append('photoLink', photoURL)
+    } else if (photoSource === 'existing' && recipe.photo) {
+      formData.append('photo', JSON.stringify(recipe.photo))
     }
+
+    formData.append('time[hours]', hours || 0)
+    formData.append('time[minutes]', minutes || 0)
+    ingredients.split(',').forEach(i => formData.append('ingredients[]', i.trim()))
+    instructions.split('\n').forEach(i => formData.append('instructions[]', i.trim()))
+    formData.append('favorited', JSON.stringify(favorited))
+
+    await updateRecipe(formData)
+
+    navigate('/recipes')
   }
+
+
+
 
   const onDeleteRecipeClicked = async () => {
     await deleteRecipe({id: recipe.id})
@@ -265,12 +294,12 @@ const EditRecipeForm = ({recipe}) => {
                     '
                         title='editRecipeFormLabel'
                     >
-                        <h2>Photo</h2>
+                        <h2>Choose Photo Source:</h2>
                         <h4>(Optional)</h4>
                     </label>
 
-
-                    <input
+                    <div>
+                    {/* <input
                         className='
                            w-6/10
                            p-1
@@ -287,7 +316,67 @@ const EditRecipeForm = ({recipe}) => {
                         name='photo'
                         value={photo}
                         onChange={onPhotoChanged}    
-                    />
+                    /> */}
+
+                    <select 
+                    className='
+                           w-6/10
+                           p-1
+                           rounded-lg
+                           resize-none
+                           overflow-hidden
+                           min-h-10
+                           bg-white
+                           whitespace-pre-wrap
+                        '
+                        title='editRecipeFormInput'
+                    value={photoSource}
+                    onChange={e => setPhotoSource(e.target.value)}
+                    id='recipe-photo'
+                    name='photo'
+                    // value={photo}
+                    >
+                        <option value="existing">Keep Current</option>
+                        <option value="upload">Upload New</option>
+                        <option value="url">Use Link</option>
+                    </select> 
+
+                    {photoSource === "upload" && (
+                        <input type="file" multiple onChange={(e) => setPhoto(Array.from(e.target.files))} />
+                    )}
+
+                    {photoSource === "url" && (
+                        <input
+                            type="text"
+                            placeholder="https://example.com/image.jpg"
+                            value={photoURL}
+                            onChange={(e) => setPhotoURL(e.target.value)}
+                        />
+                    )}
+
+                        {photoSource === "existing" && photo.length > 0 && (
+                        <img src={photo[0].url} alt="Current" className="w-24" />
+                    )}
+
+                    {/* <input
+                        className='
+                           w-6/10
+                           p-1
+                           rounded-lg
+                           resize-none
+                           overflow-hidden
+                           min-h-10
+                           bg-white
+                           whitespace-pre-wrap
+                        '
+                        title='editRecipeFormInput'
+                        type="file"
+                        id='recipe-photo'
+                        name='photo'
+                        value={photo}
+                        onChange={e => setPhoto(Array.from(e.target.files))}    
+                    /> */}
+                    </div>
                 </div>
 
 

@@ -1,11 +1,18 @@
 // mongoose = require("mongoose");
 const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
+const Schema = mongoose.Schema;
 
-const recipeSchema = new mongoose.Schema(
+const ImageSchema = new Schema({ url: String, filename: String });
+
+ImageSchema.virtual("thumbnail").get(() => {
+  return this.url.replace("/upload", "/upload/w_200");
+});
+
+const recipeSchema = new Schema(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
@@ -16,9 +23,7 @@ const recipeSchema = new mongoose.Schema(
     course: {
       type: [String],
     },
-    photo: {
-      type: String,
-    },
+    photo: [ImageSchema],
     time: {
       hours: { type: Number, default: 0 },
       minutes: { type: Number, default: 0 },

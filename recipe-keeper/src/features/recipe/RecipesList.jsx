@@ -11,6 +11,24 @@ import { useEffect } from "react"
 
 const RecipesList = () => {
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowTop = window.scrollY
+      const windowHeight = window.innerHeight
+      const docHeight = document.documentElement.scrollHeight
+
+      if (windowTop + windowHeight >= docHeight - 150) {
+        handleLoadMore()
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   const {username} = useAuth()
 
   const [visibleCount, setVisibleCount] = useState(9);
@@ -34,24 +52,6 @@ const RecipesList = () => {
 
 
   const recipeContent = ids?.length ? ids.slice(0,visibleCount).map(recipeCardId => <RecipeCard key={recipeCardId} recipeCardId={recipeCardId}/>) : null
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const windowTop = window.scrollY
-      const windowHeight = window.innerHeight
-      const docHeight = document.documentElement.scrollHeight
-
-      if (windowTop + windowHeight >= docHeight - 150) {
-        handleLoadMore()
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
 
   return (
     <div

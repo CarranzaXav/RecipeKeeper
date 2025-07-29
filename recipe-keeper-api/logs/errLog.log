@@ -63,3 +63,9 @@
   height: 1500,
   width: 1500
 }" (type Object) at path "photo"	POST	/recipes	http://localhost:5173
+20250721	23:37:44	e9058269-ebbb-4d35-beb5-5ea2f7857e43	ValidationError: Recipe validation failed: photo: Cast to embedded failed for value "https://hips.hearstapps.com/hmg-prod/images/bbq-lime-chicken-lead-670ea6290bd78.jpg?crop=1xw:1xh;center,top&resize=640:*" (type string) at path "photo" because of "ObjectParameterError"	PATCH	/recipes	http://localhost:5173
+20250721	23:38:42	2dcbe68f-6a2a-4d0c-9f28-efcf0f8f2703	ValidationError: Recipe validation failed: photo: Cast to embedded failed for value "https://hips.hearstapps.com/hmg-prod/images/bbq-lime-chicken-lead-670ea6290bd78.jpg?crop=1xw:1xh;center,top&resize=640:*" (type string) at path "photo" because of "ObjectParameterError"	PATCH	/recipes	http://localhost:5173
+20250723	23:04:53	b0fd9b09-ed1a-487f-9384-549a20c0a58b	ValidationError: Recipe validation failed: photo: Cast to embedded failed for value "C:\\fakepath\\recipeKeeperLoader.svg" (type string) at path "photo" because of "ObjectParameterError"	PATCH	/recipes	http://localhost:5173
+20250723	23:10:19	7bd0284c-26de-47e9-b854-7dbfb64f555a	ValidationError: Recipe validation failed: photo: Cast to embedded failed for value "C:\\fakepath\\recipeKeeperLoader.svg" (type string) at path "photo" because of "ObjectParameterError"	PATCH	/recipes	http://localhost:5173
+20250728	22:06:21	ab4876cf-6e32-4645-861e-249fefac0173	ValidationError: Recipe validation failed: photo: Parameter "obj" to Document() must be an object, got "" (type string)	PATCH	/recipes	http://localhost:5173
+20250728	23:08:24	fe755c99-9d5e-48a0-99f6-2fa98bb83120	TypeError: Cannot read properties of undefined (reading 'map')	POST	/recipes	http://localhost:5173

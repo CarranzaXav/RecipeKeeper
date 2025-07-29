@@ -39,12 +39,13 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: [{ type: "Recipe", id: "LIST" }],
     }),
     updateRecipe: builder.mutation({
-      query: (initialRecipe) => ({
+      query: (formData) => ({
         url: "/recipes",
         method: "PATCH",
-        body: { ...initialRecipe },
+        body: formData,
+        formData: true,
       }),
-      async onQueryStarted(initialRecipe, { dispatch, queryFulfilled }) {
+      async onQueryStarted(formData, { dispatch, queryFulfilled }) {
         try {
           const { data: updatedRecipe } = await queryFulfilled;
 

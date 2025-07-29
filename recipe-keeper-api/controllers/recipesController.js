@@ -28,16 +28,13 @@ const getAllRecipes = async (req, res) => {
 // @route POST /recipes
 // @access Private
 const createNewRecipe = async (req, res) => {
-  const {
-    user,
-    title,
-    course,
-    photo,
-    time,
-    ingredients,
-    instructions,
-    favorited,
-  } = req.body;
+  const { user, title, course, time, ingredients, instructions, favorited } =
+    req.body;
+
+  const images = (req.files?.photo || []).map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
 
   // Confirm data
   if (!user || !title || !ingredients || !instructions) {
@@ -49,7 +46,7 @@ const createNewRecipe = async (req, res) => {
     user,
     title,
     course,
-    photo,
+    photo: images,
     time: {
       hours: Number(time?.hours) || 0,
       minutes: Number(time?.minutes) || 0,
@@ -70,12 +67,14 @@ const createNewRecipe = async (req, res) => {
 // @route PATCH /recipes
 // @access Private
 const updateRecipe = async (req, res) => {
+  console.log("🔍 BODY:", req.body);
+  console.log("🔍 FILES:", req.files);
+
   const {
     id,
     user,
     title,
     course,
-    photo,
     time,
     ingredients,
     instructions,
@@ -93,10 +92,30 @@ const updateRecipe = async (req, res) => {
     return res.status(400).json({ message: "Recipe not found" });
   }
 
+  let images = [];
+
+  if (req.files?.photo?.length) {
+    // Uploaded files
+    images = req.files.photo.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+  } else if (req.body.photoLink) {
+    // User pasted a URL
+    images = [{ url: req.body.photoLink, filename: "external-url" }];
+  } else if (req.body.photo) {
+    // JSON stringified photo data from frontend
+    try {
+      images = JSON.parse(req.body.photo);
+    } catch (err) {
+      console.error("Failed to parse photo JSON");
+    }
+  }
+
   if (user !== undefined) recipe.user = user;
   if (title !== undefined) recipe.title = title;
   if (course !== undefined) recipe.course = course;
-  if (photo !== undefined) recipe.photo = photo;
+  if (images.length > 0) recipe.photo = images;
   if (time !== undefined) {
     recipe.time = {
       hours: Number(time?.hours) || 0,

@@ -5,20 +5,26 @@ import { COURSES } from "../../config/courses"
 
 import useAuth from "../../hooks/useAuth"
 
-const NewRecipeForm = ({users, recipe}) => {
+const NewRecipeForm = ({users}) => {
 // Authenticate current user
   const {id: userId, username} = useAuth()
 
-  const [addNewRecipe, {isLoading, isSuccess, isError, error}] = useAddNewRecipeMutation()
+  const [addNewRecipe, {
+    isLoading, 
+    isSuccess, 
+    isError, 
+    error
+  }] = useAddNewRecipeMutation()
 
   const navigate = useNavigate()
 
   const [title, setTitle] = useState('')
   const [course, setCourse] = useState([''])
-  const [photo, setPhoto] = useState('')
-//   const [time, setTime] = useState()
-  const [hours, setHours] = useState()
-  const [minutes, setMinutes] = useState()
+  const [photo, setPhoto] = useState([])
+  const [photoSource, setPhotoSource] = useState("existing")
+  const [photoURL, setPhotoURL] = useState("")
+  const [hours, setHours] = useState(0)
+  const [minutes, setMinutes] = useState(0)
   const [ingredients, setIngredients] = useState('')
   const [instructions, setInstructions] = useState('')
 
@@ -26,8 +32,7 @@ const NewRecipeForm = ({users, recipe}) => {
     if (isSuccess) {
         setTitle('')
         setCourse([])
-        setPhoto('')
-        // setTime()
+        setPhoto([])
         setHours()
         setMinutes()
         setIngredients('')
@@ -37,8 +42,7 @@ const NewRecipeForm = ({users, recipe}) => {
   }, [isSuccess, navigate])
 
   const onTitleChanged = (e) => setTitle(e.target.value)
-  const onPhotoChanged = (e) => setPhoto(e.target.value)
-//   const onTimeChanged = (e) => setTime(e.target.value)
+//   const onPhotoChanged = (e) => setPhoto(e.target.value)
   const onHoursChanged = (e) => setHours(e.target.value)
   const onMinutesChanged = (e) => setMinutes(e.target.value)
 
@@ -64,16 +68,41 @@ const onInstructionsChanged = (e) => {
 
   const onSaveRecipeClicked = async (e) => {
     e.preventDefault()
-    if(canSave){
-        await addNewRecipe({
-            user: userId,
-            title, 
-            // split ingredients and instruction 
-            // into arrays before mutation
-            ingredients: ingredients.split(', ').map(i => i.trim()).filter(Boolean),
-            instructions: instructions.split(/[\n]/).map(i => i.trim()).filter(Boolean),
-        })
-    }
+    if(!canSave) return
+
+    const formData = new FormData()
+    // formData.append('id', recipe.id)
+    formData.append('user', userId)
+    formData.append('title', title)
+    course.forEach(c => formData.append('course', c))
+
+    if(photoSource === 'upload' && Array.isArray(photo)) {
+        photo.forEach(file => formData.append('photo', file))
+    } else if ( photoSource === 'url' && photoURL){
+        formData.append('photoLink', photoURL)
+    } 
+    // else if (photoSource === 'existing' && recipe.photo){
+    //     formData.append('photo', JSON.stringify(recipe.photo))
+    // }
+
+    formData.append('time[hours]', hours || 0)
+    formData.append('time[minutes]', minutes || 0)
+    ingredients.split(',').forEach(i => formData.append('ingredients[]', i.trim()))
+    instructions.split('\n').forEach(i => formData.append('instructions[]', i.trim()))
+
+    await addNewRecipe(formData)
+
+    navigate('/recipes')
+    // if(canSave){
+    //     await addNewRecipe({
+    //         user: userId,
+    //         title, 
+    //         // split ingredients and instruction 
+    //         // into arrays before mutation
+    //         ingredients: ingredients.split(', ').map(i => i.trim()).filter(Boolean),
+    //         instructions: instructions.split(/[\n]/).map(i => i.trim()).filter(Boolean),
+    //     })
+    
   }
 
   const fields = Object.values(COURSES).map((course) => {
@@ -181,7 +210,7 @@ const onInstructionsChanged = (e) => {
                     />
                 </div>
 
-                <div className=''
+                <div className='flex my-3'
                     title="newRecipeFormBodyPhotoBlock"
                 >
                     <label className='
@@ -195,9 +224,10 @@ const onInstructionsChanged = (e) => {
                         title="newRecipeFormLabel" 
                         htmlFor="photo"
                     >
-                        Photo: 
+                        <h2>Choose Photo Source:</h2>
+                        <h4>(Optional)</h4>                    
                     </label>
-                    <input 
+                    {/* <input 
                         className='
                            w-full
                            p-1
@@ -214,7 +244,45 @@ const onInstructionsChanged = (e) => {
                         id="photo" 
                         value={photo}
                         onChange={onPhotoChanged}
-                    />
+                    /> */}
+
+                    <select 
+                        className="
+                           w-6/10
+                           p-1
+                           rounded-lg
+                           resize-none
+                           overflow-hidden
+                           min-h-10
+                           bg-white
+                           whitespace-pre-wrap" 
+                        id="recipe-photo"
+                        title="newRecipeFormInput"
+                        value={photoSource}
+                        onChange={e => setPhotoSource(e.target.value)}
+                        name="name"
+                    >
+                        <option value="">Select A Method</option>
+                        <option value="upload">Upload Image</option>
+                        <option value="url">Image Link</option>
+                    </select>
+
+                    {photoSource === 'upload' && (
+                        <input 
+                            type="file"
+                            multiple
+                            onChange={(e) => setPhoto(Array.from(e.target.files))} 
+                        />
+                    )}
+
+                    {photoSource === 'url' && (
+                        <input 
+                            type="text"
+                            placeholder=""
+                            value={photoURL}
+                            onChange={(e) => setPhotoURL(e.target.value)} 
+                        />
+                    )}
                 </div>
 
                 <div className=''
