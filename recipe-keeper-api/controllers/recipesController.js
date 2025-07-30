@@ -28,6 +28,9 @@ const getAllRecipes = async (req, res) => {
 // @route POST /recipes
 // @access Private
 const createNewRecipe = async (req, res) => {
+  console.log("BODY:", req.body);
+  console.log("FILES:", req.files);
+
   const { user, title, course, time, ingredients, instructions, favorited } =
     req.body;
 

@@ -21,7 +21,7 @@ const NewRecipeForm = ({users}) => {
   const [title, setTitle] = useState('')
   const [course, setCourse] = useState([''])
   const [photo, setPhoto] = useState([])
-  const [photoSource, setPhotoSource] = useState("existing")
+  const [photoSource, setPhotoSource] = useState("")
   const [photoURL, setPhotoURL] = useState("")
   const [hours, setHours] = useState(0)
   const [minutes, setMinutes] = useState(0)
@@ -87,10 +87,25 @@ const onInstructionsChanged = (e) => {
 
     formData.append('time[hours]', hours || 0)
     formData.append('time[minutes]', minutes || 0)
-    ingredients.split(',').forEach(i => formData.append('ingredients[]', i.trim()))
-    instructions.split('\n').forEach(i => formData.append('instructions[]', i.trim()))
+    // ingredients.split(',').forEach(i => formData.append('ingredients[]', i.trim()))
+    // instructions.split('\n').forEach(i => formData.append('instructions[]', i.trim()))
+formData.append('ingredients', JSON.stringify(
+  ingredients.split(',').map(i => i.trim()).filter(Boolean)
+))
+
+formData.append('instructions', JSON.stringify(
+  instructions.split('\n').map(i => i.trim()).filter(Boolean)
+))
+
+
+console.log(formData instanceof FormData); // ✅ should be true
 
     await addNewRecipe(formData)
+
+    for (let [key, value] of formData.entries()) {
+  console.log(key, value)
+}
+
 
     navigate('/recipes')
     // if(canSave){
@@ -490,6 +505,7 @@ const onInstructionsChanged = (e) => {
                             hover:transform-[translate(-4px,-4px)]
                         "
                         title="Save"
+                        type="submit"
                         // disabled={!canSave}
                     >
                         UPLOAD

@@ -23,34 +23,29 @@ const PersistLogin = () => {
     useRefreshMutation();
 
   useEffect(() => {
-    let isMounted = true;
+  let isMounted = true;
 
-    const verifyRefreshToken = async () => {
-      if (!token && persist) {
-        try {
-          if (isMounted) {
-            const {accessToken} = await refresh().unwrap();
-            dispatch(setCredentials({accessToken}))
-            setIsVerified(true);
-          }
-        } catch (err) {
-          if (isMounted) {
-            console.log("Refresh token failed: ", err);
-            // Allow rendering login page on failure
-            setIsVerified(true);
-          }
-        }
-      } else if (isMounted) {
-        // If token exists, no need to verify
-        setIsVerified(true);
+  const verifyRefreshToken = async () => {
+    if (!token && persist) {
+      try {
+        const { accessToken } = await refresh().unwrap();
+        dispatch(setCredentials({ accessToken }));
+        if (isMounted) setIsVerified(true);
+      } catch (err) {
+        console.log("Refresh token failed: ", err);
+        if (isMounted) setIsVerified(true); // still allow login route to render
       }
-    };
-    verifyRefreshToken();
+    } else {
+      if (isMounted) setIsVerified(true);
+    }
+  };
 
-    return () => {
-      isMounted = false;
-    };
-  }, [token, persist, refresh]);
+  verifyRefreshToken();
+
+  return () => {
+    isMounted = false;
+  };
+}, [token, persist, refresh, dispatch]);
 
   let content;
 
