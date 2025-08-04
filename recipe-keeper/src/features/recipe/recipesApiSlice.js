@@ -28,18 +28,7 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
         } else return [{ type: "Recipe", id: "LIST" }];
       },
     }),
-    // addNewRecipe: builder.mutation({
-    //   query: (formData) => ({
-    //     url: "/recipes",
-    //     method: "POST",
-    //     // body: {
-    //     //   ...initialRecipe,
-    //     // },
-    //     body: formData,
-    //     formData: true,
-    //   }),
-    //   invalidatesTags: [{ type: "Recipe", id: "LIST" }],
-    // }),
+
     addNewRecipe: builder.mutation({
       async queryFn(formData, _queryApi, _extraOptions, fetchWithBQ) {
         const result = await fetchWithBQ({

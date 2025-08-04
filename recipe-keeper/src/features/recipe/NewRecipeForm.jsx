@@ -41,99 +41,78 @@ const NewRecipeForm = ({users}) => {
     }
   }, [isSuccess, navigate])
 
-  const onTitleChanged = (e) => setTitle(e.target.value)
-//   const onPhotoChanged = (e) => setPhoto(e.target.value)
-  const onHoursChanged = (e) => setHours(e.target.value)
-  const onMinutesChanged = (e) => setMinutes(e.target.value)
+    const onTitleChanged = (e) => setTitle(e.target.value)
+    const onHoursChanged = (e) => setHours(e.target.value)
+    const onMinutesChanged = (e) => setMinutes(e.target.value)
 
-const onIngredientsChanged = (e) => {
-    setIngredients(e.target.value)
-    autoResizeTextarea(e.target)
+    const onIngredientsChanged = (e) => {
+        setIngredients(e.target.value)
+        autoResizeTextarea(e.target)
+        }
+
+    const onInstructionsChanged = (e) => {
+        setInstructions(e.target.value)
+        autoResizeTextarea(e.target)
+        }
+
+    const onCourseChanged = (e) => {
+        const values = Array.from(
+            e.target.selectedOptions,
+            (option) => option.value
+        )
+        setCourse(values)
     }
 
-const onInstructionsChanged = (e) => {
-    setInstructions(e.target.value)
-    autoResizeTextarea(e.target)
-    }
+    const canSave = [username, title, ingredients, instructions].every(Boolean) && !isLoading
 
-  const onCourseChanged = (e) => {
-    const values = Array.from(
-        e.target.selectedOptions,
-        (option) => option.value
-    )
-    setCourse(values)
-  }
+    const onSaveRecipeClicked = async (e) => {
+        e.preventDefault()
+        if(!canSave) return
 
-  const canSave = [username, title, ingredients, instructions].every(Boolean) && !isLoading
+        const formData = new FormData()
+        formData.append('user', userId)
+        formData.append('title', title)
+        course.forEach(c => formData.append('course', c))
 
-  const onSaveRecipeClicked = async (e) => {
-    e.preventDefault()
-    if(!canSave) return
+        if(photoSource === 'upload' && Array.isArray(photo)) {
+            photo.forEach(file => formData.append('photo', file))
+        } else if ( photoSource === 'url' && photoURL){
+            formData.append('photoLink', photoURL)
+        }
 
-    const formData = new FormData()
-    // formData.append('id', recipe.id)
-    formData.append('user', userId)
-    formData.append('title', title)
-    course.forEach(c => formData.append('course', c))
+        formData.append('time[hours]', hours || 0)
+        formData.append('time[minutes]', minutes || 0)
+        formData.append('ingredients', JSON.stringify(
+            ingredients.split(',').map(i => i.trim()).filter(Boolean)
+        ))
 
-    if(photoSource === 'upload' && Array.isArray(photo)) {
-        photo.forEach(file => formData.append('photo', file))
-    } else if ( photoSource === 'url' && photoURL){
-        formData.append('photoLink', photoURL)
-    } 
-    // else if (photoSource === 'existing' && recipe.photo){
-    //     formData.append('photo', JSON.stringify(recipe.photo))
+        formData.append('instructions', JSON.stringify(
+            instructions.split('\n').map(i => i.trim()).filter(Boolean)
+        ))
+        await addNewRecipe(formData)
+
+    //     for (let [key, value] of formData.entries()) {
+    //   console.log(key, value)
     // }
 
-    formData.append('time[hours]', hours || 0)
-    formData.append('time[minutes]', minutes || 0)
-    // ingredients.split(',').forEach(i => formData.append('ingredients[]', i.trim()))
-    // instructions.split('\n').forEach(i => formData.append('instructions[]', i.trim()))
-formData.append('ingredients', JSON.stringify(
-  ingredients.split(',').map(i => i.trim()).filter(Boolean)
-))
 
-formData.append('instructions', JSON.stringify(
-  instructions.split('\n').map(i => i.trim()).filter(Boolean)
-))
+        navigate('/recipes')    
+    }
 
+    const fields = Object.values(COURSES).map((course) => {
+        return (
+            <option key={course} value={course}>
+                {course}
+            </option>
+        )
+    })
 
-console.log(formData instanceof FormData); // ✅ should be true
-
-    await addNewRecipe(formData)
-
-    for (let [key, value] of formData.entries()) {
-  console.log(key, value)
-}
-
-
-    navigate('/recipes')
-    // if(canSave){
-    //     await addNewRecipe({
-    //         user: userId,
-    //         title, 
-    //         // split ingredients and instruction 
-    //         // into arrays before mutation
-    //         ingredients: ingredients.split(', ').map(i => i.trim()).filter(Boolean),
-    //         instructions: instructions.split(/[\n]/).map(i => i.trim()).filter(Boolean),
-    //     })
-    
-  }
-
-  const fields = Object.values(COURSES).map((course) => {
-    return (
-        <option key={course} value={course}>
-            {course}
-        </option>
-    )
-  })
-
-  const autoResizeTextarea = (element) => {
+    const autoResizeTextarea = (element) => {
     if(element) {
         element.style.height = 'auto';
         element.style.height = `${element.scrollHeight}px`
     }
-  }
+    }
 
   useEffect(() => {
     const ingredientsBox = document.getElementById('ingredients');
@@ -142,12 +121,12 @@ console.log(formData instanceof FormData); // ✅ should be true
     autoResizeTextarea(instructionsBox)
   }, [ingredients, instructions])
 
-  const errClass = isError ? "errmsg" : ""
-  const validTitleClass = !title ? 'form-input--incomplete' : ''
-  const validIngreClass = !ingredients ? 'form-input--incomplete' : ''
-  const validInstrClass = !instructions ? 'form-input--incomplete' : ''
-  
-  const errContent = (error?.data?.message) ?? ""
+    const errClass = isError ? "errmsg" : ""
+    const validTitleClass = !title ? 'form-input--incomplete' : ''
+    const validIngreClass = !ingredients ? 'form-input--incomplete' : ''
+    const validInstrClass = !instructions ? 'form-input--incomplete' : ''
+
+    const errContent = (error?.data?.message) ?? ""
 
   return (
     <>
@@ -242,24 +221,6 @@ console.log(formData instanceof FormData); // ✅ should be true
                         <h2>Choose Photo Source:</h2>
                         <h4>(Optional)</h4>                    
                     </label>
-                    {/* <input 
-                        className='
-                           w-full
-                           p-1
-                           rounded-lg
-                           resize-none
-                           overflow-hidden
-                           min-h-16
-                           bg-white
-                           whitespace-pre-wrap 
-                        '
-                        title="newRecipeFormInput"
-                        type="text"
-                        name="photo" 
-                        id="photo" 
-                        value={photo}
-                        onChange={onPhotoChanged}
-                    /> */}
 
                     <select 
                         className="
@@ -281,6 +242,16 @@ console.log(formData instanceof FormData); // ✅ should be true
                         <option value="upload">Upload Image</option>
                         <option value="url">Image Link</option>
                     </select>
+
+                    {photoSource === '' && (
+                        photo.length > 0 && photo[0].url ? (
+                            <img src={photo[0].url} alt="Current" className="w-24 rounded" />
+                        ) : (
+                            <div className="w-24 h-24 flex items-center justify-center bg-white border border-gray-300 text-xl rounded">
+                            📷
+                            </div>
+                        )
+                    )}
 
                     {photoSource === 'upload' && (
                         <input 

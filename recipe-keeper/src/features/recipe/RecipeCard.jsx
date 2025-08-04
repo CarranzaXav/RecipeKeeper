@@ -102,7 +102,7 @@ const handleFavorited = async () => {
             "
             title='recipeCardTitle'
             >
-              {truncate(recipe.title,35)}
+              {truncate(recipe.title,30)}
             </div>
 
             {(username) && 
@@ -131,14 +131,17 @@ const handleFavorited = async () => {
         "
           title="recipeCardPhoto"
         >
-          {(recipe.photo) ? 
-        <img 
-                src={recipe.photo} 
-                alt={recipe.title} 
-                className="recipeImage w-full h-full rounded-xl"
+
+          {recipe.photo?.length > 0 ? (
+            <img 
+              src={recipe.photo[0].url} 
+              alt={recipe.title} 
+              className="recipeImage w-full h-full rounded-xl"
             />
-          :
-          "📷"}
+          ) : (
+            "📷"
+          )}
+
         </div>
 
         {/* User Can Only Edit Their Own Recipes */}

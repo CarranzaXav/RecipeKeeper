@@ -28,7 +28,7 @@ const EditRecipeForm = ({recipe}) => {
 
   const [title, setTitle] = useState(recipe.title)
   const [course,setCourse] = useState(recipe.course)
-  const [photo, setPhoto] = useState(recipe.photo || [])
+  const [photo, setPhoto] = useState(Array.isArray(recipe.photo) ? recipe.photo : [])
   const [photoSource, setPhotoSource] = useState("existing")
   const [photoURL, setPhotoURL] = useState("") 
   const [hours, setHours] = useState(recipe?.time?.hours || '')
@@ -62,8 +62,6 @@ const EditRecipeForm = ({recipe}) => {
   }, [isSuccess, isDelSuccess, navigate])
 
   const onTitleChanged = (e) => setTitle(e.target.value)
-//   const onPhotoChanged = (e) => setPhoto(e.target.value)
-//   const onTimeChanged = (e) => setTime(e.target.value)
   const onHoursChanged = (e) => setHours(Number(e.target.value))
   const onMinutesChanged = (e) => setMinutes(Number(e.target.value))
 
@@ -100,28 +98,6 @@ const EditRecipeForm = ({recipe}) => {
   const validInstrClass = !instructions ? 'form-input--incomplete' : ''
   
   const errContent = (error?.data?.message || delerror?.data?.message) ?? ""
-
-
-
-//   const onSaveRecipeClicked = async (e) => {
-    
-//     if(canSave){
-//         await updateRecipe({
-//             id: recipe.id,
-//             user: recipe.user,
-//             title,
-//             course,
-//             time:{
-//                 hours, minutes
-//             },
-//             photo,
-//             ingredients: ingredients.split(', ').map(i => i.trim()).filter(Boolean),
-//             instructions: instructions.split(/[\n]/).map(i => i.trim()).filter(Boolean),
-//             favorited
-//     })
-//     navigate('/recipes')
-//     }
-//   }
 
   const onSaveRecipeClicked = async (e) => {
     e.preventDefault()
@@ -334,12 +310,18 @@ const EditRecipeForm = ({recipe}) => {
                     onChange={e => setPhotoSource(e.target.value)}
                     id='recipe-photo'
                     name='photo'
-                    // value={photo}
                     >
                         <option value="existing">Keep Current</option>
                         <option value="upload">Upload New</option>
                         <option value="url">Use Link</option>
                     </select> 
+
+                    {/* {photoSource === '' && (
+                        <input 
+                            type="img"
+                            onChange={(e) => setPhoto( "📷")} 
+                        />
+                    )} */}
 
                     {photoSource === "upload" && (
                         <input type="file" multiple onChange={(e) => setPhoto(Array.from(e.target.files))} />
@@ -354,9 +336,16 @@ const EditRecipeForm = ({recipe}) => {
                         />
                     )}
 
-                        {photoSource === "existing" && photo.length > 0 && (
-                        <img src={photo[0].url} alt="Current" className="w-24" />
+                    {photoSource === "existing" && (
+                        photo.length > 0 && photo[0].url ? (
+                        <img src={photo[0].url} alt="Current" className="w-24 rounded" />
+                        ) : (
+                        <div className="w-24 h-24 flex items-center justify-center bg-white border border-gray-300 text-xl rounded">
+                        📷
+                        </div>
+                        )
                     )}
+
 
                     {/* <input
                         className='

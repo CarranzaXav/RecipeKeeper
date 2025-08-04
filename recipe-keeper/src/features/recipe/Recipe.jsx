@@ -153,11 +153,26 @@ const isFavorited = userId && recipe?.favorited?.[userId]
           ' 
         title="recipePhoto"
         >
+
+          {recipe.photo?.length > 0 ? (
             <img 
-                src={recipe.photo || "/images/placeholder.jpg"} 
-                alt={recipe.title} 
-                className="recipeImage w-full md:w-2/3 h-full rounded-xl"
+              src={recipe.photo[0].url} 
+              alt={recipe.title} 
+              className="recipeImage w-full md:w-2/3 h-full rounded-xl"
             />
+          ) : (
+            <p
+              className='bg-gray-300 w-full flex justify-center items-center text-3xl rounded-xl'
+            >
+            📷
+            </p>
+          )}
+
+            {/* <img 
+                src={recipe.photo?.[0]?.url || "/images/placeholder.jpg"}                 
+                alt={recipe.title} 
+                
+            /> */}
         </div>
         <div className=' flex justify-center' 
         title="recipeCourse"
