@@ -73,8 +73,8 @@ const handleFavorited = async () => {
 
     <div 
     className=" 
-      w-full 
-      h-72 m:h-48 lg:h-80
+      w-9/10
+      h-72 sm:h-96 lg:h-80
       bg-[var(--FORM-COLOR)] 
       px-[0.75em] py-[0.5em]
       rounded-xl

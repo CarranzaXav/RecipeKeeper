@@ -64,7 +64,7 @@ const RecipesList = () => {
       <Link className="recipeListCreate
        flex 
       bg-gray-300 
-       w-full lg:w-8/10
+       w-full sm:w-9/10 lg:w-8/10
        justify-self-center
        h-28  md:h-20 lg:h-16
        px-[0.75em] py-[0.5em]
@@ -76,7 +76,7 @@ const RecipesList = () => {
       >
         <div className="recipeListCreateBtn
         flex
-        w-full
+        w-full 
         justify-center
         self-center
         text-4xl
@@ -87,10 +87,11 @@ const RecipesList = () => {
       </Link>
       }
       <div className="recipeList 
-      grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 
+      grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 
       w-full lg:w-full
       h-full
       justify-evenly 
+      justify-items-center
       gap-x-2 gap-y-6"
       >
         {recipeContent}

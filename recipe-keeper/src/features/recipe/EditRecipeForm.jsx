@@ -191,23 +191,23 @@ const EditRecipeForm = ({recipe}) => {
                 font-semibold
                 justify-items-center 
                 justify-center
-                px-4
+                mx-6
             ' 
                 title="editRecipeFormHeadTitle"
             >
-                <h3>Edit</h3>
+                <h3 className='w-1/4'>Edit</h3>
                 <p className='
-                w-1/2 lg:w-auto
+                w-3/8 lg:w-auto
                 flex
                 justify-center
-                text-lg xl:text-2xl 
+                content-center
+                text-[1.2rem] xl:text-2xl 
                 xl:self-end
-                px-4
                 '
                 >
                     {recipe.title}
                 </p>
-                <h3>Recipe</h3>
+                <h3 className='w-1/4'>Recipe</h3>
             </h2>
             <button
                 className='text-2xl '
@@ -254,81 +254,59 @@ const EditRecipeForm = ({recipe}) => {
                 </div>
 
                  <div className='
-                flex
+                    grid
+                    w-full
                     my-3
                 '
                     title="editRecipeFormPhoto"
                 >
                     <label htmlFor="recipe-photo"
                     className='
-                        w-4/10
-                        grid
+                        w-full
+                        flex
                         text-sm
                         tracking-[2px]
                         self-center
+                        justify-center
                         py-2
                     '
                         title='editRecipeFormLabel'
                     >
-                        <h2>Choose Photo Source:</h2>
+                        <h2 className='w-1/2'>Choose Photo Source:</h2>
                         <h4>(Optional)</h4>
                     </label>
 
-                    <div>
-                    {/* <input
-                        className='
-                           w-6/10
-                           p-1
-                           rounded-lg
-                           resize-none
-                           overflow-hidden
-                           min-h-10
-                           bg-white
-                           whitespace-pre-wrap
-                        '
-                        title='editRecipeFormInput'
-                        type="text"
-                        id='recipe-photo'
-                        name='photo'
-                        value={photo}
-                        onChange={onPhotoChanged}    
-                    /> */}
-
-                    <select 
-                    className='
-                           w-6/10
-                           p-1
-                           rounded-lg
-                           resize-none
-                           overflow-hidden
-                           min-h-10
-                           bg-white
-                           whitespace-pre-wrap
-                        '
-                        title='editRecipeFormInput'
-                    value={photoSource}
-                    onChange={e => setPhotoSource(e.target.value)}
-                    id='recipe-photo'
-                    name='photo'
-                    >
-                        <option value="existing">Keep Current</option>
-                        <option value="upload">Upload New</option>
-                        <option value="url">Use Link</option>
-                    </select> 
-
-                    {/* {photoSource === '' && (
-                        <input 
-                            type="img"
-                            onChange={(e) => setPhoto( "📷")} 
-                        />
-                    )} */}
+                    <div className='w-full 
+                    grid
+                    justify-items-center'>
 
                     {photoSource === "upload" && (
-                        <input type="file" multiple onChange={(e) => setPhoto(Array.from(e.target.files))} />
+                        <input 
+                            className='
+                                bg-purple-400
+                                hover:bg-purple-600
+                                text-white
+                                gap-x-3
+                                p-2
+                                rounded-lg
+                                w-3/4
+                                cursor-pointer
+                            '
+                        type="file" multiple onChange={(e) => setPhoto(Array.from(e.target.files))} />
                     )}
 
                     {photoSource === "url" && (
                         <input
+                            className='
+                                bg-purple-400
+                                hover:bg-purple-600
+                                text-white
+                                gap-x-3
+                                p-2
+                                rounded-lg
+                                w-3/4
+                                cursor-pointer
+                            '
                             type="text"
                             placeholder="https://example.com/image.jpg"
                             value={photoURL}
@@ -338,7 +316,7 @@ const EditRecipeForm = ({recipe}) => {
 
                     {photoSource === "existing" && (
                         photo.length > 0 && photo[0].url ? (
-                        <img src={photo[0].url} alt="Current" className="w-24 rounded" />
+                        <img src={photo[0].url} alt="Current" className="w-52 h-52 rounded" />
                         ) : (
                         <div className="w-24 h-24 flex items-center justify-center bg-white border border-gray-300 text-xl rounded">
                         📷
@@ -346,25 +324,29 @@ const EditRecipeForm = ({recipe}) => {
                         )
                     )}
 
-
-                    {/* <input
+                        <select 
                         className='
-                           w-6/10
-                           p-1
-                           rounded-lg
-                           resize-none
-                           overflow-hidden
-                           min-h-10
-                           bg-white
-                           whitespace-pre-wrap
-                        '
-                        title='editRecipeFormInput'
-                        type="file"
+                                w-3/4
+                                mt-3
+                                py-1 px-2
+                                rounded-lg
+                                resize-none
+                                overflow-hidden
+                                min-h-10
+                                bg-white
+                                whitespace-pre-wrap
+                            '
+                            title='editRecipeFormInput'
+                        value={photoSource}
+                        onChange={e => setPhotoSource(e.target.value)}
                         id='recipe-photo'
                         name='photo'
-                        value={photo}
-                        onChange={e => setPhoto(Array.from(e.target.files))}    
-                    /> */}
+                        >
+                            <option value="existing">Keep Current</option>
+                            <option value="upload">Upload New</option>
+                            <option value="url">Use Link</option>
+                        </select> 
+
                     </div>
                 </div>
 
