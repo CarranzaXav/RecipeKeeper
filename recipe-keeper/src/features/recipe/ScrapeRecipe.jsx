@@ -3,10 +3,14 @@ import { useScrapeRecipeMutation, useAddNewRecipeMutation } from './recipesApiSl
 import useAuth from '../../hooks/useAuth'
 import Loader from '../../Components/Loader'
 import RecipePreview from './RecipePreview'
+import { useNavigate } from 'react-router-dom'
 
 const ScrapeRecipe = () => {
 
     const {id: userId} = useAuth();
+
+    const navigate = useNavigate()
+
     const [url, setUrl] = useState('')
     const [previewData, setPreviewData] = useState(null)
 
@@ -33,6 +37,8 @@ const ScrapeRecipe = () => {
         } catch (err) {
             console.error('Failed to save recipe', err)
         }
+
+        navigate('/recipes')
     }
 
   return (
@@ -58,7 +64,7 @@ const ScrapeRecipe = () => {
         {previewData && (
             <div className="mt-4 border-t pt-4">
                 <RecipePreview data={previewData}/>
-                <button onClick={handleSave} className='bg-green-600 text-white px-4 py-2 rounded mt-4'>
+                <button onClick={handleSave} className='bg-green-600 text-white px-4 py-2 rounded mt-4 cursor-pointer'>
                     Save Recipe
                 </button>
             </div>

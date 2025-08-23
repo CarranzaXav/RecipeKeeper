@@ -82,13 +82,8 @@ const NewRecipeForm = ({users}) => {
 
         formData.append('time[hours]', hours || 0)
         formData.append('time[minutes]', minutes || 0)
-        formData.append('ingredients', JSON.stringify(
-            ingredients.split(',').map(i => i.trim()).filter(Boolean)
-        ))
-
-        formData.append('instructions', JSON.stringify(
-            instructions.split('\n').map(i => i.trim()).filter(Boolean)
-        ))
+        ingredients.split(',').forEach(i => formData.append('ingredients[]', i.trim()))
+        instructions.split('\n').forEach(i => formData.append('instructions[]', i.trim()))
         await addNewRecipe(formData)
 
     //     for (let [key, value] of formData.entries()) {

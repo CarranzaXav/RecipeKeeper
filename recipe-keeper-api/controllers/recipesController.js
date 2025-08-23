@@ -34,10 +34,32 @@ const createNewRecipe = async (req, res) => {
   const { user, title, course, time, ingredients, instructions, favorited } =
     req.body;
 
-  const images = (req.files?.photo || []).map((f) => ({
-    url: f.path,
-    filename: f.filename,
-  }));
+  // const images = (req.files?.photo || []).map((f) => ({
+  //   url: f.path,
+  //   filename: f.filename,
+  // }));
+
+  let images = [];
+
+  // Handle Cloudinary uploads
+  if (req.files?.photo?.length) {
+    images = req.files.photo.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+  }
+  // Handle scraped or user-provided URL string
+  else if (req.body.photo) {
+    if (typeof req.body.photo === "string") {
+      images = [{ url: req.body.photo, filename: "external-url" }];
+    } else {
+      try {
+        images = JSON.parse(req.body.photo);
+      } catch (err) {
+        console.error("📛 Could not parse photo JSON", err);
+      }
+    }
+  }
 
   // Confirm data
   if (!user || !title || !ingredients || !instructions) {
