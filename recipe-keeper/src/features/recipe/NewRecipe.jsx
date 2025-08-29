@@ -12,7 +12,7 @@ const NewRecipe = () => {
         }),
     })
 
-    if (!users?.length) return <Loader/>
+    if (!users?.length) return <div className='flex mt-24 h-96 justify-center'><Loader/></div>
 
   return (
     <div>

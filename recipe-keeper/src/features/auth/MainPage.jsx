@@ -30,7 +30,7 @@ const MainPage = () => {
       return () => clearInterval(interval)
     }, [])
     
-    if (isLoading) return  <Loader />
+    if (isLoading) return <div className='flex mt-24 h-96 justify-center'><Loader/></div>
 
   if(isSuccess){
 
@@ -88,21 +88,8 @@ const MainPage = () => {
       title="mainPageBody"
     >
       {(username) ? 
-        <FavoritedRecipes className="
-          gap-y-4 sm:gap-y-0
-        "
-        /> 
+        <FavoritedRecipes className="gap-y-4 sm:gap-y-0"/> 
         :
-        // <div className="
-        //   grid 
-        //   grid-cols-1 md:grid-cols-3
-        //   gap-y-4 sm:gap-y-0
-        //   sm:gap-x-4 
-        // "
-        //   title='mainPageBodyRecipeCards'
-        // >
-        // {recipeContent}
-        // </div>
         <MainPageRecipeCards className="gap-y-4 sm:gap-y-0"/>
         }
     </div>

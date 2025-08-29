@@ -13,7 +13,7 @@ const EditUser = () => {
         }),
     })
 
-    if(!user) return <Loader/>
+    if(!user) return <div className='flex mt-24 h-96 justify-center'><Loader/></div>
 
     return <EditUserForm user={user} />
 

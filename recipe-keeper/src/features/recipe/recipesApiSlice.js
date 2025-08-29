@@ -1,17 +1,20 @@
 import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../../app/api/apiSlice";
 
+// Entity adapter (normalizes recipe state by id/entities)
 const recipesAdapter = createEntityAdapter();
 
+// Initial normalized state
 const initialState = recipesAdapter.getInitialState();
 
+// API slice: inject endpoints for recipes
 export const recipesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    // Query: fetch all recipes
     getRecipes: builder.query({
       query: () => "/recipes",
-      validateStatus: (response, result) => {
-        return response.status === 200 && !result.isError;
-      },
+      validateStatus: (response, result) =>
+        response.status === 200 && !result.isError,
       transformResponse: (responseData) => {
         const loadedRecipes = responseData.map((recipe) => {
           recipe.id = recipe._id;
@@ -19,16 +22,16 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
         });
         return recipesAdapter.setAll(initialState, loadedRecipes);
       },
-      providesTags: (result, error, arg) => {
-        if (result?.ids) {
-          return [
-            { type: "Recipe", id: "LIST" },
-            ...result.ids.map((id) => ({ type: "Recipe", id })),
-          ];
-        } else return [{ type: "Recipe", id: "LIST" }];
-      },
+      providesTags: (result) =>
+        result?.ids
+          ? [
+              { type: "Recipe", id: "LIST" },
+              ...result.ids.map((id) => ({ type: "Recipe", id })),
+            ]
+          : [{ type: "Recipe", id: "LIST" }],
     }),
 
+    // Mutation: create a new recipe
     addNewRecipe: builder.mutation({
       async queryFn(formData, _queryApi, _extraOptions, fetchWithBQ) {
         const result = await fetchWithBQ({
@@ -38,12 +41,12 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
         });
         console.log(formData);
         console.log([...formData.entries()]);
-
         return result;
       },
       invalidatesTags: [{ type: "Recipe", id: "LIST" }],
     }),
 
+    // Mutation: update a recipe
     updateRecipe: builder.mutation({
       query: (formData) => ({
         url: "/recipes",
@@ -54,7 +57,7 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(formData, { dispatch, queryFulfilled }) {
         try {
           const { data: updatedRecipe } = await queryFulfilled;
-
+          // Apply favorited changes to cache after update
           dispatch(
             apiSlice.util.updateQueryData(
               "getRecipes",
@@ -78,6 +81,7 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: "Recipe", id: arg.id }],
     }),
 
+    // Mutation: delete a recipe
     deleteRecipe: builder.mutation({
       query: ({ id }) => ({
         url: `/recipes`,
@@ -87,6 +91,7 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: "Recipe", id: arg.id }],
     }),
 
+    // Mutation: scrape recipe data from a URL
     scrapeRecipe: builder.mutation({
       query: (url) => ({
         url: "/scrape",
@@ -97,6 +102,7 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
+// Auto-generated hooks
 export const {
   useGetRecipesQuery,
   useAddNewRecipeMutation,
@@ -105,22 +111,21 @@ export const {
   useScrapeRecipeMutation,
 } = recipesApiSlice;
 
-// return the query result object
+// Selector: get query result object
 export const selectRecipesResult =
   recipesApiSlice.endpoints.getRecipes.select();
 
-// create memoized selector
+// Memoized selector: extract normalized data
 const selectRecipesData = createSelector(
   selectRecipesResult,
   (recipesResult) => recipesResult.data // normalized state object with ids & entities
 );
 
-// getSelectors creates these selectors and we rename them with aliases using destucturing
+// Entity adapter selectors (select all, by id, or ids)
 export const {
   selectAll: selectAllRecipes,
   selectById: selectRecipeById,
   selectIds: selectRecipeIds,
-  //Pass in a selector that returns the notes slice of state
 } = recipesAdapter.getSelectors(
   (state) => selectRecipesData(state) ?? initialState
 );

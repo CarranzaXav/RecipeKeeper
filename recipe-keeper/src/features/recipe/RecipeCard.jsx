@@ -1,5 +1,4 @@
-import { useSelector } from "react-redux"
-import { selectRecipeById, useUpdateRecipeMutation } from "./recipesApiSlice"
+import { useUpdateRecipeMutation } from "./recipesApiSlice"
 import { useGetRecipesQuery } from "./recipesApiSlice"
 import { useNavigate } from "react-router-dom"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -9,65 +8,69 @@ import useAuth from "../../hooks/useAuth"
 
 const RecipeCard = ({recipeCardId, props}) => {
 
-    const {id: userId, username} = useAuth()
+// User Authentication
+  const {id: userId, username} = useAuth()
 
-    const {recipe, refetch} = useGetRecipesQuery('recipesList', {
-        selectFromResult: ({data}) => ({
-            recipe: data?.entities[recipeCardId]
-        }),
-        refetchOnFocus: true,
-        refetchOnReconnect: true,
-        refetchOnMountOrArgChange: false
-      })
+// State and Mutation hooks
+  const {recipe, refetch} = useGetRecipesQuery('recipesList', {
+      selectFromResult: ({data}) => ({
+          recipe: data?.entities[recipeCardId]
+      }),
+      refetchOnFocus: true,
+      refetchOnReconnect: true,
+      refetchOnMountOrArgChange: false
+    })
 
-    const [updateRecipe] = useUpdateRecipeMutation()
+  const [updateRecipe] = useUpdateRecipeMutation()
 
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
-const handleFavorited = async () => {
-  if (!recipe || !userId) return;
+// Handlers
+  const handleFavorited = async () => {
+    if (!recipe || !userId) return;
 
-  // Clone favorited object or initialize empty
-  const favoritedMap = typeof recipe.favorited === 'object' ? { ...recipe.favorited } : {};
+    // Clone favorited object or initialize empty
+    const favoritedMap = typeof recipe.favorited === 'object' ? { ...recipe.favorited } : {};
 
-  const currentStatus = !!favoritedMap[userId];
-  const updatedStatus = !currentStatus;
+    const currentStatus = !!favoritedMap[userId];
+    const updatedStatus = !currentStatus;
 
-  // Update user's favorited flag
-  favoritedMap[userId] = updatedStatus;
+    // Update user's favorited flag
+    favoritedMap[userId] = updatedStatus;
 
-  console.log("🟡 Toggling favorite", {
-    recipeId: recipe.id,
-    userId,
-    from: currentStatus,
-    to: updatedStatus,
-  });
+    console.log("🟡 Toggling favorite", {
+      recipeId: recipe.id,
+      userId,
+      from: currentStatus,
+      to: updatedStatus,
+    });
 
 
-  try {
-    await updateRecipe({
-      id: recipe.id,
-      favorited: favoritedMap,
-    }).unwrap();
+    try {
+      await updateRecipe({
+        id: recipe.id,
+        favorited: favoritedMap,
+      }).unwrap();
 
-    await refetch()
-  } catch (err) {
-    console.error("🔴 Favorite toggle failed", err);
+      await refetch()
+    } catch (err) {
+      console.error("🔴 Favorite toggle failed", err);
+    }
+  };
+
+  const handleEdit = () => navigate(`/dash/recipes/edit/${recipeCardId}`)
+
+  const viewRecipeCard = () => navigate(`/recipes/${recipeCardId}`)
+
+// CSS class for Favorited
+  const isFavorited = !!recipe.favorited?.[userId]
+
+// Shorten string to 'n' and add '...' if too long
+  const truncate = (str,n) => {
+  return str?.length > n ? str.substr(0, n-1) + "..." : str;
   }
-};
 
-
-    const isFavorited = !!recipe.favorited?.[userId]
-
-    if (!recipe) return null
-
-    const handleEdit = () => navigate(`/dash/recipes/edit/${recipeCardId}`)
-
-    const viewRecipeCard = () => navigate(`/recipes/${recipeCardId}`)
-
-    const truncate = (str,n) => {
-    return str?.length > n ? str.substr(0, n-1) + "..." : str;
-    }    
+  if (!recipe) return null
 
   return (
 
@@ -94,19 +97,19 @@ const handleFavorited = async () => {
         "
         title="recipeCardHeader"
         >
-            <div className="
-            w-8/10
-            text-sm lg:text-base
-            font-extrabold
-            relative
-            "
-            title='recipeCardTitle'
-            >
-              {truncate(recipe.title,30)}
-            </div>
+          <div className="
+          w-8/10
+          text-sm lg:text-base
+          font-extrabold
+          relative
+          "
+          title='recipeCardTitle'
+          >
+            {truncate(recipe.title,30)}
+          </div>
 
-            {(username) && 
-            <div className="
+          {(username) && 
+          <div className="
             w-1/10
             text-xl
             cursor-pointer
@@ -115,8 +118,8 @@ const handleFavorited = async () => {
               title="recipeCardFavorited"
               onClick={handleFavorited}
             >
-             <FontAwesomeIcon icon={faStar} style={{color: isFavorited ? '#FFD43B' : '#bababa'}}/>
-            </div>}
+              <FontAwesomeIcon icon={faStar} style={{color: isFavorited ? '#FFD43B' : '#bababa'}}/>
+          </div>}
         </div>
 
         <div className="
@@ -155,49 +158,49 @@ const handleFavorited = async () => {
         "
           title="recipeCardFooter"
         >
-            <div className="w-1/2" title='recipeCardEditContainer'>
-        {userId === recipe.user &&
-                <button className="
-                  text-2xl
-                  text-white
-                  bg-transparent
-                  border-none
-                  cursor-pointer
-                  hover:text-purple-500
-                " 
-                  onClick={handleEdit}
-                  name="recipeCardEditBtn"
-                >
-                  <FontAwesomeIcon icon={faPenToSquare} />
-                </button>
-        }
-            </div>
-
-            <div className="
-              w-1/2 
-              flex
-              justify-end
-            "
-              title='recipeCardViewContainer'
+          <div className="w-1/2" title='recipeCardEditContainer'>
+            {userId === recipe.user &&
+            <button className="
+              text-2xl
+              text-white
+              bg-transparent
+              border-none
+              cursor-pointer
+              hover:text-purple-500
+            " 
+              onClick={handleEdit}
+              name="recipeCardEditBtn"
             >
-                <button className="
-                  bg-transparent
-                  border-none
-                  text-2xl
-                  cursor-pointer
-                " 
-                  onClick={viewRecipeCard}
-                  title='recipeCardViewButton'
-                >
-                    <FontAwesomeIcon  className='
-                    text-white
-                    hover:text-purple-500
-                    '
-                      title="recipeCardViewBtn"
-                      icon={faEye} 
-                    />
-                </button>
-            </div>
+              <FontAwesomeIcon icon={faPenToSquare} />
+            </button>
+            }
+          </div>
+
+          <div className="
+            w-1/2 
+            flex
+            justify-end
+          "
+            title='recipeCardViewContainer'
+          >
+            <button className="
+              bg-transparent
+              border-none
+              text-2xl
+              cursor-pointer
+            " 
+              onClick={viewRecipeCard}
+              title='recipeCardViewButton'
+            >
+              <FontAwesomeIcon  className='
+              text-white
+              hover:text-purple-500
+              '
+                title="recipeCardViewBtn"
+                icon={faEye} 
+              />
+            </button>
+          </div>
         </div>
     </div>
   )

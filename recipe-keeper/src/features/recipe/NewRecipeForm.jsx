@@ -7,28 +7,32 @@ import useAuth from "../../hooks/useAuth"
 
 const NewRecipeForm = ({users}) => {
 // Authenticate current user
-  const {id: userId, username} = useAuth()
-
-  const [addNewRecipe, {
+    const {id: userId, username} = useAuth()
+    
+// State and Mutation hooks
+    const [addNewRecipe, {
     isLoading, 
     isSuccess, 
     isError, 
     error
-  }] = useAddNewRecipeMutation()
+    }] = useAddNewRecipeMutation()
 
-  const navigate = useNavigate()
+    const navigate = useNavigate()
 
-  const [title, setTitle] = useState('')
-  const [course, setCourse] = useState([''])
-  const [photo, setPhoto] = useState([])
-  const [photoSource, setPhotoSource] = useState("")
-  const [photoURL, setPhotoURL] = useState("")
-  const [hours, setHours] = useState(0)
-  const [minutes, setMinutes] = useState(0)
-  const [ingredients, setIngredients] = useState('')
-  const [instructions, setInstructions] = useState('')
+// Form State
+    const [title, setTitle] = useState('')
+    const [course, setCourse] = useState([''])
+    const [photo, setPhoto] = useState([])
+    const [photoSource, setPhotoSource] = useState("")
+    const [photoURL, setPhotoURL] = useState("")
+    const [hours, setHours] = useState(0)
+    const [minutes, setMinutes] = useState(0)
+    const [ingredients, setIngredients] = useState('')
+    const [instructions, setInstructions] = useState('')
 
-  useEffect(() => {
+  
+// Navigate after success
+    useEffect(() => {
     if (isSuccess) {
         setTitle('')
         setCourse([])
@@ -39,8 +43,20 @@ const NewRecipeForm = ({users}) => {
         setInstructions('')
         navigate('/recipes')
     }
-  }, [isSuccess, navigate])
+    }, [isSuccess, navigate])
 
+// Auto-resize textareas
+    useEffect(() => {
+    const ingredientsBox = document.getElementById('ingredients');
+    const instructionsBox = document.getElementById('instructions');
+    autoResizeTextarea(ingredientsBox);
+    autoResizeTextarea(instructionsBox)
+    }, [ingredients, instructions])
+
+// Validation
+    const canSave = [username, title, ingredients, instructions].every(Boolean) && !isLoading
+
+// Handlers
     const onTitleChanged = (e) => setTitle(e.target.value)
     const onHoursChanged = (e) => setHours(e.target.value)
     const onMinutesChanged = (e) => setMinutes(e.target.value)
@@ -63,8 +79,7 @@ const NewRecipeForm = ({users}) => {
         setCourse(values)
     }
 
-    const canSave = [username, title, ingredients, instructions].every(Boolean) && !isLoading
-
+//Save new recipe 
     const onSaveRecipeClicked = async (e) => {
         e.preventDefault()
         if(!canSave) return
@@ -74,6 +89,7 @@ const NewRecipeForm = ({users}) => {
         formData.append('title', title)
         course.forEach(c => formData.append('course', c))
 
+        // Handle photo upload/url
         if(photoSource === 'upload' && Array.isArray(photo)) {
             photo.forEach(file => formData.append('photo', file))
         } else if ( photoSource === 'url' && photoURL){
@@ -82,18 +98,18 @@ const NewRecipeForm = ({users}) => {
 
         formData.append('time[hours]', hours || 0)
         formData.append('time[minutes]', minutes || 0)
+
+        // Split Ingredients by Commas
         ingredients.split(',').forEach(i => formData.append('ingredients[]', i.trim()))
+
+        // Split Instructions by New Lines
         instructions.split('\n').forEach(i => formData.append('instructions[]', i.trim()))
         await addNewRecipe(formData)
-
-    //     for (let [key, value] of formData.entries()) {
-    //   console.log(key, value)
-    // }
-
 
         navigate('/recipes')    
     }
 
+// Dropdown fields
     const fields = Object.values(COURSES).map((course) => {
         return (
             <option key={course} value={course}>
@@ -102,6 +118,7 @@ const NewRecipeForm = ({users}) => {
         )
     })
 
+//Auto-resize textarea utility
     const autoResizeTextarea = (element) => {
     if(element) {
         element.style.height = 'auto';
@@ -109,18 +126,13 @@ const NewRecipeForm = ({users}) => {
     }
     }
 
-  useEffect(() => {
-    const ingredientsBox = document.getElementById('ingredients');
-    const instructionsBox = document.getElementById('instructions');
-    autoResizeTextarea(ingredientsBox);
-    autoResizeTextarea(instructionsBox)
-  }, [ingredients, instructions])
-
+// CSS classes for validation/errors
     const errClass = isError ? "errmsg" : ""
     const validTitleClass = !title ? 'form-input--incomplete' : ''
     const validIngreClass = !ingredients ? 'form-input--incomplete' : ''
     const validInstrClass = !instructions ? 'form-input--incomplete' : ''
 
+// Error message
     const errContent = (error?.data?.message) ?? ""
 
   return (
@@ -199,7 +211,7 @@ const NewRecipeForm = ({users}) => {
                     />
                 </div>
 
-                <div className='flex my-3'
+                <div className='grid w-full my-3'
                     title="newRecipeFormBodyPhotoBlock"
                 >
                     <label className='
@@ -208,6 +220,7 @@ const NewRecipeForm = ({users}) => {
                         text-sm
                         tracking-[2px]
                         self-center
+                        justify-center
                         py-2
                     '
                         title="newRecipeFormLabel" 
@@ -217,53 +230,77 @@ const NewRecipeForm = ({users}) => {
                         <h4>(Optional)</h4>                    
                     </label>
 
-                    <select 
-                        className="
-                           w-6/10
-                           p-1
-                           rounded-lg
-                           resize-none
-                           overflow-hidden
-                           min-h-10
-                           bg-white
-                           whitespace-pre-wrap" 
-                        id="recipe-photo"
-                        title="newRecipeFormInput"
-                        value={photoSource}
-                        onChange={e => setPhotoSource(e.target.value)}
-                        name="name"
-                    >
-                        <option value="">Select A Method</option>
-                        <option value="upload">Upload Image</option>
-                        <option value="url">Image Link</option>
-                    </select>
+                    <div className='
+                        w-full 
+                        grid
+                        justify-items-center
+                    '>
+                        {photoSource === '' && (
 
-                    {photoSource === '' && (
-                        photo.length > 0 && photo[0].url ? (
-                            <img src={photo[0].url} alt="Current" className="w-24 rounded" />
-                        ) : (
-                            <div className="w-24 h-24 flex items-center justify-center bg-white border border-gray-300 text-xl rounded">
-                            📷
-                            </div>
-                        )
-                    )}
+                                <div className="size-24 flex items-center justify-center bg-white border border-gray-300 text-xl rounded">
+                                📷
+                                </div>
+                        )}
 
-                    {photoSource === 'upload' && (
-                        <input 
-                            type="file"
-                            multiple
-                            onChange={(e) => setPhoto(Array.from(e.target.files))} 
-                        />
-                    )}
+                        {photoSource === 'upload' && (
+                            <input 
+                                type="file"
+                                className="
+                                    bg-purple-400
+                                    hover:bg-purple-600
+                                    text-white
+                                    gap-x-3
+                                    p-2
+                                    rounded-lg
+                                    w-3/4
+                                    cursor-pointer
+                                "
+                                multiple
+                                onChange={(e) => setPhoto(Array.from(e.target.files))} 
+                            />
+                        )}
 
-                    {photoSource === 'url' && (
-                        <input 
-                            type="text"
-                            placeholder=""
-                            value={photoURL}
-                            onChange={(e) => setPhotoURL(e.target.value)} 
-                        />
-                    )}
+                        {photoSource === 'url' && (
+                            <input 
+                                className="
+                                    bg-purple-400
+                                    hover:bg-purple-600
+                                    text-white
+                                    gap-x-3
+                                    p-2
+                                    rounded-lg
+                                    w-3/4
+                                    cursor-pointer
+                                "
+                                type="text"
+                                placeholder="Enter photo URL"
+                                value={photoURL}
+                                onChange={(e) => setPhotoURL(e.target.value)} 
+                            />
+                        )}
+                        <select 
+                            className="
+                            w-3/4
+                                mt-3
+                                py-1 px-2
+                                rounded-lg
+                                resize-none
+                                overflow-hidden
+                                min-h-10
+                                bg-white
+                                whitespace-pre-wrap
+                            " 
+                            id="recipe-photo"
+                            title="newRecipeFormInput"
+                            value={photoSource}
+                            onChange={e => setPhotoSource(e.target.value)}
+                            name="name"
+                        >
+                            <option value="">Select A Method</option>
+                            <option value="upload">Upload Image</option>
+                            <option value="url">Image Link</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div className=''
@@ -317,8 +354,7 @@ const NewRecipeForm = ({users}) => {
                     >
                         Time: 
                     </label>
-                    <input 
-                        className='
+                    <input className='
                            w-1/2
                            p-1
                            rounded-lg
@@ -337,8 +373,7 @@ const NewRecipeForm = ({users}) => {
                         onChange={onHoursChanged}
                         placeholder="0 Hours"
                     />
-                    <input 
-                        className='
+                    <input className='
                            w-1/2
                            p-1
                            rounded-lg
@@ -362,8 +397,7 @@ const NewRecipeForm = ({users}) => {
                 <div className='mb-2'
                 title="newRecipeFormBodyIngredientsBlock">
 
-                    <textarea 
-                        className={`          
+                    <textarea className={`          
                            w-full
                            bg-white
                            p-1
@@ -441,43 +475,44 @@ const NewRecipeForm = ({users}) => {
                     
                 </div>
             </div>
-                <div className='
-                    h-15/100
-                    w-full
-                    flex
-                    justify-center
-                '
-                title="newRecipeFormFooter">
-                {(canSave) &&
-                    <button
-                        className="
-                            h-8/10
-                            p-4
-                            justify-items-center
-                            flex
-                            cursor-pointer
-                            bg-[var(--BUTTON-COLOR)] hover:bg-white
-                            text-white hover:text-[var(--BUTTON-COLOR)]
-                            tracking-[2px]
-                            font-semibold
-                            rounded-2xl
-                            border-solid
-                            border-t-2 border-t-white 
-                            border-l-2 border-l-white 
-                            border-b-2 border-b-[#aba6d2] 
-                            border-r-2 border-r-[#aba6d2] 
-                            hover:shadow-[4px 4px]
-                            hover:shadow-[var(--BUTTON-COLOR)]
-                            hover:transform-[translate(-4px,-4px)]
-                        "
-                        title="Save"
-                        type="submit"
-                        // disabled={!canSave}
-                    >
-                        UPLOAD
-                    </button>
-                }
-                </div>
+
+            <div className='
+                h-15/100
+                w-full
+                flex
+                justify-center
+            '
+            title="newRecipeFormFooter">
+            {(canSave) &&
+                <button
+                    className="
+                        h-8/10
+                        p-4
+                        justify-items-center
+                        flex
+                        cursor-pointer
+                        bg-[var(--BUTTON-COLOR)] hover:bg-white
+                        text-white hover:text-[var(--BUTTON-COLOR)]
+                        tracking-[2px]
+                        font-semibold
+                        rounded-2xl
+                        border-solid
+                        border-t-2 border-t-white 
+                        border-l-2 border-l-white 
+                        border-b-2 border-b-[#aba6d2] 
+                        border-r-2 border-r-[#aba6d2] 
+                        hover:shadow-[4px 4px]
+                        hover:shadow-[var(--BUTTON-COLOR)]
+                        hover:transform-[translate(-4px,-4px)]
+                    "
+                    title="Save"
+                    type="submit"
+                    // disabled={!canSave}
+                >
+                    UPLOAD
+                </button>
+            }
+            </div>
         </form>
     </>
   )

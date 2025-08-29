@@ -19,7 +19,7 @@ const Loader = () => {
   }, [])
 
   return (
-    <div className='flex mt-40 lg:mt-48 h-full justify-center'>
+    <div className='flex items-center justify-center'>
       <img 
         src={images[current]} 
         alt={`Loader Part ${current + 1}`} 

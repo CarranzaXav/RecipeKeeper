@@ -8,46 +8,48 @@ import useAuth from '../../hooks/useAuth'
 
 
 const EditRecipeForm = ({recipe}) => {
+// Authenticate current user
+    const {id: userId} = useAuth()
 
-  const {id: userId} = useAuth()
-
-  const [updateRecipe, {
+// State and Mutation Hooks
+    const [updateRecipe, {
     isLoading,
     isSuccess,
     isError,
     error
-  }] = useUpdateRecipeMutation()
+    }] = useUpdateRecipeMutation()
 
-  const [deleteRecipe, {
+    const [deleteRecipe, {
     isSuccess: isDelSuccess,
     isError: isDelError,
     error: delerror
-  }] = useDeleteRecipeMutation()
+    }] = useDeleteRecipeMutation()
 
-  const navigate = useNavigate()
+    const navigate = useNavigate()
 
-  const [title, setTitle] = useState(recipe.title)
-  const [course,setCourse] = useState(recipe.course)
-  const [photo, setPhoto] = useState(Array.isArray(recipe.photo) ? recipe.photo : [])
-  const [photoSource, setPhotoSource] = useState("existing")
-  const [photoURL, setPhotoURL] = useState("") 
-  const [hours, setHours] = useState(recipe?.time?.hours || '')
-  const [minutes, setMinutes] = useState(recipe?.time?.minutes || '')
-  const [ingredients, setIngredients] = useState(
-  Array.isArray(recipe.ingredients)
+// Form State 
+    const [title, setTitle] = useState(recipe.title)
+    const [course,setCourse] = useState(recipe.course)
+    const [photo, setPhoto] = useState(Array.isArray(recipe.photo) ? recipe.photo : [])
+    const [photoSource, setPhotoSource] = useState("existing")
+    const [photoURL, setPhotoURL] = useState("") 
+    const [hours, setHours] = useState(recipe?.time?.hours || '')
+    const [minutes, setMinutes] = useState(recipe?.time?.minutes || '')
+    const [ingredients, setIngredients] = useState(
+    Array.isArray(recipe.ingredients)
     ? recipe.ingredients.join(', ')
     : recipe.ingredients
-  )
-  const [instructions, setInstructions] = useState(
+    )
+    const [instructions, setInstructions] = useState(
     Array.isArray(recipe.instructions)
     ? recipe.instructions.join(', ')
     : recipe.instructions
-  )
+    )
 
-  const [favorited, setFavorited] = useState(() => typeof recipe.favorited === 'object' ? { ...recipe.favorited } : {})
+    const [favorited, setFavorited] = useState(() => typeof recipe.favorited === 'object' ? { ...recipe.favorited } : {})
 
-  useEffect(() => {
-
+// Navigate after success/delete
+    useEffect(() => {
     if(isSuccess || isDelSuccess){
         setTitle('')
         setCourse([])
@@ -59,18 +61,22 @@ const EditRecipeForm = ({recipe}) => {
         setFavorited(recipe.favorited || false)
         navigate('/recipes')
     }
-  }, [isSuccess, isDelSuccess, navigate])
+    }, [isSuccess, isDelSuccess, navigate])
 
-  const onTitleChanged = (e) => setTitle(e.target.value)
-  const onHoursChanged = (e) => setHours(Number(e.target.value))
-  const onMinutesChanged = (e) => setMinutes(Number(e.target.value))
+// Validation
+    const canSave = [title, ingredients, instructions].every(Boolean) && !isLoading
 
-  const onFavorited = () => {
+// Handlers
+    const onTitleChanged = (e) => setTitle(e.target.value)
+    const onHoursChanged = (e) => setHours(Number(e.target.value))
+    const onMinutesChanged = (e) => setMinutes(Number(e.target.value))
+
+    const onFavorited = () => {
     setFavorited(prev => ({
         ...prev,
         [userId]: !prev?.[userId]
     }))
-  }
+    }
 
 
     const onIngredientsChanged = (e) => {
@@ -82,24 +88,16 @@ const EditRecipeForm = ({recipe}) => {
     }
 
 
-  const onCourseChanged = (e) => {
+    const onCourseChanged = (e) => {
     const values = Array.from(
         e.target.selectedOptions,
         (option) => option.value
     )
     setCourse(values)
-  }
+    }
 
-  const canSave = [title, ingredients, instructions].every(Boolean) && !isLoading
-
-  const errClass = isError || isDelError ? 'errmsg' : ''
-  const validTitleClass = !title ? 'form-input--incomplete' : ''
-  const validIngreClass = !ingredients ? 'form-input--incomplete' : ''
-  const validInstrClass = !instructions ? 'form-input--incomplete' : ''
-  
-  const errContent = (error?.data?.message || delerror?.data?.message) ?? ""
-
-  const onSaveRecipeClicked = async (e) => {
+// Save recipe
+    const onSaveRecipeClicked = async (e) => {
     e.preventDefault()
     if (!canSave) return
 
@@ -108,42 +106,53 @@ const EditRecipeForm = ({recipe}) => {
     formData.append('user', userId)
     formData.append('title', title)
     course.forEach(c => formData.append('course', c))
-
+    // Handle photo
     if (photoSource === 'upload' && Array.isArray(photo)) {
-      photo.forEach(file => formData.append('photo', file))
+        photo.forEach(file => formData.append('photo', file))
     } else if (photoSource === 'url' && photoURL) {
-      formData.append('photoLink', photoURL)
+        formData.append('photoLink', photoURL)
     } else if (photoSource === 'existing' && recipe.photo) {
-      formData.append('photo', JSON.stringify(recipe.photo))
+        formData.append('photo', JSON.stringify(recipe.photo))
     }
 
     formData.append('time[hours]', hours || 0)
     formData.append('time[minutes]', minutes || 0)
+    // Split ingredients by commas
     ingredients.split(',').forEach(i => formData.append('ingredients[]', i.trim()))
+
+    // Split instructions by new lines
     instructions.split('\n').forEach(i => formData.append('instructions[]', i.trim()))
     formData.append('favorited', JSON.stringify(favorited))
 
     await updateRecipe(formData)
 
     navigate('/recipes')
-  }
+    }
 
-
-
-
-  const onDeleteRecipeClicked = async () => {
+// Delete Recipe
+    const onDeleteRecipeClicked = async () => {
     await deleteRecipe({id: recipe.id})
-  }
+    }
 
-  const fields = Object.values(COURSES).map((course) => {
-      return (
-          <option key={course} value={course}>
-              {course}
-          </option>
-      )
-   })
+// Dropdown fields
+    const fields = Object.values(COURSES).map((course) => {
+        return (
+            <option key={course} value={course}>
+                {course}
+            </option>
+        )
+    })
 
-  return (
+// CSS classes for validation/errors
+    const errClass = isError || isDelError ? 'errmsg' : ''
+    const validTitleClass = !title ? 'form-input--incomplete' : ''
+    const validIngreClass = !ingredients ? 'form-input--incomplete' : ''
+    const validInstrClass = !instructions ? 'form-input--incomplete' : ''
+  
+// Error Message  
+    const errContent = (error?.data?.message || delerror?.data?.message) ?? ""
+
+    return (
     <>
         <p className={errClass}>{errContent}</p>
         <form className="
@@ -182,40 +191,41 @@ const EditRecipeForm = ({recipe}) => {
                     />
                 </div>
 
-            <h2 className='
-                w-8/10
-                grid md:flex
-                text-white
-                text-xl md:text-2xl lg:text-3xl
-                tracking-[3px]
-                font-semibold
-                justify-items-center 
-                justify-center
-                mx-6
-            ' 
-                title="editRecipeFormHeadTitle"
-            >
-                <h3 className='w-1/4'>Edit</h3>
-                <p className='
-                w-3/8 lg:w-auto
-                flex
-                justify-center
-                content-center
-                text-[1.2rem] xl:text-2xl 
-                xl:self-end
-                '
+                <h2 className='
+                    w-8/10
+                    grid md:flex
+                    text-white
+                    text-xl md:text-2xl lg:text-3xl
+                    tracking-[3px]
+                    font-semibold
+                    justify-items-center 
+                    justify-between
+                    mx-4
+                ' 
+                    title="editRecipeFormHeadTitle"
                 >
-                    {recipe.title}
-                </p>
-                <h3 className='w-1/4'>Recipe</h3>
-            </h2>
-            <button
-                className='text-2xl '
-                title='Delete'
-                onClick={onDeleteRecipeClicked}
-            >
-                <FontAwesomeIcon icon={faTrash} className='text-white hover:text-purple-500 cursor-pointer'/>
-            </button>
+                    <h3 className=''>Edit</h3>
+                    <p className='
+                    lg:w-auto
+                    flex
+                    justify-center
+                    content-center
+                    text-[1.2rem] xl:text-2xl 
+                    xl:self-end
+                    mx-5
+                    '
+                    >
+                        {recipe.title}
+                    </p>
+                    <h3 className=''>Recipe</h3>
+                </h2>
+                <button
+                    className='text-2xl '
+                    title='Delete'
+                    onClick={onDeleteRecipeClicked}
+                >
+                    <FontAwesomeIcon icon={faTrash} className='text-white hover:text-purple-500 cursor-pointer'/>
+                </button>
             </div>
 
             <div className='
@@ -230,35 +240,34 @@ const EditRecipeForm = ({recipe}) => {
             >
 
                 <div className='' title="editRecipeFormBodyTitle">                    
-                <input 
-                        type="text" 
-                        className={`
-                            flex
-                            w-full
-                            tracking-[2px]
-                            text-lg
-                            text-purple-500
-                            self-center
-                            bg-white
-                            rounded-lg 
-                            p-1.5
-                            ${validTitleClass}
-                        `}
-                        title='editRecipeFormInput'
-                        id='recipe-title'
-                        name='title'
-                        autoComplete='off'
-                        value={title}
+                    <input type="text" 
+                            className={`
+                                flex
+                                w-full
+                                tracking-[2px]
+                                text-lg
+                                text-purple-500
+                                self-center
+                                bg-white
+                                rounded-lg 
+                                p-1.5
+                                ${validTitleClass}
+                            `}
+                            title='editRecipeFormInput'
+                            id='recipe-title'
+                            name='title'
+                            autoComplete='off'
+                            value={title}
                         onChange={onTitleChanged}
                     />
                 </div>
 
-                 <div className='
-                    grid
-                    w-full
-                    my-3
+                <div className='
+                grid
+                w-full
+                my-3
                 '
-                    title="editRecipeFormPhoto"
+                title="editRecipeFormPhoto"
                 >
                     <label htmlFor="recipe-photo"
                     className='
@@ -276,13 +285,14 @@ const EditRecipeForm = ({recipe}) => {
                         <h4>(Optional)</h4>
                     </label>
 
-                    <div className='w-full 
-                    grid
-                    justify-items-center'>
+                    <div className='
+                        w-full 
+                        grid
+                        justify-items-center
+                    '>
 
-                    {photoSource === "upload" && (
-                        <input 
-                            className='
+                        {photoSource === "upload" && (
+                            <input className='
                                 bg-purple-400
                                 hover:bg-purple-600
                                 text-white
@@ -291,38 +301,38 @@ const EditRecipeForm = ({recipe}) => {
                                 rounded-lg
                                 w-3/4
                                 cursor-pointer
-                            '
-                        type="file" multiple onChange={(e) => setPhoto(Array.from(e.target.files))} />
-                    )}
+                        '
+                            type="file" multiple onChange={(e) => setPhoto(Array.from(e.target.files))} />
+                        )}
 
-                    {photoSource === "url" && (
-                        <input
-                            className='
-                                bg-purple-400
-                                hover:bg-purple-600
-                                text-white
-                                gap-x-3
-                                p-2
-                                rounded-lg
-                                w-3/4
-                                cursor-pointer
-                            '
-                            type="text"
-                            placeholder="https://example.com/image.jpg"
-                            value={photoURL}
-                            onChange={(e) => setPhotoURL(e.target.value)}
-                        />
-                    )}
+                        {photoSource === "url" && (
+                            <input
+                                className='
+                                    bg-purple-400
+                                    hover:bg-purple-600
+                                    text-white
+                                    gap-x-3
+                                    p-2
+                                    rounded-lg
+                                    w-3/4
+                                    cursor-pointer
+                                '
+                                type="text"
+                                placeholder="https://example.com/image.jpg"
+                                value={photoURL}
+                                onChange={(e) => setPhotoURL(e.target.value)}
+                            />
+                        )}
 
-                    {photoSource === "existing" && (
-                        photo.length > 0 && photo[0].url ? (
-                        <img src={photo[0].url} alt="Current" className="w-52 h-52 rounded" />
-                        ) : (
-                        <div className="w-24 h-24 flex items-center justify-center bg-white border border-gray-300 text-xl rounded">
-                        📷
-                        </div>
-                        )
-                    )}
+                        {photoSource === "existing" && (
+                            photo.length > 0 && photo[0].url ? (
+                            <img src={photo[0].url} alt="Current" className="w-52 h-52 rounded" />
+                            ) : (
+                            <div className="w-24 h-24 flex items-center justify-center bg-white border border-gray-300 text-xl rounded">
+                            📷
+                            </div>
+                            )
+                        )}
 
                         <select 
                         className='
@@ -357,21 +367,21 @@ const EditRecipeForm = ({recipe}) => {
                 '
                 title="editRecipeFormTime">
                     <label
-                     className='
+                        className='
                         w-3/10 lg:w-4/10
                         flex
                         text-sm
                         tracking-[2px]
                         self-center
                         py-2
-                     '
-                     title='editRecipeFormLabel'
-                     htmlFor="recipe-time"
-                     >
+                        '
+                        title='editRecipeFormLabel'
+                        htmlFor="recipe-time"
+                    >
                         Time:
-                     </label>
+                    </label>
 
-                     <input 
+                    <input 
                         className='
                             w-1/2 lg:w-6/10
                             py-1
@@ -389,8 +399,9 @@ const EditRecipeForm = ({recipe}) => {
                         value={hours}
                         onChange={onHoursChanged}
                         placeholder='Hours'
-                     />
-                     <input 
+                    />
+
+                    <input 
                         className='
                             w-1/2 lg:w-6/10
                             py-1
@@ -408,7 +419,7 @@ const EditRecipeForm = ({recipe}) => {
                         value={minutes}
                         onChange={onMinutesChanged}
                         placeholder='Minutes'
-                     />
+                    />
                 </div>
 
                 <div className='flex'
@@ -423,7 +434,7 @@ const EditRecipeForm = ({recipe}) => {
                         py-2
                     '
                         title='editRecipeFormLabel'
-                     htmlFor="recipe-course">
+                        htmlFor="recipe-course">
                         Select Course
                     </label>
 
@@ -444,7 +455,9 @@ const EditRecipeForm = ({recipe}) => {
                         size='1'
                         value={course}
                         onChange={onCourseChanged}
-                    >{fields}</select>
+                    >
+                        {fields}
+                    </select>
                     
                 </div>
 
@@ -536,10 +549,10 @@ const EditRecipeForm = ({recipe}) => {
                     title='editRecipeFormInput'
                     name="instructions" id="recipe-instructions"
                     value={instructions} 
-                    onChange={onInstructionsChanged}></textarea>
-                </div>
+                    onChange={onInstructionsChanged}>
+                    </textarea>
 
-                <div id="PrevInstructions">
+                    <div id="PrevInstructions">
                         <ul className="px-4">
                             {instructions
                                 .split(/[\n]+/) //splitby newline or comma
@@ -554,6 +567,7 @@ const EditRecipeForm = ({recipe}) => {
                         </ul>
                     </div>
 
+                </div>
             </div>
 
             <div className='
@@ -565,36 +579,36 @@ const EditRecipeForm = ({recipe}) => {
                 title="editRecipeFormFooter"
             >
                 {(canSave) && 
-                <button
-                    className="
-                            h-8/10
-                            p-4
-                            justify-items-center
-                            flex
-                            cursor-pointer
-                            bg-[var(--BUTTON-COLOR)] hover:bg-white
-                            text-white hover:text-[var(--BUTTON-COLOR)]
-                            tracking-[2px]
-                            font-semibold
-                            rounded-2xl
-                            border-solid
-                            border-t-2 border-t-white 
-                            border-l-2 border-l-white 
-                            border-b-2 border-b-[#aba6d2] 
-                            border-r-2 border-r-[#aba6d2] 
-                            hover:shadow-[4px 4px]
-                            hover:shadow-[var(--BUTTON-COLOR)]
-                            hover:transform-[translate(-4px,-4px)]
-                        "
+                <button className="
+                    h-8/10
+                    p-4
+                    justify-items-center
+                    flex
+                    cursor-pointer
+                    bg-[var(--BUTTON-COLOR)] hover:bg-white
+                    text-white hover:text-[var(--BUTTON-COLOR)]
+                    tracking-[2px]
+                    font-semibold
+                    rounded-2xl
+                    border-solid
+                    border-t-2 border-t-white 
+                    border-l-2 border-l-white 
+                    border-b-2 border-b-[#aba6d2] 
+                    border-r-2 border-r-[#aba6d2] 
+                    hover:shadow-[4px 4px]
+                    hover:shadow-[var(--BUTTON-COLOR)]
+                    hover:transform-[translate(-4px,-4px)]
+                "
                     title='Save'
                     onClick={onSaveRecipeClicked}
                 >
                 Save
-                </button>}
+                </button>
+                }
             </div>
         </form>
     </>
-  )
+    )
 }
 
 export default EditRecipeForm

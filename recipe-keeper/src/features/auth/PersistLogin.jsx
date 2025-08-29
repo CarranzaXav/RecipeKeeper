@@ -56,7 +56,7 @@ const PersistLogin = () => {
   } else if (isLoading) {
     // Show loader during token verification
     console.log("Loading...");
-    content = <Loader/>;
+    content = <div className='flex mt-24 h-96 justify-center'><Loader/></div>;
   } else if (isError) {
     // Show error message if refresh token fails
     console.log("Error during token refresh: ", error?.data?.message);

@@ -11,6 +11,23 @@ import { useEffect } from "react"
 
 const RecipesList = () => {
 
+  // User Authentication
+  const {username} = useAuth()
+
+// State and mutation hooks
+  const {
+    data: recipes,
+    isLoading, isSuccess, isError, error
+  } = useGetRecipesQuery("recipesList")
+  
+  const [visibleCount, setVisibleCount] = useState(9);
+
+// Handlers
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 9)
+  }
+
+// Scroll loader effect 
   useEffect(() => {
     const handleScroll = () => {
       const windowTop = window.scrollY
@@ -29,27 +46,16 @@ const RecipesList = () => {
     }
   }, [])
 
-  const {username} = useAuth()
+// Loader
+  if (isLoading) return <div className='flex mt-24 h-96 justify-center'><Loader/></div>
 
-  const [visibleCount, setVisibleCount] = useState(9);
-
-  const {
-    data: recipes,
-    isLoading, isSuccess, isError, error
-  } = useGetRecipesQuery("recipesList")
-
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 9)
-  }
-
-  if (isLoading) return <Loader/>
-
+// Error Message
   if(isError) return <p className="errmsg">{error?.data?.message}</p>
 
-
+// Success Message
   if(isSuccess){
-  const {ids} = recipes
 
+  const {ids} = recipes
 
   const recipeContent = ids?.length ? ids.slice(0,visibleCount).map(recipeCardId => <RecipeCard key={recipeCardId} recipeCardId={recipeCardId}/>) : null
 

@@ -67,7 +67,7 @@ const Login = () => {
   
   const errClass = errMsg ? 'errmsg': 'offscreen'
 
-  if (isLoading) return <Loader/>
+  if (isLoading) return <div className='flex mt-24 h-96 justify-center'><Loader/></div>
 
   return (
   <div className="w-full pt-12 h-96">

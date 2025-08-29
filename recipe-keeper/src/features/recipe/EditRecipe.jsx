@@ -6,12 +6,15 @@ import EditRecipeForm from './EditRecipeForm'
 import Loader from "../../Components/Loader"
 
 const EditRecipe = () => {
-    const { id } = useParams()
+//Route param
+  const { id } = useParams()
 
-    const recipe = useSelector(state => selectRecipeById(state, id))
-    const users = useSelector(selectAllUsers)
+//Selectors 
+  const recipe = useSelector(state => selectRecipeById(state, id))
+  const users = useSelector(selectAllUsers)
 
-  return recipe && users ? <EditRecipeForm recipe={recipe} users={users} /> : <Loader/>
+// Content
+  return recipe && users ? <EditRecipeForm recipe={recipe} users={users} /> : <div className='flex mt-24 h-96 justify-center'><Loader/></div>
 }
 
 export default EditRecipe

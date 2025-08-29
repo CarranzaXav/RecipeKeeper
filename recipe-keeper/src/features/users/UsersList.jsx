@@ -10,7 +10,7 @@ const UsersList = () => {
     refetchOnMountOrArgChange: true,
   })
 
-  if (isLoading) return <Loader/>
+  if (isLoading) return <div className='flex mt-24 h-96 justify-center'><Loader/></div>
   
   if (isError) return <p className="errmsg">{error?.data?.message}</p>
 

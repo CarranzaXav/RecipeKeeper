@@ -35,7 +35,7 @@ const Recipe = () => {
 
   const navigate = useNavigate()
 
-  if(isLoading) return <Loader/>
+  if(isLoading) return <div className='flex mt-24 h-96 justify-center'><Loader/></div>
 
   if (!recipe && isSuccess) return <p>Recipe not found</p>
 
