@@ -56,8 +56,27 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    requestPasscode: builder.mutation({
+      query: (body) => ({
+        url: "/auth/otp/request-passcode",
+        method: "POST",
+        body,
+      }),
+    }),
+    verifyPasscode: builder.mutation({
+      query: (body) => ({
+        url: "/auth/otp/verify-passcode",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useSendLogoutMutation, useRefreshMutation } =
-  authApiSlice;
+export const {
+  useLoginMutation,
+  useSendLogoutMutation,
+  useRefreshMutation,
+  useRequestPasscodeMutation,
+  useVerifyPasscodeMutation,
+} = authApiSlice;

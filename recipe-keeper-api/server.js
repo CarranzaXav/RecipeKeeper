@@ -30,6 +30,7 @@ app.use("/", express.static(path.join(__dirname, "public")));
 
 app.use("/", require("./routes/root"));
 app.use("/auth", require("./routes/authRoutes"));
+app.use("/auth/otp", require("./routes/otpRoutes"));
 app.use("/users", require("./routes/userRoutes"));
 app.use("/recipes", require("./routes/recipeRoutes"));
 app.use("/scrape", require("./routes/scrapeRoutes"));

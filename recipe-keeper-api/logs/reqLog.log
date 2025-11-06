@@ -22202,3 +22202,15 @@
 20250828	23:08:36	044fa14a-26c8-464b-955f-1db1b1028ffd	OPTIONS	/users	http://localhost:5173
 20250828	23:08:36	ecf27426-b0bb-4541-b83b-b424222bb2e1	GET	/recipes	http://localhost:5173
 20250828	23:08:36	f85c1ce4-04a5-46d1-95f9-c016a0efee24	GET	/users	http://localhost:5173
+20251017	20:27:36	c183e3f6-adf7-4899-9ae4-63fe627c9228	GET	/recipes	undefined
+20251017	20:27:38	7492b0b7-bc19-4dd9-9dbc-8826bb0bfaad	GET	/favicon.ico	undefined
+20251017	20:28:32	fe6aa8d2-a560-4e9f-9c29-93267cd3c16d	GET	/	undefined
+20251017	20:28:32	2d5cda24-44f6-4e7d-9243-ae07c3b3d3a9	GET	/css/style.css	undefined
+20251017	20:29:43	2121b0d7-b77d-41e3-b2e8-1ef5a5d5dc85	GET	/recipes	http://localhost:5173
+20251102	12:19:26	98d42666-9ef2-48a1-ae51-ea5b5e948234	GET	/recipes	http://localhost:5173
+20251102	12:23:12	43f8af68-a31c-4201-9ea3-87c6c0da1088	OPTIONS	/auth/otp/request-passcode	http://localhost:5173
+20251102	12:23:12	37aed2a4-f7e4-4a34-b0f3-5de99788772f	POST	/auth/otp/request-passcode	http://localhost:5173
+20251102	12:23:43	106f7cda-2412-4ffc-941a-c94a4d59bd49	OPTIONS	/auth/otp/verify-passcode	http://localhost:5173
+20251102	12:23:43	916d25df-720e-41f3-91a8-94ffa7af87c2	POST	/auth/otp/verify-passcode	http://localhost:5173
+20251102	12:23:43	6dfd5bf7-e188-4929-a537-ceb0b42dc102	OPTIONS	/recipes	http://localhost:5173
+20251102	12:23:43	e46831fc-4bf3-4503-b501-c1c89f5a69d7	GET	/recipes	http://localhost:5173

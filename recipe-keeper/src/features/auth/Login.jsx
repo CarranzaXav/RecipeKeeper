@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect} from 'react'
 import { useNavigate, Link} from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faHouseChimney} from '@fortawesome/free-solid-svg-icons'
+import {faHouseChimney, faQuestionCircle} from '@fortawesome/free-solid-svg-icons'
+import {faCircleQuestion} from '@fortawesome/free-solid-svg-icons'
 
 import { useDispatch} from 'react-redux'
 import { setCredentials } from './authSlice';
@@ -223,14 +224,28 @@ const Login = () => {
 
       <footer className='loginFormFooter
         h-6
-        flex flex-col-reverse
+        grid grid-cols-2
+        px-2.5
 
       '>
+       <div className="loginFormFooterBtnContainer">
+          <Link
+            className='loginFormButton
+            flex
+            ' 
+            to='/forgot-password'
+          >
+            <FontAwesomeIcon icon={faQuestionCircle}             className='text-white text-xl'
+            title='Forgot Password'
+            />
+          </Link>
+        </div>
         <div className="loginFormFooterBtnContainer">
           <Link
             className='loginFormButton
             flex flex-row-reverse
             ' 
+            title='Return Home'
             to='/'
           >
             <FontAwesomeIcon icon={faHouseChimney}             className='text-white text-xl'

@@ -17,6 +17,8 @@ import ScrapeRecipe from './features/recipe/ScrapeRecipe'
 import { ROLES } from './config/roles'
 import EditUser from './features/users/EditUser'
 import Loader from './Components/Loader'
+import ForgotPassword from './features/auth/ForgotPassword'
+import PasscodeVerifier from './features/auth/PasscodeVerifier'
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
         <Route index element={<MainPage/>}/>
         <Route path='login' element={<Login/>}/>
         {/* <Route path='loader' element={<Loader/>}/> */}
+        <Route path='forgot-password' element={<ForgotPassword/>}/>
+        <Route path='verify-passcode' element={<PasscodeVerifier/>}/>
 
         <Route path='users/new' element={<NewUserForm/>}/>
 
