@@ -33,11 +33,11 @@ function maskPhone(p) {
 
 async function sendSmsViaEmail(phoneDigits, carrierKey, message) {
   const domain = CARRIER_TO_DOMAIN[carrierKey];
-  if (!domain) throw new Error("Unsuppoerted Carrier");
+  if (!domain) throw new Error("Unsupported Carrier");
 
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || "smtp.gmail.com",
-    port: Number(process.env.SMTP_POST || 465),
+    port: Number(process.env.SMTP_PORT || 465),
     secure: (process.env.SMTP_SECURE || "true") !== "false",
     auth: {
       user: process.env.EMAIL_USER,
@@ -134,7 +134,7 @@ exports.verifyPasscode = async (req, res) => {
   // Issue access token like normal login
   const accessToken = jwt.sign(
     {
-      userInfo: {
+      UserInfo: {
         id: user._id.toString(),
         username: user.username,
         roles: user.roles,
