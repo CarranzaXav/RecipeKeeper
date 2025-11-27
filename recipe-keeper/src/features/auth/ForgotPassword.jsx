@@ -38,25 +38,54 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="w-full pt-12 h-96">
+    <div className="w-full mt-4 md:mt-12 h-96">
       <section
         className="
 			grid
 			w-9/10 sm:w-8/10 md:w-6/10 lg:w-1/2 xl:w-2/5
-			h-72 md:h-60
+			h-64 md:h-60
 			my-auto
 			px-1.5
 			justify-self-center
 			bg-[var(--LOGIN-SIGNUP)]
 			rounded-xl
+      border-4 lg:border-8
+      border-t-purple-200 border-l-purple-200
+      border-r-purple-400/50 border-b-purple-400/50
 			"
         title="Forgot Password"
       >
-        <header>
-          <h1>Forgot Password</h1>
+        <header
+          className="
+          md:py-2
+          mt-2
+          flex
+          self-center
+          justify-center
+          "
+        >
+          <h1
+            className="
+          text-white
+            text-sm sm:text-2xl
+            font-semibold
+            flex
+            self-center
+            tracking-[6px]
+          "
+          >
+            Forgot Password
+          </h1>
         </header>
 
-        <main>
+        <main
+          className="
+        w-full
+        h-full
+        justify-items-center
+        content-center
+        "
+        >
           <p
             ref={errRef}
             className={errMsg ? "errmsg" : "offscreen"}
@@ -66,14 +95,34 @@ const ForgotPassword = () => {
           </p>
 
           <form onSubmit={onSubmit} className="forgotPwdForm">
-            <div className="forgotPwdPhoneBlock">
-              <label htmlFor="phone" className="forgotPwdLabel">
+            <div
+              className="forgotPwdPhoneBlock
+              flex
+
+            "
+            >
+              <label
+                htmlFor="phone"
+                className="forgotPwdLabel
+              text-white
+              w-6/10
+              "
+              >
                 Phone Number:
               </label>
               <input
                 type="tel"
                 id="phone"
-                className="forgotPwdInput"
+                className="forgotPwdInput
+                bg-white
+                rounded-xl
+                w-1/2
+                md:pl-6
+                pr-0
+                py-0 md:py-0.5
+                cursor-pointer
+                text-xs
+                "
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="(555) 555-1234"
@@ -81,12 +130,33 @@ const ForgotPassword = () => {
               />
             </div>
 
-            <div className="forgotPwdCarrierBlock">
-              <label htmlFor="carrier" className="forgotPwdCarrierLabel">
+            <div
+              className="forgotPwdCarrierBlock
+              flex
+              py-2
+              justify-between md:justify-normal
+            "
+            >
+              <label
+                htmlFor="carrier"
+                className="forgotPwdCarrierLabel
+                text-white
+                md:w-6/10
+                pr-2
+              "
+              >
                 Carrier:{" "}
               </label>
               <select
-                className="forgotPwdInput"
+                className="forgotPwdInput
+                  w-1/2
+                  text-xs
+                bg-white
+                  rounded-xl
+                  md:pl-2
+                  py-0.5
+                  cursor-pointer
+                "
                 id="carrier"
                 value={carrier}
                 onChange={(e) => setCarrier(e.target.value)}
@@ -103,15 +173,49 @@ const ForgotPassword = () => {
               </select>
             </div>
 
-            <button className="forgotPwdBtn" disabled={isLoading}>
+            <button
+              className="forgotPwdBtn
+              flex
+              justify-self-center
+              my-1.5
+              text-sm
+            bg-white
+              rounded-xl
+              px-2
+              py-0.5
+              cursor-pointer
+              hover:shadow-xl hover:shadow-purple-400
+              hover:text-purple-500
+            "
+              disabled={isLoading}
+            >
               {isLoading ? "Sending..." : "Send Passcode"}
             </button>
           </form>
         </main>
 
-        <footer className="forgotPwdFooter">
-          <div className="forgotPwdFooterBtnContainer">
-            <Link className="loginFormButton" to="/login">
+        <footer
+          className="forgotPwdFooter
+          flex flex-row-reverse
+        "
+        >
+          <div
+            className="forgotPwdFooterBtnContainer
+            pr-2
+            text-xs
+           
+          "
+          >
+            <Link
+              className="loginFormButton
+             hover:bg-white
+            hover:rounded-xl
+            hover:py-0.5
+            hover:px-2
+            "
+              title="Login Page"
+              to="/login"
+            >
               Back to Login
             </Link>
           </div>

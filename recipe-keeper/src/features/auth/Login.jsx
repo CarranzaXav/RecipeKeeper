@@ -75,17 +75,21 @@ const Login = () => {
     );
 
   return (
-    <div className="w-full pt-12 h-96">
+    <div className="w-full mt-4 md:mt-12 h-full">
       <section
         className="
       grid
       w-9/10 sm:w-8/10 md:w-6/10 lg:w-1/2 xl:w-2/5
-      h-72 md:h-60
+      h-64 md:h-60
       my-auto
       px-1.5
       justify-self-center
       bg-[var(--LOGIN-SIGNUP)]
       rounded-t-xl
+      border-x-4 lg:border-x-8
+      border-t-4 lg:border-t-8
+      border-t-purple-200 border-l-purple-200
+      border-r-purple-400/50
       "
         title="login"
       >
@@ -118,7 +122,7 @@ const Login = () => {
           className="
         w-full
         h-full
-        my-4
+        mb-8
         justify-items-center
         content-center
         "
@@ -239,9 +243,11 @@ const Login = () => {
         <footer
           className="loginFormFooter
         h-6
-        grid grid-cols-2
+        w-full md:w-8/10
         px-2.5
-
+        mt-1
+        flex justify-between
+        justify-self-center
       "
         >
           <div className="loginFormFooterBtnContainer">
@@ -274,13 +280,19 @@ const Login = () => {
           </div>
         </footer>
       </section>
+
       <div
         className="
         w-9/10 sm:w-8/10 md:w-6/10 lg:w-1/2 xl:w-2/5
         bg-[var(--LOGIN-SIGNUP)]
         rounded-b-2xl
+        md:pt-4
         pb-2.5
         justify-self-center
+        border-x-4 lg:border-x-8
+        border-b-4 lg:border-b-8
+      border-t-purple-200 border-l-purple-200
+      border-r-purple-400/50 border-b-purple-400/50
       "
         title="signupButtonContainer"
         onClick={handleSignUp}
@@ -289,10 +301,10 @@ const Login = () => {
           className="
       w-full
       flex
-      py-2
+      md:py-2
       text-white
       tracking-[4px]
-      text-md sm:text-lg
+      text-base sm:text-lg
       justify-center
     "
           title="signupButtonTitle"
