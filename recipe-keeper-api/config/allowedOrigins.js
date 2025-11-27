@@ -1,9 +1,9 @@
 const allowedOrigins = [
   // For Production
-  // 'https://recipekeeper.onrender.com'
-
+  // 'https://www.xaviercarranza.com/recipe-keeper'
+  //
   // For Development
-  "http://localhost:5173",
+  // "http://localhost:5173",
 ];
 
 module.exports = allowedOrigins;
