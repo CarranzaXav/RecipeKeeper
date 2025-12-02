@@ -1,10 +1,11 @@
 const Recipe = require("../models/Recipe");
 const User = require("../models/User");
+const asyncHandler = require("express-async-handler");
 
 // @desc Get all Recipes
 // @route GET /recipes
 // @access Private
-const getAllRecipes = async (req, res) => {
+const getAllRecipes = asyncHandler(async (req, res) => {
   // Get all recipes from MongoDB
   const recipes = await Recipe.find().lean();
 
@@ -22,22 +23,17 @@ const getAllRecipes = async (req, res) => {
   );
 
   res.json(recipesWithUser);
-};
+});
 
 // @desc Create a Recipe
 // @route POST /recipes
 // @access Private
-const createNewRecipe = async (req, res) => {
+const createNewRecipe = asyncHandler(async (req, res) => {
   console.log("BODY:", req.body);
   console.log("FILES:", req.files);
 
   const { user, title, course, time, ingredients, instructions, favorited } =
     req.body;
-
-  // const images = (req.files?.photo || []).map((f) => ({
-  //   url: f.path,
-  //   filename: f.filename,
-  // }));
 
   let images = [];
 
@@ -86,12 +82,12 @@ const createNewRecipe = async (req, res) => {
   } else {
     return res.status(400).json({ message: "Invalid recipe data recieved" });
   }
-};
+});
 
 // @desc Update a Recipe
 // @route PATCH /recipes
 // @access Private
-const updateRecipe = async (req, res) => {
+const updateRecipe = asyncHandler(async (req, res) => {
   console.log("🔍 BODY:", req.body);
   console.log("🔍 FILES:", req.files);
 
@@ -156,12 +152,12 @@ const updateRecipe = async (req, res) => {
 
   // console.log("✅ PATCH hit with data:", req.body);
   res.json(updatedRecipe);
-};
+});
 
 // @desc Delete a Recipe
 // @route DELETE /recipes
 // @access Private
-const deleteRecipe = async (req, res) => {
+const deleteRecipe = asyncHandler(async (req, res) => {
   const { id } = req.body;
 
   // Confirm data
@@ -181,7 +177,7 @@ const deleteRecipe = async (req, res) => {
   const reply = `Recipe '${result.title}' with ID ${result._id} deleted`;
 
   res.json(reply);
-};
+});
 
 module.exports = {
   getAllRecipes,

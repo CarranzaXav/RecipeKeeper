@@ -1,12 +1,12 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const asyncHandler = require("express-async-handler");
+const asyncHandler = require("express-async-handler");
 
 // @desc Login
 // @route POST /auth
 // @access Public
-const login = async (req, res) => {
+const login = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -55,12 +55,12 @@ const login = async (req, res) => {
 
   // Send accessToken containing username and roles
   res.json({ accessToken });
-};
+});
 
 // @desc Refresh
 // @route GET /auth/refresh
 // @access Public - because access token has expired
-const refresh = (req, res) => {
+const refresh = asyncHandler((req, res) => {
   const cookies = req.cookies;
 
   if (!cookies?.jwt)
@@ -96,17 +96,17 @@ const refresh = (req, res) => {
       res.json({ accessToken });
     }
   );
-};
+});
 
 // @desc LogOut
 // @route POST /auth/logout
 // @access Public - just to clear cookie if exists
-const logout = (req, res) => {
+const logout = asyncHandler((req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204);
   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
   res.json({ message: "Cookie cleared" });
-};
+});
 
 module.exports = {
   login,

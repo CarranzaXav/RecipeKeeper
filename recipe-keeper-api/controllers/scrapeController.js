@@ -1,4 +1,5 @@
 const { chromium } = require("playwright");
+const asyncHandler = require("express-async-handler");
 
 // ⬇️ NEW: Handles nested "HowToSection" and flat "HowToStep" from JSON-LD
 const flattenInstructions = (rawInstructions) => {
@@ -31,7 +32,7 @@ const parseISODuration = (isoString) => {
   };
 };
 
-const scrapeRecipe = async (req, res) => {
+const scrapeRecipe = asyncHandler(async (req, res) => {
   const { url } = req.body;
   if (!url) {
     console.log("❌ No URL provided");
@@ -185,6 +186,6 @@ const scrapeRecipe = async (req, res) => {
     await browser.close();
     return res.status(500).json({ message: "Error scraping recipe" });
   }
-};
+});
 
 module.exports = { scrapeRecipe };
