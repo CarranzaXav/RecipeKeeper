@@ -1,13 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials } from "../../features/auth/authSlice";
 
+const API_BASE_URL = "/api";
+
 const baseQuery = fetchBaseQuery({
   // CHANGE URLS IN BACKEND ALLOWEDORIGINS.JS
   // For Production
   // baseUrl:'https://recipekeeper-api.onrender.com'
+  baseUrl: API_BASE_URL,
 
   // For Development,
-  baseUrl: "http://localhost:3500",
+  // baseUrl: "http://localhost:3500",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
