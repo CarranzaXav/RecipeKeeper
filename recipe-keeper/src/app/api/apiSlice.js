@@ -6,7 +6,6 @@ const API_BASE_URL = "/api";
 const baseQuery = fetchBaseQuery({
   // CHANGE URLS IN BACKEND ALLOWEDORIGINS.JS
   // For Production
-  // baseUrl:'https://recipekeeper-api.onrender.com'
   baseUrl: API_BASE_URL,
 
   // For Development,
