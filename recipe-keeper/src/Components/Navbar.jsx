@@ -113,7 +113,7 @@ const Navbar = () => {
               className={`navBtn
               ${hoverClass}
               text-white hover:text-purple-700
-              text-sm md:text-base
+              text-sm md:text-sm
               tracking-[2px]
               font-semibold
               w-18 md:w-20 
