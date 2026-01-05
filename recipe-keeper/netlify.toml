@@ -1,11 +1,21 @@
 [[redirects]]
+  from = "/recipe-keeper"
+  to = "/recipe-keeper/"
+  status = 301
+
+[[redirects]]
+  from = "/recipe-keeper/*"
+  to = "https://recipe-keeper-ui.netlify.app/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/api/*"
   to = "https://recipekeeperapi.onrender.com/:splat"
   status = 200
   force = true
-  
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
